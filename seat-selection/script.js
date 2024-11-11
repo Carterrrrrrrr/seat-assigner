@@ -16,31 +16,49 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-db.listCollections()
-  .then(snapshot=>{
-      snapshot.forEach(snaps => {
-        console.log(snaps["_queryOptions"].collectionId); // LIST OF ALL COLLECTIONS
-      })
-  })
-  .catch(error => console.error(error));
+// // NOT WORKING
+// db.listCollections()
+//   .then(snapshot=>{
+//       snapshot.forEach(snaps => {
+//         console.log(snaps["_queryOptions"].collectionId); // LIST OF ALL COLLECTIONS
+//       })
+//   })
+//   .catch(error => console.error(error));
 
-  //NOT WORKING
-const eventsDiv = document.getElementById('divEvents');
-if(LIST-OF-COLLECTIONS.length == 0){
-    const div = document.createElement('div');
-    div.textContent = "there are currently no Events";
-} else {
-    LIST-OF-COLLECTIONS.forEach(collection => {
-        // create a new div element
-        const div = document.createElement('div');
+// const eventsDiv = document.getElementById('divEvents');
+// if(LIST-OF-COLLECTIONS.length == 0){
+//     const div = document.createElement('div');
+//     div.textContent = "there are currently no Events";
+// } else {
+//     LIST-OF-COLLECTIONS.forEach(collection => {
+//         // create a new div element
+//         const div = document.createElement('div');
     
-        // set the content of the div
-        div.textContent = collection; 
-        div.className = 'button'; // add a class to the div
-        });  
+//         // set the content of the div
+//         div.textContent = collection; 
+//         div.className = 'button'; // add a class to the div
+//         });  
+// }
+// containerChecked.appendChild(div);
+
+const event = collection(db, "seats"); //"seats" WILL BE WHATEVER EVENT IS CLICKED
+
+createRoom(event);
+
+export const createRoom = async function(event) {
+    const seats = query(event);
+    const querySnapshot1 = await getDocs(seats);
+    let listSeats = [];
+    querySnapshot1.forEach((doc) => {
+        // Adding doc.id to each seat object
+        listSeats.push({
+            id: doc.id,
+            reservationName: doc.data().reservationName,
+            seatName: doc.data().seatName,
+            price: doc.data().price,
+            isReserved: doc.data().isReserved,
+            isCheckedIn: doc.data().isCheckedIn
+        });
+    });
+    return listSeats;
 }
-containerChecked.appendChild(div);
-
-const theSeats = collection(db, "seats"); //WILL BE WHATEVER EVENT IS CLICKED
-
-
