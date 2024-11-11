@@ -1,0 +1,30 @@
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    /* makes gird resize with different seat amount */
+    gap: 10px;
+    width: 1500px;
+    margin: 0 auto;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.grid-item {
+    width: 100%; 
+    padding-top: 100%; 
+    background-color: gray;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: relative; 
+    margin: 2.5px;
+}
+
+.grid-item:hover {
+    background-color: rgb(251, 251, 251);
+    cursor: pointer;
+}
+
+body{
+    background-color: greenyellow;
+    text-align: center;
+}
