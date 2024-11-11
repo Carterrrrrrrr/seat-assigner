@@ -24,4 +24,23 @@ db.listCollections()
   })
   .catch(error => console.error(error));
 
-const theSeats = collection(db, "seats");
+  //NOT WORKING
+const eventsDiv = document.getElementById('divEvents');
+if(LIST-OF-COLLECTIONS.length == 0){
+    const div = document.createElement('div');
+    div.textContent = "there are currently no Events";
+} else {
+    LIST-OF-COLLECTIONS.forEach(collection => {
+        // create a new div element
+        const div = document.createElement('div');
+    
+        // set the content of the div
+        div.textContent = collection; 
+        div.className = 'button'; // add a class to the div
+        });  
+}
+containerChecked.appendChild(div);
+
+const theSeats = collection(db, "seats"); //WILL BE WHATEVER EVENT IS CLICKED
+
+
