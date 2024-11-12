@@ -53,11 +53,9 @@ export const createRoom = async function(event) {
         // Adding doc.id to each seat object
         listSeats.push({
             id: doc.id,
-            reservationName: doc.data().reservationName,
             seatName: doc.data().seatName,
             price: doc.data().price,
             isReserved: doc.data().isReserved,
-            isCheckedIn: doc.data().isCheckedIn
         });
     });
     return listSeats;
