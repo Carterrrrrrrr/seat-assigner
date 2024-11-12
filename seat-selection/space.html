@@ -6,8 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <script type="module" src="script.js">
+        import {createSeats, createRoom} from './script.js';
+        window.onload = createSeats();
+        window.onload = createRoom();
+    </script>
 
-    <script type="module" src="script.js"></script>
+    <button id="checkIn">Check out</button>
+
+    <div id="eventDetails"></div>
+
+    <div id="seatingArea"></div>
+
 </body>
 </html>

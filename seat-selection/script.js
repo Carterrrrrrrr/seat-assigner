@@ -45,7 +45,7 @@ const event = collection(db, "seats"); //"seats" WILL BE WHATEVER EVENT IS CLICK
 
 createRoom(event);
 
-export const createRoom = async function(event) {
+export const createSeats = async function(event) {
     const seats = query(event);
     const querySnapshot1 = await getDocs(seats);
     let listSeats = [];
@@ -59,4 +59,24 @@ export const createRoom = async function(event) {
         });
     });
     return listSeats;
+}
+
+export const createRoom = async function(){
+    const eventDetails = document.getElementById('eventDetails');
+    const seatingArea = document.getElementById('seatingArea');
+
+    createRoom(event).forEach((seat) => {
+        const div = document.createElement('div');
+
+        // set the content of the div
+        div.textContent = seat.seatName; 
+        div.className = 'seat'; // add a class to the div
+
+        seatingArea.appendChild(div);
+    });
+}        
+if (seat.height > row){ //THIS MAY BE PROBLEMATIC
+    row++;
+    seatingArea.appendChild(document.createElement('div'));
+    console.log("a new row was created");
 }
