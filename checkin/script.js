@@ -43,50 +43,54 @@ export const getSeats = async function(partyName) {
     return partySeats;
 }
 
+export const displaySeats = async function(){
+    //const seats = [{seatName:'seat 1', isSelected: false, isCheckedIn: true}, {seatName:'seat 2', isSelected: false, isCheckedIn: false}, {seatName:'seat 3', isSelected: false, isCheckedIn: false}];
+    const seats = await getSeats("Alex Baer")
 
-//const seats = [{seatName:'seat 1', isSelected: false, isCheckedIn: true}, {seatName:'seat 2', isSelected: false, isCheckedIn: false}, {seatName:'seat 3', isSelected: false, isCheckedIn: false}];
-const seats = await getSeats("Alex Baer")
+    // get the container where the divs will be added
+    const containerToCheck = document.getElementById('divToCheck');
+    const containerChecked = document.getElementById('divChecked');
 
-// get the container where the divs will be added
-const containerToCheck = document.getElementById('divToCheck');
-const containerChecked = document.getElementById('divChecked');
+    // loop through the seats found (ALEX)
+    // create a button for each object and sort it into checked in or avalible
+    seats.forEach(seat => {
+        // create a new div element
+        const div = document.createElement('div');
 
-// loop through the seats found (ALEX)
-// create a button for each object and sort it into checked in or avalible
-seats.forEach(seat => {
-    // create a new div element
-    const div = document.createElement('div');
+        // set the content of the div
+        div.textContent = seat.seatName; 
+        div.className = 'button'; // add a class to the div
 
-    // set the content of the div
-    div.textContent = seat.seatName; 
-    div.className = 'button'; // add a class to the div
-
-    // Add click event listener to the div
-    div.addEventListener('click', function() {
-        if (div.classList.contains('on')) {
-            div.classList.remove('on'); // Remove 'on' class
-            div.classList.add('off'); // Add 'off' class
-            seat.isSelected = false;
-            //console.log(seat + ' is off');
-        } else {
-            div.classList.remove('off'); // Remove 'off' class
-            div.classList.add('on'); // Add 'on' class
-            seat.isSelected = true;
-            //console.log(seat + ' is on');
+        // Add click event listener to the div
+        div.addEventListener('click', function() {
+            if (div.classList.contains('on')) {
+                div.classList.remove('on'); // Remove 'on' class
+                div.classList.add('off'); // Add 'off' class
+                seat.isSelected = false;
+                //console.log(seat + ' is off');
+            } else {
+                div.classList.remove('off'); // Remove 'off' class
+                div.classList.add('on'); // Add 'on' class
+                seat.isSelected = true;
+                //console.log(seat + ' is on');
+            }
+        });  
+        // append the new div to the container
+        if (seat.isCheckedIn == true){
+            containerChecked.appendChild(div);
+        } else{
+            containerToCheck.appendChild(div);
         }
-    });  
-    // append the new div to the container
-    if (seat.isCheckedIn == true){
-        containerChecked.appendChild(div);
-    } else{
-        containerToCheck.appendChild(div);
-    }
-});
+    });
 
+}
 //event fires when button is clicked
 //if the seat is avalible and marked it becomes unavalible
-document.getElementById("checkIn").onclick = async function () {
+export const checkIn = async function () {
+    console.log("rlly");
+    // event.preventDefault();
     for (let i = 0; i < seats.length; i++){
+        console.log("why");
         if (seats[i].isSelected && !seats[i].isCheckedIn) {
             //seats[i].isCheckedIn = true;
             const itemToComplete = doc(db, "seats", seats[i].id);
@@ -96,7 +100,13 @@ document.getElementById("checkIn").onclick = async function () {
         }
     }
     window.location.href = 'index.html';
-    console.log(seats)
+    console.log(seats);
 }
 
+export const goToCheckIn = function () {
+    event.preventDefault();
+    console.log("what da flip");
+    window.location.href = 'checkin.html';
+
+}
 
