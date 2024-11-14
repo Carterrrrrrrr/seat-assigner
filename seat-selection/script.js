@@ -16,7 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// // NOT WORKING
+// // NOT WORKING -- for index.html (home page)
 // db.listCollections()
 //   .then(snapshot=>{
 //       snapshot.forEach(snaps => {
@@ -42,8 +42,7 @@ const db = getFirestore(app);
 // containerChecked.appendChild(div);
 
 const event = collection(db, "seats"); //"seats" WILL BE WHATEVER EVENT IS CLICKED
-
-createRoom(event);
+const eventDetails = null;
 
 export const createSeats = async function(event) {
     const seats = query(event);
@@ -51,30 +50,60 @@ export const createSeats = async function(event) {
     let listSeats = [];
     querySnapshot1.forEach((doc) => {
         // Adding doc.id to each seat object
-        listSeats.push({
-            id: doc.id,
-            seatName: doc.data().seatName,
-            price: doc.data().price,
-            isReserved: doc.data().isReserved,
-        });
+        if(doc.data().hasOwnProperty('eventName')){
+            eventDetails = {
+                eventName: doc.data().eventName,
+                eventDescription: doc.data().eventDescription,
+                width: doc.data().width,
+                height: doc.data().height
+            };
+        }else{
+            listSeats.push({
+                id: doc.id,
+                seatName: doc.data().seatName,
+                price: doc.data().price,
+                isReserved: doc.data().isReserved,
+                x: doc.data().x,
+                y: doc.data().y
+            });
+        }
+        
     });
-    return listSeats;
+    return sortSeats(listSeats);
+}
+
+function sortSeats(listSeats){
+    matrix[eventDetails.height][eventDetails.width] = {}
+    for (let i = 0; i < listSeats.length; i++){
+        matrix[listSeats[i].y][listSeats[i].x] = listSeats[i];
+    }
+    return matrix
 }
 
 export const createRoom = async function(){
-    const eventDetails = document.getElementById('eventDetails');
-    const seatingArea = document.getElementById('seatingArea');
+    const seatList = createSeats(event);
+    const eventDetailsDiv = document.getElementById('eventDetails');
+    const seatingAreaDiv = document.getElementById('seatingArea');
 
-    createRoom(event).forEach((seat) => {
-        const div = document.createElement('div');
+    const title = document.createElement('h1');
+    const description = document.createElement('h2');
+    title.innerHTML(eventDetails.eventName);
+    description.innerHTML(eventDetails.eventDescription);
 
-        // set the content of the div
-        div.textContent = seat.seatName; 
-        div.className = 'seat'; // add a class to the div
+    eventDetailsDiv.appendChild(title);
+    eventDetailsDiv.appendChild(description);
 
-        seatingArea.appendChild(div);
-    });
-}        
+    let i, j;
+    for (i = 0; i < seatList.length; i++) {
+        for (j = 0; j < seatList[i].length; j++) {
+            const div = document.createElement('div');
+            div.textContent = seat.seatName; 
+            div.className = 'seat'; // add a class to the div
+            seatingAreaDiv.appendChild(div);
+        }
+    }
+}
+
 if (seat.height > row){ //THIS MAY BE PROBLEMATIC
     row++;
     seatingArea.appendChild(document.createElement('div'));
