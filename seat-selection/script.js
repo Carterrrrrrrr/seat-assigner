@@ -3,7 +3,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebas
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 const { initializeApp } = require('firebase-admin/app');
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDT1gMYMrR6iDYBIM8fXX-4Ok0KdJHRvG0",
@@ -13,27 +12,10 @@ const firebaseConfig = {
     messagingSenderId: "522725525744",
     appId: "1:522725525744:web:9061c8956634a54e305a35"
   };
-  
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-//for index.html (home page)
-// const admin = require("firebase-admin");
-// const dbs = admin.firestore();
-
-// dbs.listCollections()
-//   .then(snapshot=>{
-//       snapshot.forEach(snaps => {
-//         const div = document.createElement('div');
-//         // set the content of the div
-//         div.textContent = snaps["_queryOptions"].collectionId; 
-//         div.className = 'button'; // add a class to the div
-//         eventsDiv.appendChild(div);
-//       })
-//   })
-//   .catch(error => console.error(error));
-
 
 const event = collection(db, "seats"); //"seats" WILL BE WHATEVER EVENT IS CLICKED
 const eventDetails = null;
