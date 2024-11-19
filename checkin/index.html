@@ -13,10 +13,9 @@
   <!-- type must be "module": https://www.w3schools.com/js/js_modules.asp#:~:text=JavaScript%20modules%20allow%20you%20to,in%20the%20tag.-->  
   <script type="module" src="script.js"></script>
   <script type="module">
-    import {addItem, showItems} from './script.js';
-    window.addItem = addItem;
-    window.showItems = showItems;
-    showItems();
+    import {goToCheckIn} from './script.js';
+    window.goToCheckIn = goToCheckIn;
+    
   </script>
 
 
@@ -27,7 +26,7 @@
     <input type="text" id="partyName" name="fname"><br><br>
     <h3>Ticket ID:</h3>
     <input type="text" id="ticketID" name="fname"><br><br>
-    <input type="submit" value="Check In">
+    <button type = "submision" onclick="goToCheckIn()">Next</button>
 </form>
 </body>
 </html>

@@ -12,10 +12,10 @@
   <!-- type must be "module": https://www.w3schools.com/js/js_modules.asp#:~:text=JavaScript%20modules%20allow%20you%20to,in%20the%20tag.-->  
   <script type="module" src="script.js"></script>
   <script type="module">
-    import {addItem, showItems} from './script.js';
-    window.addItem = addItem;
-    window.showItems = showItems;
-    showItems();
+    import {displaySeats, checkIn} from './script.js';
+   window.displaySeats = displaySeats;
+   window.checkIn = checkIn;
+   displaySeats();
   </script>
 
 
@@ -29,7 +29,7 @@
   <div id="divChecked">
   </div>
 
-  <button id="checkIn">Check in</button>
+  <button type = "submission" onclick="checkIn()" id="checkIn">Check in</button>
 
 </body>
 </html>
