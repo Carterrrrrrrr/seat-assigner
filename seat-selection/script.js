@@ -2,6 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
+const { initializeApp } = require('firebase-admin/app');
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDT1gMYMrR6iDYBIM8fXX-4Ok0KdJHRvG0",
@@ -11,40 +13,35 @@ const firebaseConfig = {
     messagingSenderId: "522725525744",
     appId: "1:522725525744:web:9061c8956634a54e305a35"
   };
-
+  
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// // NOT WORKING -- for index.html (home page)
-// db.listCollections()
+//for index.html (home page)
+// const admin = require("firebase-admin");
+// const dbs = admin.firestore();
+
+// dbs.listCollections()
 //   .then(snapshot=>{
 //       snapshot.forEach(snaps => {
-//         console.log(snaps["_queryOptions"].collectionId); // LIST OF ALL COLLECTIONS
+//         const div = document.createElement('div');
+//         // set the content of the div
+//         div.textContent = snaps["_queryOptions"].collectionId; 
+//         div.className = 'button'; // add a class to the div
+//         eventsDiv.appendChild(div);
 //       })
 //   })
 //   .catch(error => console.error(error));
 
-// const eventsDiv = document.getElementById('divEvents');
-// if(LIST-OF-COLLECTIONS.length == 0){
-//     const div = document.createElement('div');
-//     div.textContent = "there are currently no Events";
-// } else {
-//     LIST-OF-COLLECTIONS.forEach(collection => {
-//         // create a new div element
-//         const div = document.createElement('div');
-    
-//         // set the content of the div
-//         div.textContent = collection; 
-//         div.className = 'button'; // add a class to the div
-//         });  
-// }
-// containerChecked.appendChild(div);
 
 const event = collection(db, "seats"); //"seats" WILL BE WHATEVER EVENT IS CLICKED
 const eventDetails = null;
 
+//creates a list of seats as they are listed in firebase
+//creates a event details object that hold the title, description, x, and y.
 export const createSeats = async function(event) {
+    //takes a snapshot of all the seats in a certain event
     const seats = query(event);
     const querySnapshot1 = await getDocs(seats);
     let listSeats = [];
@@ -58,6 +55,7 @@ export const createSeats = async function(event) {
                 height: doc.data().height
             };
         }else{
+            //pushes seats into the seatlist as objects with certain inforamtion
             listSeats.push({
                 id: doc.id,
                 seatName: doc.data().seatName,
@@ -72,40 +70,41 @@ export const createSeats = async function(event) {
     return sortSeats(listSeats);
 }
 
+//sorts the seats list into a 2d array based on position
 function sortSeats(listSeats){
+    //creates a 2d array based on the width and height of the room
     matrix[eventDetails.height][eventDetails.width] = {}
     for (let i = 0; i < listSeats.length; i++){
+        //populates the list based on the x and y of each seat
         matrix[listSeats[i].y][listSeats[i].x] = listSeats[i];
     }
     return matrix
 }
 
+//creates div elementes (seats) for each seat in the 2d seat array
 export const createRoom = async function(){
+    //find the divs to put the seats and information into const
     const seatList = createSeats(event);
-    const eventDetailsDiv = document.getElementById('eventDetails');
     const seatingAreaDiv = document.getElementById('seatingArea');
 
-    const title = document.createElement('h1');
-    const description = document.createElement('h2');
+    //edit the title and description so that it matches the selected event 
+    const title = document.getElementById('title');
+    const description = document.getElementById('description');
     title.innerHTML(eventDetails.eventName);
     description.innerHTML(eventDetails.eventDescription);
 
-    eventDetailsDiv.appendChild(title);
-    eventDetailsDiv.appendChild(description);
-
+    //loop through the 2d array and create divs for the seats in order
     let i, j;
     for (i = 0; i < seatList.length; i++) {
         for (j = 0; j < seatList[i].length; j++) {
+            //create a new div elemenet and 
             const div = document.createElement('div');
             div.textContent = seat.seatName; 
-            div.className = 'seat'; // add a class to the div
+            div.className = 'seat'; // add a seat class to the div
             seatingAreaDiv.appendChild(div);
         }
+        //create a div to start a new row
+        seatingAreaDiv.appendChild(document.createElement('div'));
+        console.log("a new row was created");
     }
-}
-
-if (seat.height > row){ //THIS MAY BE PROBLEMATIC
-    row++;
-    seatingArea.appendChild(document.createElement('div'));
-    console.log("a new row was created");
 }
