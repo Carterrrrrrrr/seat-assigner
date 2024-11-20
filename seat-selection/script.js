@@ -5,7 +5,7 @@ import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, q
 const { initializeApp } = require('firebase-admin/app');
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDT1gMYMrR6iDYBIM8fXX-4Ok0KdJHRvG0",
+    apiKey: "AIzaSyDT1gMYMrR6iDYBIM8fXX-4Ok0KdJHRvG",
     authDomain: "seat-reservations-49c91.firebaseapp.com",
     projectId: "seat-reservations-49c91",
     storageBucket: "seat-reservations-49c91.appspot.com",

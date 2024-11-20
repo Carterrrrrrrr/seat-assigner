@@ -9,13 +9,21 @@
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js" defer></script>    
 </head>
 <body>
+    <script src="creator.js"></script>
+
+    <script type="module" src="firebase.js"></script>
+    <script type="module">
+      import {addItem} from './firebase.js';
+      window.addItem = addItem;
+      </script>
+
+      
     <div>
-        <h1>Event Name:</h1> <input type="text" id="event-name">
-        <h1>Event Description:</h1> <input type="text" id="event-description">
+        <h1>Event Name:</h1> <input type="text" id="event-d">
+        <h1>Event Description:</h1> <input type="text" id="event-c">
         <div>
             <h1></h1>
         </div>
-        <!-- dropdown code -->
         <label for="color-select">Select Seat type:</label>
         <select id="color-select">
             <option value="yellow">Premium</option>
@@ -25,19 +33,19 @@
         <h1></h1>
     <div>
         <label for="grid-width">Width (X): </label>
-        <input type="number" id="grid-width" value="5">
+        <input type="number" id="grid-w" value="5">
         <label for="grid-height">Height (Y): </label>
-        <input type="number" id="grid-height" value="5">
+        <input type="number" id="grid-h" value="5">
         <h1></h1>
         <button id="generate-grid">Generate Grid</button>
     </div>
     <div id="grid-container"></div>
 
-    <script src="creator.js"></script>
-    <script src="firebase.js"></script>
 
-    <!-- Publish button to save the event details and grid to Firebase -->
-    <button id="publish-button">Publish</button>
-</body>
+    <button onclick="addseats(gridItems)", >Publish the seating selection</button>
+    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value), addDocument()", >Publish</button>
+    
+
 </html>
+
 

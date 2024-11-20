@@ -1,69 +1,61 @@
-import { db, addBlock, addEventDetails } from './firebase.js';
-
 document.addEventListener('DOMContentLoaded', () => {
     const gridContainer = document.getElementById('grid-container');
     const generateButton = document.getElementById('generate-grid');
-
-    // Array to store grid block objects
-    const gridBlocks = [];
-
+    var gridItems = []; // Array to store grid item objects
+//set up an eventlistener and wait when the waits until the HTML document is fully loaded and parsed before executing the script.
+//have constants that is the gridcontainer and the generatebutton. 
     generateButton.addEventListener('click', () => {
-        const gridWidth = parseInt(document.getElementById('grid-width').value);
-        const gridHeight = parseInt(document.getElementById('grid-height').value);
+        const gridWidth = parseInt(document.getElementById('grid-w').value);
+        const gridHeight = parseInt(document.getElementById('grid-h').value);
         createGrid(gridWidth, gridHeight);
+        
     });
-
+//when the button is clicked the eventlitener is taking the value of the wdith and height and convert it to integars
+//and put the values in the creatgrid function
     function createGrid(width, height) {
-        // Clear any existing grid items before generating a new one
+        // Clear existing grid items and reset array
         gridContainer.innerHTML = '';
-        gridBlocks.length = 0;
-
-        // Set the CSS grid template to fit the new width
-        gridContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
-
-        // Create grid items (blocks)
+        gridItems = [];
+//will generate each block for w*h times and each block will be assigned a click event listener to change its color when clicked, 
+//and is then appended to the grid container.
         for (let i = 0; i < width * height; i++) {
-            const gridItem = document.createElement('div');
-            gridItem.className = 'grid-item';
-            gridItem.style.backgroundColor = "white";  // Default color
+            const gridItemElement = document.createElement('div');
+            gridItemElement.className = 'grid-item';
 
-            // Create a block object
-            const blockObject = {
-                id: i,
-                position: { row: Math.floor(i / width), column: i % width },
-                color: "white" // Default color
+            // Create an object to represent the grid item
+            const seat = {
+                element: gridItemElement,
+                color: null, // Default color is null or you can set a default color
+                x: i%width,// Position in the grid
+                y: i/width,
+                price: null, 
             };
 
-            // Add event listener to change color and update Firestore
-            gridItem.addEventListener('click', () => changeColor(gridItem, blockObject));
+            // Add event listener to change color on click
+            gridItemElement.addEventListener('click', () => changeColor(seat));
 
-            gridContainer.appendChild(gridItem);
-            gridBlocks.push(blockObject); // Add block to the array
+            // Append the grid item to the container
+            gridContainer.appendChild(gridItemElement);
+            gridItems.push(seat); // Add the item object to the array
+        }
+
+        // Update CSS grid-template-columns to fit the new grid size
+        gridContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+    }
+
+    function changeColor(seat) {
+        const selectedColor = document.getElementById('color-select').value;
+        seat.element.style.backgroundColor = selectedColor;
+        seat.color = selectedColor; // Update the color property of the object
+        if(selectedColor = "yellow"){
+            seat.price = 15;
+        }else if(selectedColor = "brown"){
+            seat.price = 10;
+        }else{
+            seat.price = null; 
         }
     }
 
-    function changeColor(element, blockObject) {
-        const selectedColor = document.getElementById('color-select').value;
-        element.style.backgroundColor = selectedColor;
-        blockObject.color = selectedColor; // Update color in block object
-
-        // Save or update the block data in Firebase
-        addBlock(blockObject);
-        console.log("Block data:", blockObject);
-    }
-
-    // Publish button handler
-    document.getElementById('publish-button').addEventListener('click', () => {
-        const eventName = document.getElementById('event-name').value;
-        const eventDescription = document.getElementById('event-description').value;
-
-        // Save event details to Firebase
-        addEventDetails(eventName, eventDescription);
-
-        // Optionally save the grid blocks as well
-        gridBlocks.forEach(block => {
-            addBlock(block);  // Save each block to Firebase
-        });
-    });
+    
 });
 
