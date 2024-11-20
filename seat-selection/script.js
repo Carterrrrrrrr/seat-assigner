@@ -11,7 +11,7 @@ const firebaseConfig = {
     storageBucket: "seat-reservations-49c91.appspot.com",
     messagingSenderId: "522725525744",
     appId: "1:522725525744:web:9061c8956634a54e305a35"
-  };
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
