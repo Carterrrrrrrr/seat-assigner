@@ -25,7 +25,9 @@ const theSeats = collection(db, "seats");
 //isReserved
 //isCheckedIn
 //isSelected
+
 export const getSeats = async function(partyName) {
+    console.log(partyName);
     const theSeatsForParty = query(theSeats, where("reservationName", "==", partyName));
     const querySnapshot1 = await getDocs(theSeatsForParty);
     let partySeats = [];
@@ -41,16 +43,41 @@ export const getSeats = async function(partyName) {
         });
     });
     return partySeats;
+    
 }
 
-export const displaySeats = async function(){
-    //const seats = [{seatName:'seat 1', isSelected: false, isCheckedIn: true}, {seatName:'seat 2', isSelected: false, isCheckedIn: false}, {seatName:'seat 3', isSelected: false, isCheckedIn: false}];
-    const seats = await getSeats("Alex Baer")
 
+//event fires when button is clicked
+//if the seat is avalible and marked it becomes unavalible
+export const checkIn = async function () {
+    console.log("rlly");
+    // event.preventDefault();
+    for (let i = 0; i < seats.length; i++){
+        console.log("why");
+        if (seats[i].isSelected && !seats[i].isCheckedIn) {
+            //seats[i].isCheckedIn = true;
+            const itemToComplete = doc(db, "seats", seats[i].id);
+            await updateDoc(itemToComplete, {
+                isCheckedIn: true
+            });
+        }
+    }
+    // window.location.href = 'index.html';
+    console.log(seats);
+}
+
+export const goToCheckIn = async function () {
+    const seats = await getSeats(document.getElementById('partyName').value);
+    console.log(seats[0].seatName);
+    // event.preventDefault();
+    // window.location.href = 'checkin.html';
+    //const seats = [{seatName:'seat 1', isSelected: false, isCheckedIn: true}, {seatName:'seat 2', isSelected: false, isCheckedIn: false}, {seatName:'seat 3', isSelected: false, isCheckedIn: false}];
     // get the container where the divs will be added
+    console.log("what da flip");
     const containerToCheck = document.getElementById('divToCheck');
     const containerChecked = document.getElementById('divChecked');
-
+    containerToCheck.innerHTML = "";
+    containerChecked.innerHTML = "";
     // loop through the seats found (ALEX)
     // create a button for each object and sort it into checked in or avalible
     seats.forEach(seat => {
@@ -82,31 +109,5 @@ export const displaySeats = async function(){
             containerToCheck.appendChild(div);
         }
     });
-
-}
-//event fires when button is clicked
-//if the seat is avalible and marked it becomes unavalible
-export const checkIn = async function () {
-    console.log("rlly");
-    // event.preventDefault();
-    for (let i = 0; i < seats.length; i++){
-        console.log("why");
-        if (seats[i].isSelected && !seats[i].isCheckedIn) {
-            //seats[i].isCheckedIn = true;
-            const itemToComplete = doc(db, "seats", seats[i].id);
-            await updateDoc(itemToComplete, {
-                isCheckedIn: true
-            });
-        }
-    }
-    window.location.href = 'index.html';
-    console.log(seats);
-}
-
-export const goToCheckIn = function () {
-    event.preventDefault();
-    console.log("what da flip");
-    window.location.href = 'checkin.html';
-
 }
 

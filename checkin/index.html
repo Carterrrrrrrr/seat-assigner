@@ -18,15 +18,23 @@
     
   </script>
 
-
+  <div class="header">
   <h1>CheckIN</h1>
   <h2>Enter Name OR ticket ID</h2>
-  <form>
+  </div>
+ 
     <h3>Name:</h3>
     <input type="text" id="partyName" name="fname"><br><br>
-    <h3>Ticket ID:</h3>
-    <input type="text" id="ticketID" name="fname"><br><br>
-    <button type = "submision" onclick="goToCheckIn()">Next</button>
-</form>
+    <button type = "submision" onclick="goToCheckIn();">Next</button>
+
+
+    
+    <h3>Avalible Tickets</h3>
+    <div id="divToCheck">
+    </div>
+  
+    <h3>Already Checked In</h3>
+    <div id="divChecked">
+    </div>
 </body>
 </html>
