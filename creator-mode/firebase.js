@@ -15,53 +15,37 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 //add the name and description to firebase
-export const addItem = async function(eventName, eventDescription, wdith, height ) {
-    try {
-      const docRef = await addDoc(collection(db, "seats"), {
-        EventName: eventName,
-        EventDescription: eventDescription,
-        width: wdith,
-        height: height,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding item to database: ", e);
-    }
-    document.getElementById("newItem").value = "";
-  }
-
-  async function addDocument() {
-    try {
-      const docRef = await addDoc(newCollectionRef, {
-        field1: "value1",
-        field2: "value2",
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
-  
-  addDocument();
-
-//add the seats to firebase
-export const addseats = async function(arrays){
-  console.log("check");
-  for (let i = 0; i < width * height; i++) {
-    try{
-      const docRef = await addDoc(collection(db, "seats"), {
-        isCheckedin: false,
-        isReserved: false,
-        price: seat.price,
-        reservationName: "",
-        seatName: "",
-        x: seat.x,
-        y: seat.y,
+export const addItem = async function (eventName, eventDescription, width, height) {
+  try {
+    // Create a document in the "events" collection
+    const eventDocRef = await addDoc(collection(db, "events"), {
+      eventName: eventName,
+      eventDescription: eventDescription,
+      width: width,
+      height: height,
     });
-    console.log("Document written with ID: ", docRef.id);
+
+    console.log("Event Document written with ID: ", eventDocRef.id);
+
+    const gridItems = JSON.parse(sessionStorage.getItem("grid"));
+    console.log("Publishing seats...");
+    for (let seat of gridItems) {
+      try {
+        const seatRef = await addDoc(collection(eventDocRef, "seats"), {
+          isCheckedin: false,
+          isReserved: false,
+          price: seat.price,
+          reservationName: "",
+          seatName: "",
+          x: seat.x,
+          y: seat.y,
+        });
+        console.log("Seat Document written with ID: ", seatRef.id);
+      } catch (e) {
+        console.error("Error adding seat to database: ", e);
+      }
+    }
   } catch (e) {
     console.error("Error adding item to database: ", e);
-  } 
-    document.getElementById("newItem").value = "";
-  } 
-}
+  }
+};

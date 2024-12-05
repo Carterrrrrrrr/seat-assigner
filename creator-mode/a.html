@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grid of Blocks</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js" defer></script>    
+    <!-- <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js" defer></script>     -->
 </head>
 <body>
     <script src="creator.js"></script>
 
     <script type="module" src="firebase.js"></script>
     <script type="module">
-      import {addItem} from './firebase.js';
+      import {addItem } from './firebase.js';
       window.addItem = addItem;
+    //   addSeats = addSeats;
       </script>
 
       
@@ -31,6 +32,7 @@
             <option value="black">Stage</option>
         </select>
         <h1></h1>
+    </div>
     <div>
         <label for="grid-width">Width (X): </label>
         <input type="number" id="grid-w" value="5">
@@ -39,13 +41,13 @@
         <h1></h1>
         <button id="generate-grid">Generate Grid</button>
     </div>
-    <div id="grid-container"></div>
+    <div id="grid-container">
 
+    </div>
 
-    <button onclick="addseats(gridItems)", >Publish the seating selection</button>
-    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value), addDocument()", >Publish</button>
+    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish</button>
     
-
+</body>
 </html>
 
 

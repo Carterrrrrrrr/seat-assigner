@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gridContainer = document.getElementById('grid-container');
     const generateButton = document.getElementById('generate-grid');
-    var gridItems = []; // Array to store grid item objects
+    gridItems = []; 
+// Array to store grid item objects
 //set up an eventlistener and wait when the waits until the HTML document is fully loaded and parsed before executing the script.
 //have constants that is the gridcontainer and the generatebutton. 
     generateButton.addEventListener('click', () => {
@@ -26,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const seat = {
                 element: gridItemElement,
                 color: null, // Default color is null or you can set a default color
-                x: i%width,// Position in the grid
-                y: i/width,
+                x: i % width,  // X-coordinate
+                y: Math.floor(i / width),
                 price: null, 
             };
 
@@ -41,21 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update CSS grid-template-columns to fit the new grid size
         gridContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+        sessionStorage.setItem("grid", JSON.stringify(gridItems));
     }
 
     function changeColor(seat) {
         const selectedColor = document.getElementById('color-select').value;
         seat.element.style.backgroundColor = selectedColor;
         seat.color = selectedColor; // Update the color property of the object
-        if(selectedColor = "yellow"){
+        if (selectedColor === "yellow") {
             seat.price = 15;
-        }else if(selectedColor = "brown"){
+        } else if (selectedColor === "brown") {
             seat.price = 10;
-        }else{
-            seat.price = null; 
+        } else {
+            seat.price = null;
         }
     }
 
     
 });
-
