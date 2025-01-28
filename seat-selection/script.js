@@ -43,12 +43,14 @@ const createEvents = async (eventsCollection) => {
             console.error("divEvents not found in the DOM.");
             return;
         }
-
         listEvents.forEach((event) => {
             const div = document.createElement("div");
-            div.textContent = event.eventName; // display the event name
+            if (event.eventName) {
+                div.textContent = event.eventName;
+            } else {div.textContent = "UNKNOWN"}
+             // display the event name
             div.id = event.id; // use the document ID as the div's ID
-            div.className = "event"; // add the 'event' class for styling
+            div.classList.add("event"); // add the 'event' class for styling
             div.addEventListener("click", () => selectEvent(event)); // attack click event listener
             divEvents.appendChild(div);
         });
@@ -61,7 +63,6 @@ const createEvents = async (eventsCollection) => {
 
 // function to select an event and update the UI
 const selectEvent = (event) => {
-    console.log("Event selected:", event);
     currentEventCollection = collection(db, event.id); // set the collection for the selected event
     eventDetails = {
         eventName: event.eventName,
@@ -115,16 +116,16 @@ export const createRoom = async () => {
         return;
     }
 
-    console.log("Creating room for event:", eventDetails.eventName);
+    console.log("Creating room for event:"+ eventDetails.eventName);
     const seatList = await createSeats(currentEventCollection);
     const seatingAreaDiv = document.getElementById("seatingArea");
     const title = document.getElementById("title");
     const description = document.getElementById("description");
 
-    if (!seatingAreaDiv || !title || !description) {
-        console.error("Required DOM elements not found.");
-        return;
-    }
+    // if (!seatingAreaDiv || !title || !description) {
+    //     console.error("Required DOM elements not found.");
+    //     return;
+    // }
 
     // update event details
     title.textContent = eventDetails.eventName;

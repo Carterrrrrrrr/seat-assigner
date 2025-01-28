@@ -9,12 +9,6 @@ body{
     padding: 30px;
     box-sizing: border-box;
 }
-#divEvents {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 20px;
-}
 
 .event {
     cursor: pointer;
