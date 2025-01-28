@@ -6,14 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <script type="module" src="script.js">
-        import {createRoom} from './script.js';
-        window.onload = createRoom();
+    <script type="module" src="script.js"></script>
+    <script>
+        window.onload = () => createRoom();
     </script>
+
 
     <button id="checkIn">Check out</button>
 
-    <div id="divEvents"></div>
     <div id="eventDetails">
         <h1 id="title">Title</h1>
         <h2 id="description">Description</h2>
