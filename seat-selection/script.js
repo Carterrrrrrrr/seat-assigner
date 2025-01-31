@@ -1,6 +1,6 @@
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, doc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -56,20 +56,15 @@ const createEvents = async (eventsCollection) => {
         });
         console.log("Events created successfully!");
     } catch (error) {
-        console.error("Error fetching events:", error);
+        console.error("Error fetching events:" + error);
     }
 };
 
 
 // function to select an event and update the UI
 const selectEvent = (event) => {
-    console.log("HIT");
-    //currentSeatCollection = collection(db, "seats").doc(event.id).collection("seats"); // set the collection for the selected event
     const parentDocRef = doc(db, "events", event.id);
-    console.log("parentDocRef " + parentDocRef);
     currentSeatCollection = collection(parentDocRef, "seats");
-
-    console.log(currentSeatCollection);
     eventDetails = {
         id: event.id,
         eventName: event.eventName,
@@ -90,7 +85,6 @@ const createSeats = async (seatsCollection) => {
 
         let listSeats = [];
         querySnapshot.forEach((doc) => {
-            console.log("AHHH" + doc.id + doc.data().seatName + doc.data().price + doc.data().x + doc.data().y)
             listSeats.push({
                 id: doc.id,
                 seatName: doc.data().seatName,
@@ -100,10 +94,9 @@ const createSeats = async (seatsCollection) => {
                 y: doc.data().y,
             });
         });
-        //console.log(listSeats);
         return sortSeats(listSeats);
     } catch (error) {
-        console.error("Error fetching seats:", error);
+        console.error("Error fetching seats:" + error);
         return [];
     }
 };
@@ -126,13 +119,14 @@ export const createRoom = async () => {
     }
 
     const seatList = await createSeats(currentSeatCollection);
+
+    location.replace("space.html");
     const seatingAreaDiv = document.getElementById("seatingArea");
     const title = document.getElementById("title");
     const description = document.getElementById("description");
-    // console.log(seatList);
-    // console.log(seatingAreaDiv);
-    // console.log(title);
-    // console.log(description);
+    console.log(seatingAreaDiv);
+    console.log(title);
+    console.log(description);
 
     // if (!seatingAreaDiv || !title || !description) {
     //     console.error("Required DOM elements not found.");
@@ -140,8 +134,8 @@ export const createRoom = async () => {
     // }
 
     // update event details
-    title.textContent = eventDetails.eventName;
-    description.textContent = eventDetails.eventDescription;
+    title.innerHTML = eventDetails.eventName;
+    description.innerHTML = eventDetails.eventDescription;
 
     // clear the seating area before populating
     seatingAreaDiv.innerHTML = "";
