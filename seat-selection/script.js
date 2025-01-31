@@ -16,7 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let currentEventCollection = null; // store the selected event's collection
+let currentSeatCollection = null; // store the selected event's collection
 let eventDetails = null; // details of the selected event
 
 // fucnction to create event elements
@@ -63,8 +63,15 @@ const createEvents = async (eventsCollection) => {
 
 // function to select an event and update the UI
 const selectEvent = (event) => {
-    currentEventCollection = collection(db, event.id); // set the collection for the selected event
+    console.log("HIT");
+    //currentSeatCollection = collection(db, "seats").doc(event.id).collection("seats"); // set the collection for the selected event
+    const parentDocRef = doc(db, "events", event.id);
+    console.log("parentDocRef " + parentDocRef);
+    currentSeatCollection = collection(parentDocRef, "seats");
+
+    console.log(currentSeatCollection);
     eventDetails = {
+        id: event.id,
         eventName: event.eventName,
         eventDescription: event.eventDescription,
         width: event.width,
@@ -75,14 +82,15 @@ const selectEvent = (event) => {
 };
 
 // function to create seats
-const createSeats = async (eventCollection) => {
+const createSeats = async (seatsCollection) => {
     try {
         console.log("Fetching seats...");
-        const seatsQuery = query(eventCollection);
+        const seatsQuery = query(seatsCollection);
         const querySnapshot = await getDocs(seatsQuery);
 
         let listSeats = [];
         querySnapshot.forEach((doc) => {
+            console.log("AHHH" + doc.id + doc.data().seatName + doc.data().price + doc.data().x + doc.data().y)
             listSeats.push({
                 id: doc.id,
                 seatName: doc.data().seatName,
@@ -92,6 +100,7 @@ const createSeats = async (eventCollection) => {
                 y: doc.data().y,
             });
         });
+        //console.log(listSeats);
         return sortSeats(listSeats);
     } catch (error) {
         console.error("Error fetching seats:", error);
@@ -111,16 +120,19 @@ const sortSeats = (listSeats) => {
 
 // funcion to create the room layout
 export const createRoom = async () => {
-    if (!currentEventCollection) {
+    if (!eventDetails.id) {
         console.error("No event selected.");
         return;
     }
 
-    console.log("Creating room for event:"+ eventDetails.eventName);
-    const seatList = await createSeats(currentEventCollection);
+    const seatList = await createSeats(currentSeatCollection);
     const seatingAreaDiv = document.getElementById("seatingArea");
     const title = document.getElementById("title");
     const description = document.getElementById("description");
+    // console.log(seatList);
+    // console.log(seatingAreaDiv);
+    // console.log(title);
+    // console.log(description);
 
     // if (!seatingAreaDiv || !title || !description) {
     //     console.error("Required DOM elements not found.");
