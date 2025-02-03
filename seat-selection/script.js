@@ -1,6 +1,6 @@
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, doc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let currentEventCollection = null; // store the selected event's collection
+let currentSeatCollection = null; // store the selected event's collection
 let eventDetails = null; // details of the selected event
 
 // fucnction to create event elements
@@ -43,27 +43,30 @@ const createEvents = async (eventsCollection) => {
             console.error("divEvents not found in the DOM.");
             return;
         }
-
         listEvents.forEach((event) => {
             const div = document.createElement("div");
-            div.textContent = event.eventName; // display the event name
+            if (event.eventName) {
+                div.textContent = event.eventName;
+            } else {div.textContent = "UNKNOWN"}
+             // display the event name
             div.id = event.id; // use the document ID as the div's ID
-            div.className = "event"; // add the 'event' class for styling
+            div.classList.add("event"); // add the 'event' class for styling
             div.addEventListener("click", () => selectEvent(event)); // attack click event listener
             divEvents.appendChild(div);
         });
         console.log("Events created successfully!");
     } catch (error) {
-        console.error("Error fetching events:", error);
+        console.error("Error fetching events:" + error);
     }
 };
 
 
 // function to select an event and update the UI
 const selectEvent = (event) => {
-    console.log("Event selected:", event);
-    currentEventCollection = collection(db, event.id); // set the collection for the selected event
+    const parentDocRef = doc(db, "events", event.id);
+    currentSeatCollection = collection(parentDocRef, "seats");
     eventDetails = {
+        id: event.id,
         eventName: event.eventName,
         eventDescription: event.eventDescription,
         width: event.width,
@@ -74,10 +77,10 @@ const selectEvent = (event) => {
 };
 
 // function to create seats
-const createSeats = async (eventCollection) => {
+const createSeats = async (seatsCollection) => {
     try {
         console.log("Fetching seats...");
-        const seatsQuery = query(eventCollection);
+        const seatsQuery = query(seatsCollection);
         const querySnapshot = await getDocs(seatsQuery);
 
         let listSeats = [];
@@ -93,7 +96,7 @@ const createSeats = async (eventCollection) => {
         });
         return sortSeats(listSeats);
     } catch (error) {
-        console.error("Error fetching seats:", error);
+        console.error("Error fetching seats:" + error);
         return [];
     }
 };
@@ -110,25 +113,29 @@ const sortSeats = (listSeats) => {
 
 // funcion to create the room layout
 export const createRoom = async () => {
-    if (!currentEventCollection) {
+    if (!eventDetails.id) {
         console.error("No event selected.");
         return;
     }
 
-    console.log("Creating room for event:", eventDetails.eventName);
-    const seatList = await createSeats(currentEventCollection);
+    const seatList = await createSeats(currentSeatCollection);
+
+    location.replace("space.html");
     const seatingAreaDiv = document.getElementById("seatingArea");
     const title = document.getElementById("title");
     const description = document.getElementById("description");
+    console.log(seatingAreaDiv);
+    console.log(title);
+    console.log(description);
 
-    if (!seatingAreaDiv || !title || !description) {
-        console.error("Required DOM elements not found.");
-        return;
-    }
+    // if (!seatingAreaDiv || !title || !description) {
+    //     console.error("Required DOM elements not found.");
+    //     return;
+    // }
 
     // update event details
-    title.textContent = eventDetails.eventName;
-    description.textContent = eventDetails.eventDescription;
+    title.innerHTML = eventDetails.eventName;
+    description.innerHTML = eventDetails.eventDescription;
 
     // clear the seating area before populating
     seatingAreaDiv.innerHTML = "";
