@@ -10,5 +10,10 @@
     <h2>Buy Tickets:</h2>
     <div id="divEvents"></div>
     <script type="module" src="script.js"></script>
+    <script type="module">
+        import {createEvents} from './script.js';
+        window.createEvents = createEvents;
+        createEvents();
+    </script>
 </body>
 </html>
