@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
     <script type="module" src="script.js"></script>
-    <script>
-        window.onload = () => createRoom();
+    <script type="module">
+        import {createRoom} from './script.js';
+        window.createRoom = createRoom;
+        createRoom();
     </script>
 
 
@@ -20,6 +23,6 @@
     </div>
     <div id="seatingArea"></div>
 
-
+    <link rel="stylesheet" href="styles.css">
 </body>
 </html>

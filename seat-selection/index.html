@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
+    
     <h1>Hello!</h1>
     <h2>Buy Tickets:</h2>
     <div id="divEvents"></div>
     <script type="module" src="script.js"></script>
-    <script>
-        window.onload = () => createRoom();
+    <script type="module">
+        import {createEvents} from './script.js';
+        window.createEvents = createEvents;
+        createEvents();
     </script>
 </body>
 </html>
