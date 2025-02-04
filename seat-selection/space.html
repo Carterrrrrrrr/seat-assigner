@@ -9,13 +9,14 @@
 <body>
     <script type="module" src="script.js"></script>
     <script type="module">
-        import {createRoom} from './script.js';
+        import {createRoom, checkOut} from './script.js';
         window.createRoom = createRoom;
+        window.checkOut = checkOut;
         createRoom();
     </script>
 
 
-    <button id="checkIn">Check out</button>
+    <button id="checkIn" onclick="checkOut()">Check out</button>
 
     <div id="eventDetails">
         <h1 id="title">Title</h1>

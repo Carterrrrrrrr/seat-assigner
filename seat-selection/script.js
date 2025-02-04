@@ -62,7 +62,6 @@ export const createEvents = async () => {
     }
 };
 
-
 // function to select an event and update the UI
 const selectEvent = (event) => {
     eventDetails = {
@@ -156,6 +155,7 @@ export const createRoom = async () => {
                 // Use seat.seatName if available, otherwise default to '*'
                 seatDiv.textContent = seat.seatName || "*";
                 seatDiv.className = "seat";
+                div.addEventListener("click", () => selectSeat(seatDiv, seat)); // attack click event listener
             } else {
                 // For empty seats
                 seatDiv.textContent = "+";
@@ -168,4 +168,20 @@ export const createRoom = async () => {
     });
     console.log("Room created successfully!");
 };
+
+let totalPrice = 0;
+const selectSeat = (seatDiv, seat) => {
+    console.log("hit");
+
+    seatDiv.className = "selected-seat";
+
+    totalPrice += seat.price;
+    
+}
+
+export const checkOut = () => {
+    console.log("HIT");
+    //SAVE INFO AS NEEDED!
+    window.location.href = 'checkout.html';
+}
 

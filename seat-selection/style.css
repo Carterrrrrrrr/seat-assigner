@@ -22,7 +22,7 @@ body{
     margin-bottom: 5px;    /* Adds space between rows */
 }
 
-.seat, .empty-seat {
+.seat, .empty-seat, .selected-seat {
     margin-right: 5px;      /* Space between seats */
     padding: 5px;          /* Padding inside seats */
     min-width: 40px;        /* Ensures consistent width */
