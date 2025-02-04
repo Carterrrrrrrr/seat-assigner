@@ -20,6 +20,7 @@ let currentSeatCollection = null; // store the selected event's collection
 let eventDetails = null; // details of the selected event
 
 // fucnction to create event elements
+
 export const createEvents = async () => {
     try {
         console.log("Fetching events...");
@@ -72,9 +73,7 @@ const selectEvent = (event) => {
         height: event.height,
     };
 
-    // sessionStorage.setItem('currentSeatCollection', JSON.stringify(currentSeatCollection)); 
     sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails));
-    sessionStorage.setItem('event', JSON.stringify(event));
     window.location.href = 'space.html';
 };
 
@@ -127,7 +126,7 @@ export const createRoom = async () => {
         console.error("No event selected.");
         return;
     }
-    const seatList = await createSeats(currentSeatCollection);
+    const seatList = await createSeats(eventDetails);
 
     const seatingAreaDiv = document.getElementById("seatingArea");
     const title = document.getElementById("title");
@@ -161,4 +160,4 @@ export const createRoom = async () => {
     });
     console.log("Room created successfully!");
 };
-    
+
