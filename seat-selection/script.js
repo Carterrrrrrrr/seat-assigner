@@ -151,8 +151,16 @@ export const createRoom = async () => {
 
         row.forEach((seat) => {
             const seatDiv = document.createElement("div");
-            seatDiv.textContent = seat ? seat.seatName : "";
-            seatDiv.className = seat ? "seat" : "empty-seat";
+            // Check if the seat exists
+            if (seat) {
+                // Use seat.seatName if available, otherwise default to '*'
+                seatDiv.textContent = seat.seatName || "*";
+                seatDiv.className = "seat";
+            } else {
+                // For empty seats
+                seatDiv.textContent = "+";
+                seatDiv.className = "empty-seat";
+            }
             rowDiv.appendChild(seatDiv);
         });
 
