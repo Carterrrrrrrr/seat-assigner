@@ -7,8 +7,10 @@
 </head>
 <body>
     <script type="module" src="script.js"></script>
-    <script>
-        window.onload = () => createRoom();
+    <script type="module">
+        import {createRoom} from './script.js';
+        window.createRoom = createRoom;
+        createRoom();
     </script>
 
 

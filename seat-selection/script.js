@@ -20,9 +20,10 @@ let currentSeatCollection = null; // store the selected event's collection
 let eventDetails = null; // details of the selected event
 
 // fucnction to create event elements
-const createEvents = async (eventsCollection) => {
+export const createEvents = async () => {
     try {
         console.log("Fetching events...");
+        const eventsCollection = collection(db, "events");
         const eventsQuery = query(eventsCollection);
         const querySnapshot = await getDocs(eventsQuery);
 
@@ -63,8 +64,6 @@ const createEvents = async (eventsCollection) => {
 
 // function to select an event and update the UI
 const selectEvent = (event) => {
-    const parentDocRef = doc(db, "events", event.id);
-    currentSeatCollection = collection(parentDocRef, "seats");
     eventDetails = {
         id: event.id,
         eventName: event.eventName,
@@ -72,14 +71,20 @@ const selectEvent = (event) => {
         width: event.width,
         height: event.height,
     };
-    // call the room display
-    createRoom();
+
+    // sessionStorage.setItem('currentSeatCollection', JSON.stringify(currentSeatCollection)); 
+    sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails));
+    sessionStorage.setItem('event', JSON.stringify(event));
+    window.location.href = 'space.html';
 };
 
 // function to create seats
-const createSeats = async (seatsCollection) => {
+const createSeats = async (event) => {
     try {
         console.log("Fetching seats...");
+        const parentDocRef = doc(db, "events", event.id);
+        const seatsCollection = collection(parentDocRef, "seats");
+
         const seatsQuery = query(seatsCollection);
         const querySnapshot = await getDocs(seatsQuery);
 
@@ -113,25 +118,25 @@ const sortSeats = (listSeats) => {
 
 // funcion to create the room layout
 export const createRoom = async () => {
+
+    currentSeatCollection = JSON.parse(sessionStorage.getItem('event')); console.log("event:" + currentSeatCollection);
+    eventDetails = JSON.parse(sessionStorage.getItem('eventDetails')); console.log("evName:" + eventDetails.eventName);
+
+    console.log("Creating room...")
     if (!eventDetails.id) {
         console.error("No event selected.");
         return;
     }
-
     const seatList = await createSeats(currentSeatCollection);
 
-    location.replace("space.html");
     const seatingAreaDiv = document.getElementById("seatingArea");
     const title = document.getElementById("title");
     const description = document.getElementById("description");
-    console.log(seatingAreaDiv);
-    console.log(title);
-    console.log(description);
 
-    // if (!seatingAreaDiv || !title || !description) {
-    //     console.error("Required DOM elements not found.");
-    //     return;
-    // }
+    if (!seatingAreaDiv || !title || !description) {
+        console.error("Required DOM elements not found.");
+        return;
+    }
 
     // update event details
     title.innerHTML = eventDetails.eventName;
@@ -156,7 +161,4 @@ export const createRoom = async () => {
     });
     console.log("Room created successfully!");
 };
-
-// initilize events on page load
-const eventsCollection = collection(db, "events");
-createEvents(eventsCollection);
+    
