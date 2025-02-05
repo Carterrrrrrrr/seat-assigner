@@ -116,7 +116,7 @@ const sortSeats = (listSeats) => {
 
 // funcion to create the room layout
 export const createRoom = async () => {
-
+    console.log("HIT");
     currentSeatCollection = JSON.parse(sessionStorage.getItem('event')); console.log("event:" + currentSeatCollection);
     eventDetails = JSON.parse(sessionStorage.getItem('eventDetails')); console.log("evName:" + eventDetails.eventName);
 
