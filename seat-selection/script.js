@@ -169,19 +169,19 @@ export const createRoom = async () => {
     console.log("Room created successfully!");
 };
 
-let totalPrice = 0;
-const selectSeat = (seatDiv, seat) => {
-    console.log("hit");
+// let totalPrice = 0;
+// const selectSeat = (seatDiv, seat) => {
+//     console.log("hit");
 
-    seatDiv.className = "selected-seat";
+//     seatDiv.className = "selected-seat";
 
-    totalPrice += seat.price;
+//     totalPrice += seat.price;
     
-}
+// }
 
-export const checkOut = () => {
-    console.log("HIT");
-    //SAVE INFO AS NEEDED!
-    window.location.href = 'checkout.html';
-}
+// export const checkOut = () => {
+//     console.log("HIT");
+//     //SAVE INFO AS NEEDED!
+//     window.location.href = 'checkout.html';
+// }
 
