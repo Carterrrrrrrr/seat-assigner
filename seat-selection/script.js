@@ -80,6 +80,7 @@ const selectEvent = (event) => {
 const createSeats = async (event) => {
     try {
         console.log("Fetching seats...");
+        console.log(event);
         const parentDocRef = doc(db, "events", event.id);
         const seatsCollection = collection(parentDocRef, "seats");
 
@@ -93,6 +94,7 @@ const createSeats = async (event) => {
                 seatName: doc.data().seatName,
                 price: doc.data().price,
                 isReserved: doc.data().isReserved,
+                reservationName: doc.data().reservationName,
                 x: doc.data().x,
                 y: doc.data().y,
             });
@@ -116,8 +118,7 @@ const sortSeats = (listSeats) => {
 
 // funcion to create the room layout
 export const createRoom = async () => {
-    console.log("HIT");
-    currentSeatCollection = JSON.parse(sessionStorage.getItem('event')); console.log("event:" + currentSeatCollection);
+    //currentSeatCollection = JSON.parse(sessionStorage.getItem('event')); console.log("event:" + currentSeatCollection);
     eventDetails = JSON.parse(sessionStorage.getItem('eventDetails')); console.log("evName:" + eventDetails.eventName);
 
     console.log("Creating room...")
@@ -147,7 +148,6 @@ export const createRoom = async () => {
     seatList.forEach((row) => {
         const rowDiv = document.createElement("div");
         rowDiv.className = "seat-row";
-
         row.forEach((seat) => {
             const seatDiv = document.createElement("div");
             // Check if the seat exists
@@ -169,19 +169,41 @@ export const createRoom = async () => {
     console.log("Room created successfully!");
 };
 
-// let totalPrice = 0;
-// const selectSeat = (seatDiv, seat) => {
-//     console.log("hit");
+let totalPrice = 0;
+const selectSeat = (seatDiv, seat) => {
+    console.log("hit");
 
-//     seatDiv.className = "selected-seat";
+    seatDiv.className = "selected-seat";
 
-//     totalPrice += seat.price;
+    totalPrice += seat.price;
+
+    let selectedSeats = [];
+    selectedSeats.push(seat);
     
-// }
+    sessionStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+}
 
-// export const checkOut = () => {
-//     console.log("HIT");
-//     //SAVE INFO AS NEEDED!
-//     window.location.href = 'checkout.html';
-// }
+export const checkOutButton = () => {
+    console.log("HIT");
+    //SAVE INFO AS NEEDED!
+    window.location.href = 'checkout.html';
+}
+
+export const checkOut = () => {
+    totalDiv = document.getElementById("total")
+    totalDiv.innerHTML = "Total: $" + totalPrice;
+}
+
+export const confirmPurchase = () => {
+    let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); console.log(selectedSeats);
+    reservationName = document.getElementById("name").value;
+    code = document.getElementById("code").value;
+
+    if (code = 12345678){
+        selectedSeats.forEach((seat) => {
+            seat.isReserved = true;
+            seat.reservationName = reservationName
+        });
+    }
+}
 
