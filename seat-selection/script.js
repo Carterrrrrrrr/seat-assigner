@@ -1,123 +1,171 @@
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, doc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
-const { initializeApp } = require('firebase-admin/app');
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDT1gMYMrR6iDYBIM8fXX-4Ok0KdJHRvG",
+    apiKey: "AIzaSyDT1gMYMrR6iDYBIM8fXX-4Ok0KdJHRvG0",
     authDomain: "seat-reservations-49c91.firebaseapp.com",
     projectId: "seat-reservations-49c91",
     storageBucket: "seat-reservations-49c91.appspot.com",
     messagingSenderId: "522725525744",
-    appId: "1:522725525744:web:9061c8956634a54e305a35"
+    appId: "1:522725525744:web:9061c8956634a54e305a35",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const events = collection(db, "events");
-createEvents(events);
+let currentSeatCollection = null; // store the selected event's collection
+let eventDetails = null; // details of the selected event
 
-let currentEventCollection = null; // will store the currently selected event's collection
+// fucnction to create event elements
 
-// attach click event listeners after creating event divs
-const createEvents = async function(events) {
-    const seatsQuery = query(events);
-    const querySnapshot1 = await getDocs(seatsQuery);
-    let listEvents = [];
-    querySnapshot1.forEach((doc) => {
-        listEvents.push({
-            id: doc.id, // store the document ID to reference the event
-            eventName: doc.data().eventName,
-            eventDescription: doc.data().eventDescription,
-            width: doc.data().width,
-            height: doc.data().height
+export const createEvents = async () => {
+    try {
+        console.log("Fetching events...");
+        const eventsCollection = collection(db, "events");
+        const eventsQuery = query(eventsCollection);
+        const querySnapshot = await getDocs(eventsQuery);
+
+        let listEvents = [];
+        querySnapshot.forEach((doc) => {
+            listEvents.push({
+                id: doc.id, // Store the document ID
+                eventName: doc.data().eventName,
+                eventDescription: doc.data().eventDescription,
+                width: doc.data().width,
+                height: doc.data().height,
+            });
         });
-    });
-    const divEvents = document.getElementById('divEvents');
-    for (let i = 0; i < listEvents.length; i++) {
-        const event = listEvents[i];
-        const div = document.createElement('div');
-        div.textContent = event.eventName;
-        div.id = event.id; // use the document ID as the div's ID
-        div.className = 'event';
-        div.addEventListener('click', () => {
-            // update the current event collection and fetch its data
-            currentEventCollection = collection(db, event.id);
-            eventDetails = {
-                eventName: event.eventName,
-                eventDescription: event.eventDescription,
-                width: event.width,
-                height: event.height
-            };
-            createRoom(); // refresh the seating area for the selected event
+
+        // make the event list on the page
+        const divEvents = document.getElementById("divEvents");
+        if (!divEvents) {
+            console.error("divEvents not found in the DOM.");
+            return;
+        }
+        listEvents.forEach((event) => {
+            const div = document.createElement("div");
+            if (event.eventName) {
+                div.textContent = event.eventName;
+            } else {div.textContent = "UNKNOWN"}
+             // display the event name
+            div.id = event.id; // use the document ID as the div's ID
+            div.classList.add("event"); // add the 'event' class for styling
+            div.addEventListener("click", () => selectEvent(event)); // attack click event listener
+            divEvents.appendChild(div);
         });
-        divEvents.appendChild(div);
+        console.log("Events created successfully!");
+    } catch (error) {
+        console.error("Error fetching events:" + error);
     }
 };
 
 
-const event = collection(db, "seats"); //"seats" WILL BE WHATEVER EVENT IS CLICKED
-const eventDetails = null;
+// function to select an event and update the UI
+const selectEvent = (event) => {
+    eventDetails = {
+        id: event.id,
+        eventName: event.eventName,
+        eventDescription: event.eventDescription,
+        width: event.width,
+        height: event.height,
+    };
 
-//creates a list of seats as they are listed in firebase
-//creates a event details object that hold the title, description, x, and y.
-const createSeats = async function(event) {
-    //takes a snapshot of all the seats in a certain event
-    const seats = query(event);
-    const querySnapshot1 = await getDocs(seats);
-    let listSeats = [];
-    querySnapshot1.forEach((doc) => {
-        //pushes seats into the seatlist as objects with certain inforamtion
-        listSeats.push({
-            id: doc.id,
-            seatName: doc.data().seatName,
-            price: doc.data().price,
-            isReserved: doc.data().isReserved,
-            x: doc.data().x,
-            y: doc.data().y
-        });        
+    sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails));
+    window.location.href = 'space.html';
+};
+
+// function to create seats
+const createSeats = async (event) => {
+    try {
+        console.log("Fetching seats...");
+        const parentDocRef = doc(db, "events", event.id);
+        const seatsCollection = collection(parentDocRef, "seats");
+
+        const seatsQuery = query(seatsCollection);
+        const querySnapshot = await getDocs(seatsQuery);
+
+        let listSeats = [];
+        querySnapshot.forEach((doc) => {
+            listSeats.push({
+                id: doc.id,
+                seatName: doc.data().seatName,
+                price: doc.data().price,
+                isReserved: doc.data().isReserved,
+                x: doc.data().x,
+                y: doc.data().y,
+            });
+        });
+        return sortSeats(listSeats);
+    } catch (error) {
+        console.error("Error fetching seats:" + error);
+        return [];
+    }
+};
+
+// function to sort seats into a 2D array
+const sortSeats = (listSeats) => {
+    console.log("Sorting seats...");
+    const matrix = Array.from({ length: eventDetails.height }, () => Array(eventDetails.width).fill(null));
+    listSeats.forEach((seat) => {
+        matrix[seat.y][seat.x] = seat;
     });
-    return sortSeats(listSeats);
-}
+    return matrix;
+};
 
-//sorts the seats list into a 2d array based on position
-function sortSeats(listSeats){
-    //creates a 2d array based on the width and height of the room
-    matrix[eventDetails.height][eventDetails.width] = {}
-    for (let i = 0; i < listSeats.length; i++){
-        //populates the list based on the x and y of each seat
-        matrix[listSeats[i].y][listSeats[i].x] = listSeats[i];
+// funcion to create the room layout
+export const createRoom = async () => {
+
+    currentSeatCollection = JSON.parse(sessionStorage.getItem('event')); console.log("event:" + currentSeatCollection);
+    eventDetails = JSON.parse(sessionStorage.getItem('eventDetails')); console.log("evName:" + eventDetails.eventName);
+
+    console.log("Creating room...")
+    if (!eventDetails.id) {
+        console.error("No event selected.");
+        return;
     }
-    return matrix
-}
+    const seatList = await createSeats(eventDetails);
 
-//creates div elementes (seats) for each seat in the 2d seat array
-export const createRoom = async function(){
-    //find the divs to put the seats and information into const
-    const seatList = createSeats(event);
-    const seatingAreaDiv = document.getElementById('seatingArea');
+    const seatingAreaDiv = document.getElementById("seatingArea");
+    const title = document.getElementById("title");
+    const description = document.getElementById("description");
 
-    //edit the title and description so that it matches the selected event 
-    const title = document.getElementById('title');
-    const description = document.getElementById('description');
-    title.innerHTML(eventDetails.eventName);
-    description.innerHTML(eventDetails.eventDescription);
-
-    //loop through the 2d array and create divs for the seats in order
-    let i, j;
-    for (i = 0; i < seatList.length; i++) {
-        for (j = 0; j < seatList[i].length; j++) {
-            //create a new div elemenet and 
-            const div = document.createElement('div');
-            div.textContent = seatList[i].seatName; 
-            div.className = 'seat'; // add a seat class to the div
-            seatingAreaDiv.appendChild(div);
-        }
-        //create a div to start a new row
-        seatingAreaDiv.appendChild(document.createElement('div'));
-        console.log("a new row was created");
+    if (!seatingAreaDiv || !title || !description) {
+        console.error("Required DOM elements not found.");
+        return;
     }
-}
+
+    // update event details
+    title.innerHTML = eventDetails.eventName;
+    description.innerHTML = eventDetails.eventDescription;
+
+    // clear the seating area before populating
+    seatingAreaDiv.innerHTML = "";
+
+    // create seat divs
+    seatList.forEach((row) => {
+        const rowDiv = document.createElement("div");
+        rowDiv.className = "seat-row";
+
+        row.forEach((seat) => {
+            const seatDiv = document.createElement("div");
+            // Check if the seat exists
+            if (seat) {
+                // Use seat.seatName if available, otherwise default to '*'
+                seatDiv.textContent = seat.seatName || "*";
+                seatDiv.className = "seat";
+            } else {
+                // For empty seats
+                seatDiv.textContent = "+";
+                seatDiv.className = "empty-seat";
+            }
+            rowDiv.appendChild(seatDiv);
+        });
+
+        seatingAreaDiv.appendChild(rowDiv);
+    });
+    console.log("Room created successfully!");
+};
+
