@@ -140,10 +140,9 @@ export const createRoom = async () => {
     // update event details
     title.innerHTML = eventDetails.eventName;
     description.innerHTML = eventDetails.eventDescription;
-
+    //console.log(seatList);
     // clear the seating area before populating
     seatingAreaDiv.innerHTML = "";
-
     // create seat divs
     seatList.forEach((row) => {
         const rowDiv = document.createElement("div");
@@ -155,7 +154,7 @@ export const createRoom = async () => {
                 // Use seat.seatName if available, otherwise default to '*'
                 seatDiv.textContent = seat.seatName || "*";
                 seatDiv.className = "seat";
-                div.addEventListener("click", () => selectSeat(seatDiv, seat)); // attack click event listener
+                //div.addEventListener("click", () => selectSeat(seatDiv, seat)); // attack click event listener
             } else {
                 // For empty seats
                 seatDiv.textContent = "+";
