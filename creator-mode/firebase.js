@@ -27,18 +27,22 @@ export const addItem = async function (eventName, eventDescription, width, heigh
 
     console.log("Event Document written with ID: ", eventDocRef.id);
 
+
+//upload the seats to firebase
     const gridItems = JSON.parse(sessionStorage.getItem("grid"));
     console.log("Publishing seats...");
     for (let seat of gridItems) {
       try {
         const seatRef = await addDoc(collection(eventDocRef, "seats"), {
-          isCheckedin: false,
+          isCheckedIn: false,
           isReserved: false,
           price: seat.price,
           reservationName: "",
-          seatName: "",
+          seatName: seat.letter + "" + seat.y,
           x: seat.x,
           y: seat.y,
+          color: seat.color,
+          letter: seat.letter
         });
         console.log("Seat Document written with ID: ", seatRef.id);
       } catch (e) {
