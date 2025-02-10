@@ -32,7 +32,9 @@ body{
     text-align: center;     /* Centers seat text */
     border: 1px solid #000; /* Adds borders around seats */
 }
-
+.selected-seat{
+    background-color: rgb(0, 53, 0);
+}
 .seat:hover {
     background-color:#5acd5e;
 }

@@ -16,11 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let currentSeatCollection = null; // store the selected event's collection
 let eventDetails = null; // details of the selected event
 
 // fucnction to create event elements
-
 export const createEvents = async () => {
     try {
         console.log("Fetching events...");
@@ -64,6 +62,7 @@ export const createEvents = async () => {
 
 // function to select an event and update the UI
 const selectEvent = (event) => {
+    //save event details as object
     eventDetails = {
         id: event.id,
         eventName: event.eventName,
@@ -72,7 +71,7 @@ const selectEvent = (event) => {
         height: event.height,
     };
 
-    sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails));
+    sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails)); //save event details
     window.location.href = 'space.html';
 };
 
@@ -81,12 +80,15 @@ const createSeats = async (event) => {
     try {
         console.log("Fetching seats...");
         console.log(event);
+
+        //accsess subcollection docs
         const parentDocRef = doc(db, "events", event.id);
         const seatsCollection = collection(parentDocRef, "seats");
 
         const seatsQuery = query(seatsCollection);
         const querySnapshot = await getDocs(seatsQuery);
 
+        // make list of seat objects
         let listSeats = [];
         querySnapshot.forEach((doc) => {
             listSeats.push({
@@ -113,12 +115,11 @@ const sortSeats = (listSeats) => {
     listSeats.forEach((seat) => {
         matrix[seat.y][seat.x] = seat;
     });
-    return matrix;
+    return matrix; //2D array of seats in position
 };
 
 // funcion to create the room layout
 export const createRoom = async () => {
-    //currentSeatCollection = JSON.parse(sessionStorage.getItem('event')); console.log("event:" + currentSeatCollection);
     eventDetails = JSON.parse(sessionStorage.getItem('eventDetails')); console.log("evName:" + eventDetails.eventName);
 
     console.log("Creating room...")
@@ -154,7 +155,7 @@ export const createRoom = async () => {
                 // Use seat.seatName if available, otherwise default to '*'
                 seatDiv.textContent = seat.seatName || "*";
                 seatDiv.className = "seat";
-                //div.addEventListener("click", () => selectSeat(seatDiv, seat)); // attack click event listener
+                seatDiv.addEventListener("click", () => selectSeat(seatDiv, seat)); // attack click event listener
             } else {
                 // For empty seats
                 seatDiv.textContent = "+";
@@ -169,40 +170,44 @@ export const createRoom = async () => {
 };
 
 let totalPrice = 0;
+let selectedSeats = [];
+// funcion for when seats are clicked 
 const selectSeat = (seatDiv, seat) => {
-    console.log("hit");
-
-    seatDiv.className = "selected-seat";
-
-    totalPrice += seat.price;
-
-    let selectedSeats = [];
-    selectedSeats.push(seat);
-    
+    if(!selectedSeats.includes(seat)){
+        totalPrice += seat.price;
+        selectedSeats.push(seat);
+        seatDiv.className = "selected-seat";
+    } else {
+        totalPrice -= seat.price;
+        selectedSeats.splice(selectedSeats.indexOf(seat), 1);
+        seatDiv.className = "seat";
+    }
     sessionStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
 }
 
+// fucntion to change to checkout page + set up
 export const checkOutButton = () => {
     console.log("HIT");
     //SAVE INFO AS NEEDED!
     window.location.href = 'checkout.html';
 }
 
+// set up checkout page when loaded
 export const checkOut = () => {
     totalDiv = document.getElementById("total")
     totalDiv.innerHTML = "Total: $" + totalPrice;
 }
 
-export const confirmPurchase = () => {
-    let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); console.log(selectedSeats);
-    reservationName = document.getElementById("name").value;
-    code = document.getElementById("code").value;
+// // function to mark seats as reserved with a reservation name
+// export const confirmPurchase = () => {
+//     let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); console.log(selectedSeats);
+//     reservationName = document.getElementById("name").value;
+//     code = document.getElementById("code").value;
 
-    if (code = 12345678){
-        selectedSeats.forEach((seat) => {
-            seat.isReserved = true;
-            seat.reservationName = reservationName
-        });
-    }
-}
-
+//     if (code = 12345678){
+//         selectedSeats.forEach((seat) => {
+//             seat.isReserved = true;
+//             seat.reservationName = reservationName
+//         });
+//     }
+// }
