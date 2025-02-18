@@ -22,7 +22,7 @@ body{
     margin-bottom: 5px;    /* Adds space between rows */
 }
 
-.seat, .empty-seat, .selected-seat {
+.empty-seat, .selected-seat, .occupied-seat, .available-seat, .stage-seat {
     margin-right: 5px;      /* Space between seats */
     padding: 5px;          /* Padding inside seats */
     min-width: 40px;        /* Ensures consistent width */
@@ -35,15 +35,19 @@ body{
 .selected-seat{
     background-color: rgb(0, 53, 0);
 }
+.available-seat{
+    background-color: #4caf50;
+}
+.occupied-seat{
+    background-color: #ba0000;
+}
+.stage-seat{
+    background-color: black;
+}
 .seat:hover {
     background-color:#5acd5e;
 }
 
 .empty-seat {
-    background-color: #eee; /* Light gray for empty seats */
-}
-
-.seat {
-    background-color: #4caf50; /* Green background for available seats */
-    color: white;              /* White text for contrast */
+    background-color: #eee; 
 }

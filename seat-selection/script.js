@@ -154,8 +154,17 @@ export const createRoom = async () => {
             if (seat) {
                 // Use seat.seatName if available, otherwise default to '*'
                 seatDiv.textContent = seat.seatName || "*";
-                seatDiv.className = "seat";
-                seatDiv.addEventListener("click", () => selectSeat(seatDiv, seat)); // attack click event listener
+                if(seat.price){
+                    if(seat.isReserved){
+                        seatDiv.className = "occupied-seat"
+                    }else{
+                        seatDiv.className = "available-seat"
+                        seatDiv.addEventListener("click", () => selectSeat(seatDiv, seat)); // attach click event listener
+                    }
+                }else{
+                    seatDiv.textContent = "+";
+                    seatDiv.className = "stage-seat"
+                }
             } else {
                 // For empty seats
                 seatDiv.textContent = "+";
@@ -180,34 +189,41 @@ const selectSeat = (seatDiv, seat) => {
     } else {
         totalPrice -= seat.price;
         selectedSeats.splice(selectedSeats.indexOf(seat), 1);
-        seatDiv.className = "seat";
+        seatDiv.className = "available-seat";
     }
+    sessionStorage.setItem('totalPrice', totalPrice)
     sessionStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
 }
 
 // fucntion to change to checkout page + set up
 export const checkOutButton = () => {
-    console.log("HIT");
-    //SAVE INFO AS NEEDED!
     window.location.href = 'checkout.html';
 }
 
 // set up checkout page when loaded
-export const checkOut = () => {
-    totalDiv = document.getElementById("total")
-    totalDiv.innerHTML = "Total: $" + totalPrice;
+export const checkOut = () => {    
+    totalPrice = Number(sessionStorage.getItem('totalPrice'));
+    const totalText = document.getElementById("total");
+    console.log(totalPrice);
+    totalText.innerHTML = "Total: $" + totalPrice;
 }
 
-// // function to mark seats as reserved with a reservation name
-// export const confirmPurchase = () => {
-//     let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); console.log(selectedSeats);
-//     reservationName = document.getElementById("name").value;
-//     code = document.getElementById("code").value;
+// function to mark seats as reserved with a reservation name
+export const confirmPurchase = () => {
+    let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); console.log(selectedSeats);
+    const reservationName = document.getElementById("name").value;
+    const code = document.getElementById("code").value;
 
-//     if (code = 12345678){
-//         selectedSeats.forEach((seat) => {
-//             seat.isReserved = true;
-//             seat.reservationName = reservationName
-//         });
-//     }
-// }
+    if (code == 12345678){
+        selectedSeats.forEach(async (seat) => {
+            const parentDocRef = doc(db, "events", EVENTSSSSS);
+            var seatToRes = doc(parentDocRef, "seats", seat.id);
+            console.log(seatToRes.id);
+            await updateDoc(seatToRes, {
+                reservationName: reservationName,
+                isReserved: true
+            });
+        });
+    }
+    console.log("DONE");
+}

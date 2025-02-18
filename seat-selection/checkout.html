@@ -7,20 +7,23 @@
     <title>Document</title>
 </head>
 <body>
+    <script type="module" src="script.js"></script>
+    <script type="module">
+        import {checkOut, confirmPurchase} from './script.js';
+        window.checkOut = checkOut;
+        window.confirmPurchase = confirmPurchase;
+        checkOut()
+    </script>
+
+    
     <h1 id="total">Total: $0</h1>
     
     <p>Party Name:</p>
     <input type="text" id="name" name="name" size="25"/>
     <p>Please proceed to Veracross and complete your purchase, then enter the confirmation code below</p>
     <input type="number" id="code" name="code" maxlength="5" size="10"/>
-
     <button id="confirmPurchase" onclick="confirmPurchase()">Confirm</button>
 
-    <script type="module" src="script.js"></script>
-    <script type="module">
-        import {checkOut} from './script.js';
-        window.checkOut = checkOut;
-    </script>
 
 </body>
 </html>
