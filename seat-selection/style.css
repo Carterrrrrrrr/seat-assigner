@@ -1,5 +1,84 @@
 body{
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(121, 49, 65);
+}
+:root{
+    --marron: rgb(121, 49, 65);
+    --gray: rgb(150, 150, 150);
+    --black: rgb(0, 0, 0);
+}
+
+h1{
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    text-align:center;
+    font-size: 2.5em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight:bold;
+}
+h2{
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    text-align:center;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    text-align:center;
+    font-weight:bold;
+}
+h3{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0.5em;
+    margin-right: 0;
+    font-weight: bold;
+}
+h4{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0.5em;
+    margin-right: 0;
+    font-weight: bold;
+}
+p{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: .67em;
+    margin-top: 2.33em;
+    margin-bottom: 2.33em;
+    margin-left: 0.5em;
+    margin-right: 0;
+    font-weight: lighter;
+}
+.center{
+    text-align:center;
+}
+.marron{
+    color: rgb(121, 49, 65);
+}
+.white{
+    color:rgb(255, 255, 255);
+}
+
+.divParty{
+    background-color: gray;
+    margin: 10px;
+    padding: 10px;
+}
+
+.header{
+    background-color: rgb(121, 49, 65);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .event {

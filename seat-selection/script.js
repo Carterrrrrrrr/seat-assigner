@@ -1,6 +1,6 @@
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, doc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, doc, updateDoc} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -210,13 +210,14 @@ export const checkOut = () => {
 
 // function to mark seats as reserved with a reservation name
 export const confirmPurchase = () => {
-    let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); console.log(selectedSeats);
+    let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); 
+    const event = JSON.parse(sessionStorage.getItem('eventDetails')); 
     const reservationName = document.getElementById("name").value;
     const code = document.getElementById("code").value;
 
-    if (code == 12345678){
+    if (code == 123){
         selectedSeats.forEach(async (seat) => {
-            const parentDocRef = doc(db, "events", EVENTSSSSS);
+            const parentDocRef = doc(db, "events", event.id);
             var seatToRes = doc(parentDocRef, "seats", seat.id);
             console.log(seatToRes.id);
             await updateDoc(seatToRes, {
