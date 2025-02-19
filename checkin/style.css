@@ -19,11 +19,13 @@
     transition: background-color 0.3s;
 }
 .button.on {
-    background-color: #28a745; /* Green when toggled on */
+    /* background-color: #28a745; Green when toggled on */
+    background-color: #007bff;
 }
 
 .button.off {
-    background-color: #dc3545; /* Red when toggled off */
+    /* background-color: #dc3545; Red when toggled off */
+    background-color: #007bff;
 }
 
 .button:hover {
