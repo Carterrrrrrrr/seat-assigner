@@ -9,17 +9,21 @@
 <body>
     <script type="module" src="script.js"></script>
     <script type="module">
-        import {createRoom} from './script.js';
+        import {createRoom, checkOutButton} from './script.js';
+        window.checkOutButton = checkOutButton;
         window.createRoom = createRoom;
         createRoom();
     </script>
 
-
-    <button id="checkIn">Check out</button>
-
-    <div id="eventDetails">
-        <h1 id="title">Title</h1>
-        <h2 id="description">Description</h2>
+    <div class="header">
+        <div id="eventDetails">
+            <h1 id="title">Title</h1>
+            <h4 id="description">Description</h4>
+        </div>
+    </div>
+    <div>
+        <button id="back" onclick="window.location.href='index.html'">Back</button>
+        <button id="checkOut" onclick="checkOutButton()">Check out</button>
     </div>
     <div id="seatingArea"></div>
 
