@@ -5,6 +5,10 @@
 }
 .header{
     background-color: rgb(121, 49, 65);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 .buttonOn {
     display: inline-block;
@@ -17,6 +21,10 @@
     cursor: pointer;
     user-select: none; /* Prevent text selection */
     transition: background-color 0.3s;
+    margin-right: 0.125em;
+    margin-left: 0.125em;
+    margin-top: 0.125em;
+    margin-bottom: 0.125em;
 }
 .buttonOff {
     display: inline-block;
@@ -28,26 +36,62 @@
     cursor: pointer;
     user-select: none; /* Prevent text selection */
     transition: background-color 0.3s;
+    margin-right: 0.125em;
+    margin-left: 0.125em;
+    margin-top: 0.125em;
+    margin-bottom: 0.125em;
 }
 .buttonOn:hover {
-    padding: 15px 25px;
+    padding: 11px 22px;
     transition:all .2s ease-in-out;
 }
 .buttonOff:hover {
-    padding: 15px 25px;
+    padding: 11px 22px;
     transition:all .2s ease-in-out;
 }
 h1{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    text-align:center;
+    font-size: 2.5em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight:bold;
 }
 h2{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    text-align:center;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight:bold;
 }
 h3{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:rgb(121, 49, 65);
+    /* text-align:center; */
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
 }
 h4{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:white;
+    text-align:center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0.5em;
+    margin-right: 0;
+    font-weight: bold;
 }
 button{
     margin: 1vh;
@@ -68,7 +112,45 @@ button:hover{
     transform: scale(1.1);
 }
 body{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 .partyDiv{
+    color:rgb(121, 49, 65);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 2.0em;
+    font-weight: lighter;
+}
+.marron{
+    color: rgb(121, 49, 65);
+}
+.white{
+    color:rgb(255, 255, 255);
+}
+input {
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    background-color: rgba(121, 49, 65, 0.5);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.2em;
+    font-weight: lighter;
+    color:rgb(121, 49, 65);
+    border: rgb(121, 49, 65) 2px solid;
+}   
+input:focus {
+    background-color: rgb(255, 255, 255);
+    border: rgba(0, 0, 0, 0.2) 2px solid;
+}
+select{
+    width: 10rem;
+    background-color: rgb(121, 49, 65);
+    color: rgb(255, 255, 255)
+}
+select>option {
+    background-color: rgb(255, 255, 255);
+    font-size: 0.67em;
+    color: rgb(121, 49, 65);
+    font-family: 'Times New Roman', Times, serif;
 }
