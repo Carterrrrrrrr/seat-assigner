@@ -98,12 +98,12 @@ const createSeats = async (event) => {
                 isReserved: doc.data().isReserved,
                 reservationName: doc.data().reservationName,
                 x: doc.data().x,
-                y: doc.data().y,
+                y: doc.data().y
             });
         });
         return sortSeats(listSeats);
     } catch (error) {
-        console.error("Error fetching seats:" + error);
+        console.error("Error fetching seats: " + error);
         return [];
     }
 };
