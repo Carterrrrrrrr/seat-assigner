@@ -76,18 +76,45 @@ p{
 #seatingArea{
     margin: 10px;
 }
-#checkOut, #back, #confirmPurchase{
-    background-color: rgb(121, 49, 65);;
-    color:rgb(255, 255, 255);
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#back {
+    background-color: rgb(121, 49, 65);
+    color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
-    text-align:center;
+    text-align: center;
     margin: 10px;
     font-size: 1em;
-    display:inline-block;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    display: inline-block;
+    padding: 5px 15px;
+}
+
+#checkOut {
+    background-color: rgb(121, 49, 65);
+    color: rgb(255, 255, 255);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    margin: 10px;
+    font-size: 1em;
+    display: inline-block;
+    padding: 5px 15px;
+    margin-left: auto; 
+}
+
+#confirmPurchase {
+    background-color: rgb(121, 49, 65);
+    color: rgb(255, 255, 255);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    margin: 10px;
+    font-size: 1em;
+    display: inline-block;
+    padding: 5px 15px;
 }
 input {
     background-color: rgba(0, 0, 0, 0.2);
@@ -123,19 +150,29 @@ input:focus {
     background-color: rgb(154, 63, 83);
 }
 .seat-row {
-    display: flex;          /* Makes seats align horizontally */
-    margin-bottom: 5px;    /* Adds space between rows */
+    display: flex;          
+    margin-bottom: 5px;   
 }
-
+.seatingArea {
+    flex-wrap: wrap; 
+    justify-content: center; /* Ensures proper alignment */
+    align-items: center; /* Centers items vertically */
+    width: 100%;
+}
 .empty-seat, .selected-seat, .occupied-seat, .available-seat, .stage-seat {
-    margin-right: 5px;      /* Space between seats */
-    padding: 5px;          /* Padding inside seats */
-    min-width: 40px;        /* Ensures consistent width */
-    max-width: 40px;
-    min-height: 30px;        /* Ensures consistent width */
-    max-height: 30px;
-    text-align: center;     /* Centers seat text */
-    border: 1px solid #000; /* Adds borders around seats */
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    margin-right: 5px;      
+    padding: 5px;         
+    min-width: 20px;
+    min-height: 20px;   
+    max-width: 50px;
+    max-height: 50px;     
+    text-align: center;  
+    display: flex;
+    justify-content: center; /* Centers text horizontally */
+    align-items: center; /* Centers text vertically */   
+    border: 1px solid #000; 
 }
 .selected-seat{
     background-color: rgb(0, 53, 0);
