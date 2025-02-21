@@ -10,15 +10,20 @@
 </head>
 <body>
     <script src="creator.js"></script>
-
+    <script src="firebase.js"></script>
     <script type="module" src="firebase.js"></script>
     <script type="module">
-      import {addItem } from './firebase.js';
+    import {addItem} from './firebase.js';
       window.addItem = addItem;
-    //   addSeats = addSeats;
       </script>
 
-      
+<script type="module">
+    import { loadEventData } from './firebase.js';
+    window.loadEventData = loadEventData;
+    loadEventData();
+</script>
+
+
     <div>
         <h1>Event Name:</h1> <input type="text" id="event-d">
         
@@ -46,15 +51,13 @@
     <div id="grid-container">
 
     </div>
+ 
 
-    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish</button>
+    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish & Save</button>
     <div class="click">
         <a href="createpage.html">
             <h2>Home</h2>
         </a>
-
-        <button id="saveButton">Save</button>
-</body>
-</html>
-
-
+    
+     
+    

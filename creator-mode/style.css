@@ -29,3 +29,70 @@ body{
     text-align: center;
     color: white
 }
+
+.event {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #fbfbfb;
+    color: rgb(0, 0, 0);
+    border-radius: 100px;
+    text-align: center;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 5px;
+    max-width: 300px;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+.event:hover {
+    background-color: #ba0000;
+}
+
+.click a {
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(166, 63, 63);
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 500px;
+    transition: background-color 0.3s;
+}
+
+.click a:hover {
+    background-color: #8a3535;
+}
+
+.click h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.seat-row {
+    display: flex;          /* Makes seats align horizontally */
+    margin-bottom: 5px;    /* Adds space between rows */
+}
+
+.seat, .empty-seat {
+    margin-right: 5px;      /* Space between seats */
+    padding: 5px;          /* Padding inside seats */
+    min-width: 40px;        /* Ensures consistent width */
+    max-width: 40px;
+    min-height: 30px;        /* Ensures consistent width */
+    max-height: 30px;
+    text-align: center;     /* Centers seat text */
+    border: 1px solid #000; /* Adds borders around seats */
+}
+
+.seat:hover {
+    background-color:#5acd5e;
+}
+
+.empty-seat {
+    background-color: #eee; /* Light gray for empty seats */
+}
+
+.seat {
+    background-color: #4caf50; /* Green background for available seats */
+    color: white;              /* White text for contrast */
+}

@@ -76,6 +76,8 @@ function changeColor(seat) {
         seat.price = 10;
     } else {
         seat.price = null;
+        // seat.letter = null;
+        // seat.y = null;
     }
 
     console.log(`Seat updated - Color: ${seat.color}, Price: ${seat.price}`);
@@ -92,5 +94,5 @@ function changeColor(seat) {
     
 }
 
-
 });
+
