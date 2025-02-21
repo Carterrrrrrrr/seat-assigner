@@ -13,28 +13,24 @@
   <!-- type must be "module": https://www.w3schools.com/js/js_modules.asp#:~:text=JavaScript%20modules%20allow%20you%20to,in%20the%20tag.-->  
   <script type="module" src="script.js"></script>
   <script type="module">
-    import {goToCheckIn} from './script.js';
+    import {goToCheckIn, createEvents, generateNames} from './script.js';
     window.goToCheckIn = goToCheckIn;
-    
+    window.createEvents = createEvents;
+    window.generateNames = generateNames;
+    createEvents();
   </script>
 
-  <div class="header">
-  <h1>CheckIN</h1>
-  <h2>Enter Name OR ticket ID</h2>
-  </div>
- 
-    <h3>Name:</h3>
-    <input type="text" id="partyName" name="fname"><br><br>
-    <button type = "submision" onclick="goToCheckIn();">Next</button>
-
-
-    
-    <h3>Avalible Tickets</h3>
-    <div id="divToCheck">
+    <div class="header">
+    <h1>CheckIN</h1>
+    <h2>Enter Name OR ticket ID</h2>
     </div>
-  
-    <h3>Already Checked In</h3>
-    <div id="divChecked">
+    <h3>Select the Event</h3>
+    <select name="events" id="events" onchange="generateNames()">
+      <option value="">Events:</option>
+    </select>
+    <h3>Enter Name:</h3>
+    <input type="text" id="fName" name="fName" onchange="generateNames()"><br><br>
+    <div id="names">
     </div>
-</body>
+  </body>
 </html>
