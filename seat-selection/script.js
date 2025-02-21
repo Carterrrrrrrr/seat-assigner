@@ -1,6 +1,6 @@
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, doc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, doc, updateDoc} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -16,11 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let currentSeatCollection = null; // store the selected event's collection
 let eventDetails = null; // details of the selected event
 
 // fucnction to create event elements
-
 export const createEvents = async () => {
     try {
         console.log("Fetching events...");
@@ -62,9 +60,9 @@ export const createEvents = async () => {
     }
 };
 
-
 // function to select an event and update the UI
 const selectEvent = (event) => {
+    //save event details as object
     eventDetails = {
         id: event.id,
         eventName: event.eventName,
@@ -73,7 +71,7 @@ const selectEvent = (event) => {
         height: event.height,
     };
 
-    sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails));
+    sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails)); //save event details
     window.location.href = 'space.html';
 };
 
@@ -81,12 +79,16 @@ const selectEvent = (event) => {
 const createSeats = async (event) => {
     try {
         console.log("Fetching seats...");
+        console.log(event);
+
+        //accsess subcollection docs
         const parentDocRef = doc(db, "events", event.id);
         const seatsCollection = collection(parentDocRef, "seats");
 
         const seatsQuery = query(seatsCollection);
         const querySnapshot = await getDocs(seatsQuery);
 
+        // make list of seat objects
         let listSeats = [];
         querySnapshot.forEach((doc) => {
             listSeats.push({
@@ -94,6 +96,7 @@ const createSeats = async (event) => {
                 seatName: doc.data().seatName,
                 price: doc.data().price,
                 isReserved: doc.data().isReserved,
+                reservationName: doc.data().reservationName,
                 x: doc.data().x,
                 y: doc.data().y,
             });
@@ -112,13 +115,11 @@ const sortSeats = (listSeats) => {
     listSeats.forEach((seat) => {
         matrix[seat.y][seat.x] = seat;
     });
-    return matrix;
+    return matrix; //2D array of seats in position
 };
 
 // funcion to create the room layout
 export const createRoom = async () => {
-
-    currentSeatCollection = JSON.parse(sessionStorage.getItem('event')); console.log("event:" + currentSeatCollection);
     eventDetails = JSON.parse(sessionStorage.getItem('eventDetails')); console.log("evName:" + eventDetails.eventName);
 
     console.log("Creating room...")
@@ -140,22 +141,30 @@ export const createRoom = async () => {
     // update event details
     title.innerHTML = eventDetails.eventName;
     description.innerHTML = eventDetails.eventDescription;
-
+    //console.log(seatList);
     // clear the seating area before populating
     seatingAreaDiv.innerHTML = "";
-
     // create seat divs
     seatList.forEach((row) => {
         const rowDiv = document.createElement("div");
         rowDiv.className = "seat-row";
-
         row.forEach((seat) => {
             const seatDiv = document.createElement("div");
             // Check if the seat exists
             if (seat) {
                 // Use seat.seatName if available, otherwise default to '*'
                 seatDiv.textContent = seat.seatName || "*";
-                seatDiv.className = "seat";
+                if(seat.price){
+                    if(seat.isReserved){
+                        seatDiv.className = "occupied-seat"
+                    }else{
+                        seatDiv.className = "available-seat"
+                        seatDiv.addEventListener("click", () => selectSeat(seatDiv, seat)); // attach click event listener
+                    }
+                }else{
+                    seatDiv.textContent = "+";
+                    seatDiv.className = "stage-seat"
+                }
             } else {
                 // For empty seats
                 seatDiv.textContent = "+";
@@ -169,3 +178,53 @@ export const createRoom = async () => {
     console.log("Room created successfully!");
 };
 
+let totalPrice = 0;
+let selectedSeats = [];
+// funcion for when seats are clicked 
+const selectSeat = (seatDiv, seat) => {
+    if(!selectedSeats.includes(seat)){
+        totalPrice += seat.price;
+        selectedSeats.push(seat);
+        seatDiv.className = "selected-seat";
+    } else {
+        totalPrice -= seat.price;
+        selectedSeats.splice(selectedSeats.indexOf(seat), 1);
+        seatDiv.className = "available-seat";
+    }
+    sessionStorage.setItem('totalPrice', totalPrice)
+    sessionStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+}
+
+// fucntion to change to checkout page + set up
+export const checkOutButton = () => {
+    window.location.href = 'checkout.html';
+}
+
+// set up checkout page when loaded
+export const checkOut = () => {    
+    totalPrice = Number(sessionStorage.getItem('totalPrice'));
+    const totalText = document.getElementById("total");
+    console.log(totalPrice);
+    totalText.innerHTML = "Total: $" + totalPrice;
+}
+
+// function to mark seats as reserved with a reservation name
+export const confirmPurchase = () => {
+    let selectedSeats = JSON.parse(sessionStorage.getItem('selectedSeats')); 
+    const event = JSON.parse(sessionStorage.getItem('eventDetails')); 
+    const reservationName = document.getElementById("name").value;
+    const code = document.getElementById("code").value;
+
+    if (code == 123){
+        selectedSeats.forEach(async (seat) => {
+            const parentDocRef = doc(db, "events", event.id);
+            var seatToRes = doc(parentDocRef, "seats", seat.id);
+            console.log(seatToRes.id);
+            await updateDoc(seatToRes, {
+                reservationName: reservationName,
+                isReserved: true
+            });
+        });
+    }
+    console.log("DONE");
+}
