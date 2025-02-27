@@ -6,11 +6,11 @@
 .header{
     background-color: rgb(121, 49, 65);
 }
-.button {
+.buttonOn {
     display: inline-block;
     transition:all .2s ease-in-out;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #28a745; /* Green when toggled on */
     color: white;
     text-align: center;
     border-radius: 5px;
@@ -18,15 +18,22 @@
     user-select: none; /* Prevent text selection */
     transition: background-color 0.3s;
 }
-.button.on {
-    background-color: #28a745; /* Green when toggled on */
-}
-
-.button.off {
+.buttonOff {
+    display: inline-block;
+    transition:all .2s ease-in-out;
+    padding: 10px 20px;
     background-color: #dc3545; /* Red when toggled off */
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+    transition: background-color 0.3s;
 }
-
-.button:hover {
+.buttonOn:hover {
+    padding: 15px 25px;
+    transition:all .2s ease-in-out;
+}
+.buttonOff:hover {
     padding: 15px 25px;
     transition:all .2s ease-in-out;
 }
@@ -62,4 +69,6 @@ button:hover{
 }
 body{
     background-color: white;
+}
+.partyDiv{
 }

@@ -25,6 +25,19 @@ const theSeats = collection(db, "seats");
 //isReserved
 //isCheckedIn
 //isSelected
+div.addEventListener('click', function() {
+    if (div.classList.contains('on')) {
+        div.classList.remove('on'); // Remove 'on' class
+        div.classList.add('off'); // Add 'off' class
+        seat.isSelected = false;
+        //console.log(seat + ' is off');
+    } else {
+        div.classList.remove('off'); // Remove 'off' class
+        div.classList.add('on'); // Add 'on' class
+        seat.isSelected = true;
+        //console.log(seat + ' is on');
+    }
+});  
 
 export const getSeats = async function(partyName) {
     console.log(partyName);
@@ -65,7 +78,7 @@ export const checkIn = async function () {
     // window.location.href = 'index.html';
     console.log(seats);
 }
-
+// I am not using the goToCheckIn function right now but it might be useful later
 export const goToCheckIn = async function () {
     const seats = await getSeats(document.getElementById('partyName').value);
     console.log(seats[0].seatName);
@@ -86,22 +99,9 @@ export const goToCheckIn = async function () {
 
         // set the content of the div
         div.textContent = seat.seatName; 
-        div.className = 'button'; // add a class to the div
-
-        // Add click event listener to the div
-        div.addEventListener('click', function() {
-            if (div.classList.contains('on')) {
-                div.classList.remove('on'); // Remove 'on' class
-                div.classList.add('off'); // Add 'off' class
-                seat.isSelected = false;
-                //console.log(seat + ' is off');
-            } else {
-                div.classList.remove('off'); // Remove 'off' class
-                div.classList.add('on'); // Add 'on' class
-                seat.isSelected = true;
-                //console.log(seat + ' is on');
-            }
-        });  
+        div.className = 'button'; // add a class to the div 
+        //Add click event listener to the div
+        
         // append the new div to the container
         if (seat.isCheckedIn == true){
             containerChecked.appendChild(div);
