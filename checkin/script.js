@@ -245,6 +245,7 @@ export const generateNames = async function(){
             });
         });
     }
+
 }
 
 

@@ -7,16 +7,22 @@
     <title>Document</title>
 </head>
 <body>
-    <div class='header'>
-        <h1>STAB Events!</h1>
-        <h2>Buy Tickets:</h2>
-    </div>
+    
+    <h1>Creator Homepage</h1>
+    <h2></h2>
     <div id="divEvents"></div>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="firebase.js"></script>
     <script type="module">
-        import {createEvents} from './script.js';
+        import {createEvents} from './firebase.js';
         window.createEvents = createEvents;
         createEvents();
     </script>
+    
+
+<div class="click">
+    <a href="editor.html">
+        <h2>Create New Event</h2>
+    </a>
+    
 </body>
 </html>
