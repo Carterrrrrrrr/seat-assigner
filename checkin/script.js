@@ -245,3 +245,25 @@ export const generateNames = async function(){
             });
         });
     }
+
+}
+
+
+//filters the names accordingly to the name filter text box and returns a list of them
+export const filterNames = async function(){
+    //get all of the party names that have reservations
+    const theNames = await getAllNames();
+    //if their is nothing in the name filter text input than return all of the Names
+    if(document.getElementById("fName").value == ""){
+        return theNames;
+        //if not loop through all of the names adding the ones that contain what is in the name filter text box to the list "names" which will eventually be returned 
+    } else{
+        let names = [];
+        theNames.forEach(async name => {
+            if(name.toLowerCase().includes(document.getElementById("fName").value.toLowerCase())){
+                names.push(name);
+            }
+        });
+        return names;
+    } 
+}
