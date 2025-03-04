@@ -1,3 +1,4 @@
+// import DragSelect from "dragselect";
 document.addEventListener('DOMContentLoaded', () => {
     const gridContainer = document.getElementById('grid-container');
     const generateButton = document.getElementById('generate-grid');
@@ -76,8 +77,6 @@ function changeColor(seat) {
         seat.price = 10;
     } else {
         seat.price = null;
-        // seat.letter = null;
-        // seat.y = null;
     }
 
     console.log(`Seat updated - Color: ${seat.color}, Price: ${seat.price}`);
