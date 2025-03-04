@@ -90,9 +90,6 @@ function changeColor(seat) {
         color: seat.color,
         price: seat.price,
         letter: seat.letter 
-    }))));
-    
+    }))));   
 }
-
 });
-

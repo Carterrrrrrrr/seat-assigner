@@ -17,7 +17,16 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const eventsCollection = collection(db, "events");
 
+//const queryString = window.location.search;
+let queryString = "http://ASDADS.org/checkin/index.html/?event=Hadestown";
 
+queryString = queryString.substring(queryString.indexOf('?'), queryString.length);
+const urlParams = new URLSearchParams(queryString);
+const linkedEvent = urlParams.get('event');
+console.log("event: " + linkedEvent);
+document.getElementById("currentEvent").innerHTML = linkedEvent;
+
+let event = null;
 //returns a list of seats with the information
 //id
 //reservationName
@@ -29,7 +38,7 @@ const eventsCollection = collection(db, "events");
 //returns a list of seat objects for the inputed partyName and selected event
 export const getSeats = async function(partyName) {
     //gets seats from the selected event from firebase which are reserved to the partyName in the parameter using a query
-    const parentDocRef = doc(db, "events", document.getElementById("events").value);
+    const parentDocRef = doc(db, "events", event.id);
     var theSeats = collection(parentDocRef, "seats");
     const theSeatsForParty = query(theSeats, where("reservationName", "==", partyName));
     const querySnapshot1 = await getDocs(theSeatsForParty);
@@ -53,7 +62,7 @@ export const getSeats = async function(partyName) {
 //same thing as getSeats but doesn't take into account a parameter and returns all of the seats in an event
 export const getAllSeats = async function() {
     //gets all of the seats from the selected event from firebase 
-    const parentDocRef = doc(db, "events", document.getElementById("events").value);
+    const parentDocRef = doc(db, "events", event.id);
     var theSeats = collection(parentDocRef, "seats");
     const querySnapshot1 = await getDocs(theSeats);
     let partySeats = [];
@@ -91,106 +100,24 @@ export const getAllNames = async function() {
     return theNames;
 }
 
-
-//this is past code no longer being used:
-//event fires when button is clicked
-//if the seat is avalible and marked it becomes unavalible
-// export const checkIn = async function () {
-//     // .log("rlly");console
-//     // event.preventDefault();
-//     const theSeatsForParty = query(theSeats, where("reservationName", "==", partyName));
-//     const querySnapshot1 = await getDocs(theSeatsForParty);
-//     for (let i = 0; i < seats.length; i++){
-//         // console.log("why");
-//         if (seats[i].isSelected && !seats[i].isCheckedIn) {
-//             //seats[i].isCheckedIn = true;
-//             const itemToComplete = doc(db, "seats", seats[i].id);
-//             await updateDoc(itemToComplete, {
-//                 isCheckedIn: true
-//             });
-//         }
-//     }
-//     // window.location.href = 'index.html';
-//     // console.log(seats);
-// }
-
-
-//this is not used but later it might be useful
-export const goToCheckIn = async function () {
-    const seats = await getSeats(document.getElementById('partyName').value);
-    console.log(seats);
-    const containerToCheck = document.getElementById('divToCheck');
-    const containerChecked = document.getElementById('divChecked');
-    //resets buttons
-    containerToCheck.innerHTML = "";
-    containerChecked.innerHTML = "";
-    // loop through the seats found (ALEX)
-    // create a button for each object and sort it into checked in or avalible
-    seats.forEach(seat => {
-        // create a new div element
-        const div = document.createElement('div');
-
-        // set the content of the div
-        div.textContent = seat.seatName; 
-        div.className = 'button'; // add a class to the div
-
-        // Add click event listener to the div
-        //maybe remove async function
-        div.addEventListener('click', async function() {
-            seat.isCheckedIn = !seat.isCheckedIn;
-            if (seat.isCheckedIn == true){
-                containerChecked.appendChild(div);
-            } else{
-                containerToCheck.appendChild(div);
-            }
-            //change this
-            const parentDocRef = doc(db, "events", document.getElementById("events").value);
-            var seatToCheckIn = doc(parentDocRef, "seats", seat.id);
-            console.log(seatToCheckIn.id);
-            await updateDoc(seatToCheckIn, {
-                isCheckedIn: seat.isCheckedIn
-            });
-        });  
-        // append the new div to the container
-        if (seat.isCheckedIn == true){
-            containerChecked.appendChild(div);
-        } else{
-            containerToCheck.appendChild(div);
-        }
-    });
-}
-
-
 // fucnction to create event elements
 // I want to incorporate a for loop - looping through events and adding them to event drop down
 // I want to return a locally stored list
 export const createEvents = async function(){
     try {
         //returns all of the event objects from fire base
-        const eventsQuery = query(eventsCollection);
+        const eventsQuery = query(eventsCollection, where("eventName", "==", linkedEvent));
         const querySnapshot = await getDocs(eventsQuery);
-        let listEvents = [];
         //puting the firebase events into local objects into a list called "listEvents"
         querySnapshot.forEach((doc) => {
-            listEvents.push({
-                id: doc.id, // store the document ID
-                eventName: doc.data().eventName, // store the event name (string)
-            });
+            event = {id: doc.id, eventName: doc.data().eventName}
         });
-        //loops through all of the events in "listEvents" and adds all of the events to a html select input so the user can select which event they would like to check in seats on
-        var x = document.getElementById("events");
-        for (const event of listEvents) {
-            if(!event.eventName == ""){
-                var option = document.createElement("option");
-                option.innerHTML = event.eventName;
-                option.value = event.id;
-                x.appendChild(option);
-            }
-        }
+        generateNames()
+
         console.log("Events created successfully!");
-        return listEvents;
+        return event;
     } catch (error) {
-        console.error("Error fetching events:" + error);
+        console.error("Error fetching events: " + error);
     }
 }
 
@@ -202,7 +129,7 @@ export const generateNames = async function(){
     //empty the names
     namesDiv.innerHTML = "";
     //if the value of the event drop down is nothing when either there is an event with no name the option events is selcted then console.log an error message
-    if (document.getElementById("events").value == ""){
+    if (event == ""){
         return "nothing selected bruh";
     } else{
         //gets all the party names that have reserved seats and include the text within the name filter input in the name
@@ -213,7 +140,7 @@ export const generateNames = async function(){
             const partyDiv = document.createElement('div');
             namesDiv.appendChild(partyDiv);
             partyDiv.className = "partyDiv";
-            partyDiv.textContent = name + ":  \n ";
+            partyDiv.textContent = name + ": ";
             //gets the reserved seats objects for each name in the variable "theNames" and puts them into the variable "seats"
             var seats = await getSeats(name);
             //looping through reserved seats in the variable "seats"
@@ -235,7 +162,7 @@ export const generateNames = async function(){
                     } else{
                         div.setAttribute('class', 'buttonOff');
                     }
-                    const parentDocRef = doc(db, "events", document.getElementById("events").value);
+                    const parentDocRef = doc(db, "events", event.id);
                     var seatToCheckIn = doc(parentDocRef, "seats", seat.id);
                     await updateDoc(seatToCheckIn, {
                         isCheckedIn: seat.isCheckedIn

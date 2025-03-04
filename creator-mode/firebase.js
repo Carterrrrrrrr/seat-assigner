@@ -178,3 +178,9 @@ export const loadEventData = async () => {
     sessionStorage.setItem("grid", JSON.stringify(gridItems));
     document.getElementById("grid-container").style.gridTemplateColumns = `repeat(${eventDetails.width}, 1fr)`;
 };
+
+export const checkIn = () => {
+    const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
+    console.log("checkin/index.html/?event=" + eventDetails.eventName);
+    window.location.href = "checkin/index.html?event=" + eventDetails.eventName; //FIX REF
+};
