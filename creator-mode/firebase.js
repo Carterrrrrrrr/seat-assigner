@@ -39,7 +39,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           isReserved: false,
           price: seat.price,
           reservationName: "",
-          seatName: seat.letter + "" + seat.y,
+          seatName: seat.letter + "" + seat.y+1,
           x: seat.x,
           y: seat.y,
           color: seat.color,
