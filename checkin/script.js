@@ -17,8 +17,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const eventsCollection = collection(db, "events");
 
-//const queryString = window.location.search;
-let queryString = "http://ASDADS.org/checkin/index.html/?event=Hadestown";
+let queryString = window.location.search;
+//let queryString = "http://ASDADS.org/checkin/index.html/?event=Hadestown";
 
 queryString = queryString.substring(queryString.indexOf('?'), queryString.length);
 const urlParams = new URLSearchParams(queryString);
