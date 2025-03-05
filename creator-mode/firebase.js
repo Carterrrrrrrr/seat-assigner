@@ -180,6 +180,7 @@ export const checkIn = () => {
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
     console.log(eventDetails.eventName);
     console.log(window.location.pathname + "/checkin/index.html?event=" + eventDetails.eventName);
-    window.location = "/checkin/index.html?event=" + eventDetails.eventName;
+    //window.location = "/checkin/index.html?event=" + eventDetails.eventName;
+    window.location = "https://carterrrrrrrr.github.io/seat-assigner/checkin/index.html?event=" + eventDetails.eventName;
     //window.open(window.location.hostname + "/checkin/index.html?event=" + eventDetails.eventName);
 };
