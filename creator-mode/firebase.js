@@ -162,7 +162,7 @@ export const loadEventData = async () => {
         const gridItemElement = document.createElement("div");
         gridItemElement.className = "grid-item";
         gridItemElement.style.backgroundColor = seat.color;
-        gridItemElement.innerText = seat.seatName; 
+        // gridItemElement.innerText = seat.seatName; 
 
         gridItemElement.addEventListener("click", () => changeColor(seat));
 

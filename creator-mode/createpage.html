@@ -20,9 +20,16 @@
     
 
 <div class="click">
-    <a href="editor.html">
+    <a href="editor.html" id="create-new-event">
         <h2>Create New Event</h2>
+        
     </a>
-    
+
+
+    <script>
+        document.getElementById('create-new-event').addEventListener('click', () => {
+            sessionStorage.clear();
+        });
+    </script>
 </body>
 </html>
