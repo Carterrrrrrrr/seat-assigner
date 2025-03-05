@@ -179,7 +179,7 @@ export const checkIn = () => {
     console.log("HIT")
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
     console.log(eventDetails.eventName);
-    console.log(window.location.hostname + "/checkin/index.html?event=" + eventDetails.eventName);
+    console.log(window.location.pathname + "/checkin/index.html?event=" + eventDetails.eventName);
     window.location = "/checkin/index.html?event=" + eventDetails.eventName;
     //window.open(window.location.hostname + "/checkin/index.html?event=" + eventDetails.eventName);
 };
