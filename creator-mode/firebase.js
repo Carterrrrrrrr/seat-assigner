@@ -177,4 +177,5 @@ export const loadEventData = async () => {
    
     sessionStorage.setItem("grid", JSON.stringify(gridItems));
     document.getElementById("grid-container").style.gridTemplateColumns = `repeat(${eventDetails.width}, 1fr)`;
+    initializeDragSelect();
 };

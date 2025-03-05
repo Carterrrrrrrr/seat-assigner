@@ -1,4 +1,3 @@
-
 export let gridItems = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -94,7 +93,6 @@ function changeColor(seat) {
     }))));
     
 }
-
 function initializeDragSelect() {
     const ds = new DragSelect({
         selectables: document.querySelectorAll(".grid-item"),
