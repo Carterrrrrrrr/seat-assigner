@@ -90,8 +90,7 @@ function changeColor(seat) {
         color: seat.color,
         price: seat.price,
         letter: seat.letter 
-    }))));
-    
+    }))));   
 }
 function initializeDragSelect() {
     const ds = new DragSelect({
@@ -130,4 +129,3 @@ function initializeDragSelect() {
     });
 }
 });
-
