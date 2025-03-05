@@ -20,12 +20,15 @@
       </script>
 
 <script type="module">
-    import { loadEventData } from './firebase.js';
+    import { loadEventData, checkIn } from './firebase.js';
     window.loadEventData = loadEventData;
+    window.checkIn = checkIn;
     loadEventData();
 </script>
 
-
+    <div>
+        <button onclick="checkIn()">Checkin Page</button>
+    </div>
     <div>
         <h1>Event Name:</h1> <input type="text" id="event-d">
         

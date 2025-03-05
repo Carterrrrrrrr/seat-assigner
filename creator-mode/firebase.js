@@ -55,9 +55,6 @@ export const addItem = async function (eventName, eventDescription, width, heigh
   }
 };
 
-let currentSeatCollection = null; // store the selected event's collection
-let eventDetails = null; // details of the selected event
-
 // fucnction to create event elements
 export const createEvents = async () => {
     try {
@@ -103,7 +100,7 @@ export const createEvents = async () => {
 
 // function to select an event and update the UI
 const selectEvent = async (event) => {
-    eventDetails = {
+    let eventDetails = {
         id: event.id,
         eventName: event.eventName,
         eventDescription: event.eventDescription,
@@ -122,8 +119,6 @@ export const loadEventData = async () => {
         console.error("No event selected.");
         return;
     }
-
- 
     document.getElementById('event-d').value = eventDetails.eventName;
     document.getElementById('event-c').value = eventDetails.eventDescription;
     document.getElementById('grid-w').value = eventDetails.width;
@@ -177,4 +172,13 @@ export const loadEventData = async () => {
    
     sessionStorage.setItem("grid", JSON.stringify(gridItems));
     document.getElementById("grid-container").style.gridTemplateColumns = `repeat(${eventDetails.width}, 1fr)`;
+};
+
+export const checkIn = () => {
+    console.log("HIT")
+    const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
+    console.log(eventDetails.eventName);
+    console.log(window.location.hostname + "/checkin/index.html?event=" + eventDetails.eventName);
+    window.location = "/checkin/index.html?event=" + eventDetails.eventName;
+    //window.open(window.location.hostname + "/checkin/index.html?event=" + eventDetails.eventName);
 };
