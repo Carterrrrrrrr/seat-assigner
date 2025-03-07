@@ -13,7 +13,8 @@
   <!-- type must be "module": https://www.w3schools.com/js/js_modules.asp#:~:text=JavaScript%20modules%20allow%20you%20to,in%20the%20tag.-->  
   <script type="module" src="script.js"></script>
   <script type="module">
-    import {createEvents, generateNames} from './script.js';
+    import {goToCheckIn, createEvents, generateNames} from './script.js';
+    window.goToCheckIn = goToCheckIn;
     window.createEvents = createEvents;
     window.generateNames = generateNames;
     createEvents();
@@ -23,11 +24,13 @@
         <h1>Seat Check In</h1>
    
     </div>
-    <h2 id="currentEvent"></h2>
-    <h3>Enter Name</h3>
+    <h3>Select the Event</h3>
+    <select name="events" id="events" onchange="generateNames()">
+      <option value="">Events:</option>
+    </select>
+    <h3>Search for Party</h3>
     <input type="text" id="fName" name="fName" onchange="generateNames()">
     <h4>Click on Seats to Check Them In<br>Maroon - Checked In | White - Rampant</h4>
-    <!-- Reserverd -->
     <div id="names">
     </div>
   </body>
