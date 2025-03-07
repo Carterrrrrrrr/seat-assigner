@@ -16,18 +16,16 @@
     import {addItem} from './firebase.js';
       window.addItem = addItem;
       </script>
-
-<script type="module">
-    import { loadEventData } from './firebase.js';
-    window.loadEventData = loadEventData;
-    loadEventData();
-</script>
-
-
+    <script type="module">
+        import {loadEventData} from './firebase.js';
+        window.loadEventData = loadEventData;
+        loadEventData();
+    </script>
     <div>
-        <h1>Event Name:</h1> <input type="text" id="event-d">
+        <div class="header"><h1>Event Editor</h1></div> 
+        <h2>Event Name:</h2> <input type="text" id="event-d">
         
-        <h1>Event Description:</h1> <input type="text" id="event-c">
+        <h2>Event Description:</h2> <input type="text" id="event-c">
         <div>
             <h1></h1>
         </div>
@@ -49,15 +47,7 @@
         <button id="generate-grid">Generate Grid</button>
     </div>
     <div id="grid-container">
-
     </div>
- 
-
-    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish & Save</button>
-    <div class="click">
-        <a href="createpage.html">
-            <h2>Home</h2>
-        </a>
-    
-     
-    
+    <button onclick="window.location.href='createpage.html'">Back</button>
+    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)">Publish & Save</button>
+</body>
