@@ -95,6 +95,56 @@ body{
     margin: 0px;
 }
 
+.partyDiv{
+    color:rgb(121, 49, 65);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    margin-right: 2.0em;
+    font-weight: lighter;
+}
+.marron{
+    color: rgb(121, 49, 65);
+}
+.white{
+    color:rgb(255, 255, 255);
+}
+input {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    background-color: rgba(121, 49, 65, 0.5);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.2em;
+    font-weight: lighter;
+    color:rgb(121, 49, 65);
+    border: rgb(121, 49, 65) 2px solid;
+}   
+input:focus {
+    background-color: rgb(255, 255, 255);
+    border: rgba(0, 0, 0, 0.2) 2px solid;
+}
+select{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1em;
+    width: 10rem;
+    background-color: rgb(121, 49, 65);
+    color: rgb(255, 255, 255)
+}
+select>option {
+    background-color: rgb(255, 255, 255);
+    font-size: 0.67em;
+    color: rgb(121, 49, 65);
+    font-family: 'Times New Roman', Times, serif;
+}
 .event {
     display: flex;
     margin: auto;
@@ -118,15 +168,17 @@ body{
 .event:hover {
         background-color: rgb(154, 63, 83);
 }
-
-.click a {
-    display: inline-block;
-    text-decoration: none;
-    color: rgb(166, 63, 63);
-    background-color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 500px;
-    transition: background-color 0.3s;
+button{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(121, 49, 65);
+    color: rgb(255, 255, 255);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    font-size: 1em;
+    padding: 5px 15px;
 }
 
 .click a:hover {
