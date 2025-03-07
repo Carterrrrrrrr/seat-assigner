@@ -7,29 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <h1>Creator Homepage</h1>
-    <h2></h2>
-    <div id="divEvents"></div>
     <script type="module" src="firebase.js"></script>
     <script type="module">
         import {createEvents} from './firebase.js';
         window.createEvents = createEvents;
         createEvents();
     </script>
-    
-
-<div class="click">
-    <a href="editor.html" id="create-new-event">
-        <h2>Create New Event</h2>
-        
-    </a>
-
-
-    <script>
-        document.getElementById('create-new-event').addEventListener('click', () => {
-            sessionStorage.clear();
-        });
-    </script>
+    <div class="header">
+        <h1>Creator Page</h1>
+    </div>
+    <br>
+    <div id="divEvents"></div>
+    <div class="button" onclick="window.location.href='editor.html'">Create Event</div>
 </body>
 </html>
