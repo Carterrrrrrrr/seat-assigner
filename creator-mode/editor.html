@@ -19,20 +19,20 @@
       window.addItem = addItem;
       </script>
 
-<script type="module">
-    import { loadEventData, checkIn } from './firebase.js';
-    window.loadEventData = loadEventData;
-    window.checkIn = checkIn;
-    loadEventData();
-</script>
-
-    <div>
-        <button onclick="checkIn()">Checkin Page</button>
+    <script type="module">
+        import { loadEventData, checkIn } from './firebase.js';
+        window.loadEventData = loadEventData;
+        window.checkIn = checkIn;
+        loadEventData();
+    </script>
+    <div class="header">
+    <h1>Project Editor</h1>
     </div>
+        <button onclick="checkIn()">Checkin Page</button>
     <div>
-        <h1>Event Name:</h1> <input type="text" id="event-d">
+        <h2>Event Name:</h2> <input type="text" id="event-d">
         
-        <h1>Event Description:</h1> <input type="text" id="event-c">
+        <h2>Event Description:</h2> <input type="text" id="event-c">
         <div>
             <h1></h1>
         </div>
@@ -57,11 +57,10 @@
 
     </div>
  
-
     <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish & Save</button>
-    <div class="click">
-        <a href="createpage.html">
-            <h2>Home</h2>
-        </a>
+    <br>
+    <button onclick="location.href='createpage.html'">Home</button>
+    <br>
+</body>
 
 
