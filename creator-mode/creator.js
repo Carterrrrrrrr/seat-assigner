@@ -69,7 +69,12 @@ function changeColor(seat) {
     seat.element.style.backgroundColor = selectedColor;
 
     console.log(`Changing color to: ${selectedColor} for seat at (${seat.letter}, ${seat.y})`);
-
+   
+    if (selectedColor === "white") {
+        seat.element.style.borderColor = "white";
+    } else {
+        seat.element.style.borderColor = "black";
+    }
     seat.color = selectedColor; 
 
     if (selectedColor === "yellow") {
@@ -105,6 +110,12 @@ function initializeDragSelect() {
             if (seat) {
                 seat.element.style.backgroundColor = selectedColor;
                 seat.color = selectedColor;
+                
+                if (selectedColor === "white") {
+                    seat.element.style.borderColor = "white";
+                } else {
+                    seat.element.style.borderColor = "black";
+                }
 
                 if (selectedColor === "yellow") {
                     seat.price = 15;

@@ -14,14 +14,14 @@
     width: 100%; 
     padding-top: 100%; 
     background-color: gray;
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     border-radius: 5px;
     position: relative; 
     margin: 2.5px;
 }
 
 .grid-item:hover {
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(146, 109, 109);
     cursor: pointer;
 }
 
@@ -70,10 +70,7 @@ h4{
     font-weight: bold;
 }
 
-.grid-item:hover {
-    background-color: rgb(251, 251, 251);
-    cursor: pointer;
-}
+
 
 .header{
     width: 100vw;
