@@ -82,15 +82,15 @@ p{
     margin: 10px;
 }
 #seatingArea{
-    margin: 10px;
+    margin: auto;
+    width: 50%;
+    border: 3px solid white;  
 }
-
 .button-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
-
 #back {
     cursor: pointer;
     border-color:black;
@@ -193,8 +193,8 @@ input:focus {
         background-color: rgb(154, 63, 83);
 }
 .seat-row {
-    display: flex;          
-    margin-bottom: 5px;   
+    display:flex;          
+    margin-bottom: 5px;  
 }
 .seatingArea {
     flex-wrap: wrap; 
@@ -209,8 +209,8 @@ input:focus {
     padding: 5px;         
     min-width: 20px;
     min-height: 20px;   
-    max-width: 50px;
-    max-height: 50px;     
+    /* max-width: 50px;
+    max-height: 50px;       */
     text-align: center;  
     display: flex;
     justify-content: center; /* Centers text horizontally */
@@ -225,7 +225,7 @@ input:focus {
     background-color: #4caf50;
 }
 .occupied-seat{
-    background-color: #ba0000;
+    background-color: rgb(121, 49, 65);
 }
 .stage-seat{
     background-color: black;
@@ -233,7 +233,7 @@ input:focus {
 .seat:hover {
     background-color:#5acd5e;
 }
-
 .empty-seat {
-    background-color: #eee; 
+    background-color: rgb(255, 255, 255);
+    border: 0px;
 }
