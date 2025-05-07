@@ -1,6 +1,8 @@
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged , signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, doc, updateDoc, where} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDT1gMYMrR6iDYBIM8fXX-4Ok0KdJHRvG0",
     authDomain: "seat-reservations-49c91.firebaseapp.com",
@@ -8,12 +10,48 @@ const firebaseConfig = {
     storageBucket: "seat-reservations-49c91.appspot.com",
     messagingSenderId: "522725525744",
     appId: "1:522725525744:web:9061c8956634a54e305a35"
-  };
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
+//Email must exist and be real
+//password must be at least 6 charaters
+export const signUp = async function (email, password){
+  console.log("signUp");
+  console.log(email);
+  console.log(password);
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    sessionStorage.setItem('userEmail', user.email);
+    window.location.href = 'createpage.html';
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+}
+
+//login function for submit button
+export const login = function (email, password){
+  console.log("login")
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user);
+      sessionStorage.setItem('userEmail', user.email);
+      window.location.href = 'createpage.html';
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+}
 
 //add the name and description to firebase
 export const addItem = async function (eventName, eventDescription, width, height) {
@@ -24,6 +62,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
       eventDescription: eventDescription,
       width: width,
       height: height,
+      adminUser: sessionStorage.getItem('userEmail')
     });
 
     console.log("Event Document written with ID: ", eventDocRef.id);
@@ -60,7 +99,8 @@ export const createEvents = async () => {
     try {
         console.log("Fetching events...");
         const eventsCollection = collection(db, "events");
-        const eventsQuery = query(eventsCollection);
+        const eventsQuery = query(eventsCollection, where("adminUser", "==", sessionStorage.getItem('userEmail')));
+    
         const querySnapshot = await getDocs(eventsQuery);
 
         let listEvents = [];
