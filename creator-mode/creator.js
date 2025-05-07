@@ -18,16 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-//this function will take the x value and convert it to a Alphabet
-    function numberToLetters(num) {
-        let result = "";
-        while (true) {
-            result = String.fromCharCode((num % 26) + 65) + result;
-            num = Math.floor(num / 26) - 1; 
-            if (num < 0) break;
-        }
-        return result;
-    }
 
 
     function createGrid(width, height) {
@@ -62,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update CSS grid-template-columns to fit the new grid size
         gridContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
     }
+
+    
 
     // change the color and set price
 function changeColor(seat) {
