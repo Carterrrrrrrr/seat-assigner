@@ -153,12 +153,12 @@ select>option {
     width:40vw;
     cursor: pointer;
     border-style:outset;
-    border-width: medium medium medium medium;
+    border-width: 0px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 0px;
     font-size: 4vb;
     padding: 1.5vh 1vw;
 }
@@ -199,8 +199,8 @@ select>option {
     justify-content: center;
     border-color:black;
     border-style:outset;
-    border-width: medium medium medium medium;
-    border-radius: 10px;
+    border-width: 0px;
+    border-radius: 0px;
     width: 40vw;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
@@ -222,8 +222,8 @@ button{
     cursor: pointer;
     border-color:black;
     border-style:outset;
-    border-width: small small small small;
-    border-radius: 10px;
+    border-width: 0px;
+    border-radius: 0px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
