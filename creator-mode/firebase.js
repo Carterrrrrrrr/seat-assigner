@@ -153,7 +153,50 @@ const selectEvent = async (event) => {
     window.location.href = 'editor.html';
 };
 
-//take the seats, name and description and load it out. 
+// Helper to create a seat DOM element and object, and set up click handler
+function createSeatElement(seat, gridItems) {
+    const gridItemElement = document.createElement("div");
+    gridItemElement.className = "grid-item";
+    gridItemElement.style.backgroundColor = seat.color;
+    // Set border color based on color
+    if (seat.color === "white") {
+        gridItemElement.style.borderColor = "white";
+    } else {
+        gridItemElement.style.borderColor = "black";
+    }
+    // Attach click handler for editing
+    gridItemElement.addEventListener("click", () => {
+        // Use the same logic as creator.js's changeColor
+        const selectedColor = document.getElementById('color-select').value;
+        gridItemElement.style.backgroundColor = selectedColor;
+        if (selectedColor === "white") {
+            gridItemElement.style.borderColor = "white";
+        } else {
+            gridItemElement.style.borderColor = "black";
+        }
+        seat.color = selectedColor;
+        if (selectedColor === "yellow") {
+            seat.price = 15;
+        } else if (selectedColor === "brown") {
+            seat.price = 10;
+        } else {
+            seat.price = null;
+        }
+        // Update session storage for all seats
+        sessionStorage.setItem("grid", JSON.stringify(gridItems.map(seat => ({
+            x: seat.x,
+            y: seat.y,
+            seatName: seat.letter + "" + seat.y,
+            color: seat.color,
+            price: seat.price,
+            letter: seat.letter
+        }))));
+    });
+    seat.element = gridItemElement;
+    return seat;
+}
+
+// take the seats, name and description and load it out. 
 export const loadEventData = async () => {
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
@@ -185,6 +228,7 @@ export const loadEventData = async () => {
             letter: seatData.letter 
         });
     });
+
     //Sort the seats into the right order
     gridItems.sort((a, b) => {
         const numA = parseInt(a.seatName.slice(1)); 
@@ -197,22 +241,63 @@ export const loadEventData = async () => {
     });
 
     document.getElementById("grid-container").innerHTML = ""; 
-    gridItems.forEach((seat) => {
-        const gridItemElement = document.createElement("div");
-        gridItemElement.className = "grid-item";
-        gridItemElement.style.backgroundColor = seat.color;
-        // gridItemElement.innerText = seat.seatName; 
-
-        gridItemElement.addEventListener("click", () => changeColor(seat));
-
-        document.getElementById("grid-container").appendChild(gridItemElement);
+    // Create DOM elements and attach handlers
+    gridItems = gridItems.map(seat => createSeatElement(seat, gridItems));
+    gridItems.forEach(seat => {
+        document.getElementById("grid-container").appendChild(seat.element);
     });
 
-   
-    sessionStorage.setItem("grid", JSON.stringify(gridItems));
+    sessionStorage.setItem("grid", JSON.stringify(gridItems.map(seat => ({
+        x: seat.x,
+        y: seat.y,
+        seatName: seat.letter + "" + seat.y,
+        color: seat.color,
+        price: seat.price,
+        letter: seat.letter
+    }))));
     document.getElementById("grid-container").style.gridTemplateColumns = `repeat(${eventDetails.width}, 1fr)`;
-    initializeDragSelect();
+    initializeDragSelect(gridItems);
 };
+
+// Expose a function to allow drag select to work with loaded seats
+function initializeDragSelect(gridItems) {
+    if (typeof DragSelect === "undefined") return;
+    const ds = new DragSelect({
+        selectables: document.querySelectorAll(".grid-item"),
+        area: document.querySelector('#grid-container')
+    });
+
+    ds.subscribe("DS:end", ({ items }) => {
+        const selectedColor = document.getElementById('color-select').value;
+        items.forEach(item => {
+            const seat = gridItems.find(seat => seat.element === item);
+            if (seat) {
+                seat.element.style.backgroundColor = selectedColor;
+                seat.color = selectedColor;
+                if (selectedColor === "white") {
+                    seat.element.style.borderColor = "white";
+                } else {
+                    seat.element.style.borderColor = "black";
+                }
+                if (selectedColor === "yellow") {
+                    seat.price = 15;
+                } else if (selectedColor === "brown") {
+                    seat.price = 10;
+                } else {
+                    seat.price = null;
+                }
+            }
+        });
+        sessionStorage.setItem("grid", JSON.stringify(gridItems.map(seat => ({
+            x: seat.x,
+            y: seat.y,
+            seatName: seat.letter + "" + seat.y,
+            color: seat.color,
+            price: seat.price,
+            letter: seat.letter
+        }))));
+    });
+}
 
 export const checkIn = () => {
     console.log("HIT")
