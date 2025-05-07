@@ -27,6 +27,7 @@ console.log("event: " + linkedEvent);
 document.getElementById("currentEvent").innerHTML = linkedEvent;
 
 let event = null;
+
 //returns a list of seats with the information
 //id
 //reservationName

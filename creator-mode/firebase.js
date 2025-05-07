@@ -54,7 +54,6 @@ export const login = function (email, password){
 
 //add the name and description to firebase
 export const addItem = async function (eventName, eventDescription, width, height) {
-  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
   try {   
     let adminUser = sessionStorage.getItem('userEmail')
     console.log("New even under... " + adminUser)
@@ -95,7 +94,6 @@ export const addItem = async function (eventName, eventDescription, width, heigh
 
 // fucnction to create event elements
 export const createEvents = async () => {
-  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     try {
         console.log("Fetching events...");
         const eventsCollection = collection(db, "events");
@@ -140,7 +138,6 @@ export const createEvents = async () => {
 
 // function to select an event and update the UI
 const selectEvent = async (event) => {
-  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     let eventDetails = {
         id: event.id,
         eventName: event.eventName,
@@ -196,9 +193,8 @@ function createSeatElement(seat, gridItems) {
     return seat;
 }
 
-// take the seats, name and description and load it out. 
+// take the seats, name and description and load it out.
 export const loadEventData = async () => {
-  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
     if (!eventDetails) {
         console.error("No event selected.");
