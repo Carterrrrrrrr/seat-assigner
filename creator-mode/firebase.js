@@ -9,10 +9,13 @@ const firebaseConfig = {
     projectId: "seat-reservations-49c91",
     storageBucket: "seat-reservations-49c91.appspot.com",
     messagingSenderId: "522725525744",
+<<<<<<< Updated upstream
     appId: "1:522725525744:web:9061c8956634a54e305a35"
+=======
+    appId: "1:522725525744:web:9061c8956634a54e305a35",
+>>>>>>> Stashed changes
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
@@ -62,7 +65,11 @@ export const addItem = async function (eventName, eventDescription, width, heigh
       eventDescription: eventDescription,
       width: width,
       height: height,
+<<<<<<< Updated upstream
       adminUser: sessionStorage.getItem('userEmail')
+=======
+      adminUser: sessionStorage.getItem(userEmail)
+>>>>>>> Stashed changes
     });
 
     console.log("Event Document written with ID: ", eventDocRef.id);
