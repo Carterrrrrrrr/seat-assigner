@@ -22,7 +22,8 @@
     <div class="button" onclick="window.location.href='editor.html'" id="create-event-btn">Create Event</div>
 <script>
     document.getElementById('create-event-btn').addEventListener('click', function() {
-        sessionStorage.clear();
+        //sessionStorage.clear();
+        sessionStorage.removeItem('eventDetails')
         window.location.href = 'editor.html';
     });
 </script>
