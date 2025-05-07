@@ -9,11 +9,7 @@ const firebaseConfig = {
     projectId: "seat-reservations-49c91",
     storageBucket: "seat-reservations-49c91.appspot.com",
     messagingSenderId: "522725525744",
-<<<<<<< Updated upstream
-    appId: "1:522725525744:web:9061c8956634a54e305a35"
-=======
     appId: "1:522725525744:web:9061c8956634a54e305a35",
->>>>>>> Stashed changes
 };
 
 const app = initializeApp(firebaseConfig);
@@ -58,24 +54,20 @@ export const login = function (email, password){
 
 //add the name and description to firebase
 export const addItem = async function (eventName, eventDescription, width, height) {
+  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
   try {   
+    let adminUser = sessionStorage.getItem('userEmail')
+    console.log("New even under... " + adminUser)
     // Create a document in the "events" collection
     const eventDocRef = await addDoc(collection(db, "events"), {
       eventName: eventName,
       eventDescription: eventDescription,
       width: width,
       height: height,
-<<<<<<< Updated upstream
-      adminUser: sessionStorage.getItem('userEmail')
-=======
-      adminUser: sessionStorage.getItem(userEmail)
->>>>>>> Stashed changes
+      adminUser: adminUser,
     });
-
     console.log("Event Document written with ID: ", eventDocRef.id);
-
-
-//upload the seats to firebase
+    //upload the seats to firebase
     const gridItems = JSON.parse(sessionStorage.getItem("grid"));
     console.log("Publishing seats...");
     for (let seat of gridItems) {
@@ -103,6 +95,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
 
 // fucnction to create event elements
 export const createEvents = async () => {
+  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     try {
         console.log("Fetching events...");
         const eventsCollection = collection(db, "events");
@@ -147,6 +140,7 @@ export const createEvents = async () => {
 
 // function to select an event and update the UI
 const selectEvent = async (event) => {
+  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     let eventDetails = {
         id: event.id,
         eventName: event.eventName,
@@ -161,6 +155,7 @@ const selectEvent = async (event) => {
 
 //take the seats, name and description and load it out. 
 export const loadEventData = async () => {
+  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
     if (!eventDetails) {
         console.error("No event selected.");
@@ -190,8 +185,7 @@ export const loadEventData = async () => {
             letter: seatData.letter 
         });
     });
-
-//Sort the seats into the right order
+    //Sort the seats into the right order
     gridItems.sort((a, b) => {
         const numA = parseInt(a.seatName.slice(1)); 
         const numB = parseInt(b.seatName.slice(1));
@@ -202,8 +196,6 @@ export const loadEventData = async () => {
         return a.letter.localeCompare(b.letter); 
     });
 
-
-    
     document.getElementById("grid-container").innerHTML = ""; 
     gridItems.forEach((seat) => {
         const gridItemElement = document.createElement("div");
