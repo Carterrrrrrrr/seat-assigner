@@ -17,24 +17,45 @@ const db = getFirestore(app);
 
 //add the name and description to firebase
 export const addItem = async function (eventName, eventDescription, width, height) {
-  try {   
-    // Create a document in the "events" collection
-    const eventDocRef = await addDoc(collection(db, "events"), {
-      eventName: eventName,
-      eventDescription: eventDescription,
-      width: width,
-      height: height,
-    });
+  try {
+    const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
+    let eventDocRef;
+    if (eventDetails && eventDetails.id) {
+      // Editing existing event: update event doc and delete old seats
+      eventDocRef = doc(db, "events", eventDetails.id);
+      await updateDoc(eventDocRef, {
+        eventName: eventName,
+        eventDescription: eventDescription,
+        width: width,
+        height: height,
+      });
 
-    console.log("Event Document written with ID: ", eventDocRef.id);
+      // Delete all old seats
+      const seatsCollection = collection(eventDocRef, "seats");
+      const seatsSnapshot = await getDocs(seatsCollection);
+      const deletePromises = [];
+      seatsSnapshot.forEach((seatDoc) => {
+        deletePromises.push(deleteDoc(doc(seatsCollection, seatDoc.id)));
+      });
+      await Promise.all(deletePromises);
+      console.log("Old seats deleted.");
+    } else {
+      // Creating new event
+      eventDocRef = await addDoc(collection(db, "events"), {
+        eventName: eventName,
+        eventDescription: eventDescription,
+        width: width,
+        height: height,
+      });
+      console.log("Event Document written with ID: ", eventDocRef.id);
+    }
 
-
-//upload the seats to firebase
+    // Upload the seats to firebase
     const gridItems = JSON.parse(sessionStorage.getItem("grid"));
     console.log("Publishing seats...");
     for (let seat of gridItems) {
       try {
-        const seatRef = await addDoc(collection(eventDocRef, "seats"), {
+        await addDoc(collection(eventDocRef, "seats"), {
           isCheckedIn: false,
           isReserved: false,
           price: seat.price,
@@ -45,7 +66,6 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           color: seat.color,
           letter: seat.letter
         });
-        console.log("Seat Document written with ID: ", seatRef.id);
       } catch (e) {
         console.error("Error adding seat to database: ", e);
       }
@@ -155,7 +175,7 @@ function createSeatElement(seat, gridItems) {
     return seat;
 }
 
-// take the seats, name and description and load it out. 
+// take the seats, name and description and load it out and use the helper function of createSeatElement
 export const loadEventData = async () => {
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
     if (!eventDetails) {
@@ -217,7 +237,7 @@ export const loadEventData = async () => {
     initializeDragSelect(gridItems);
 };
 
-// Expose a function to allow drag select to work with loaded seats
+// reinitialize the drag select function to make sure it works with the reloaded seats
 function initializeDragSelect(gridItems) {
     if (typeof DragSelect === "undefined") return;
     const ds = new DragSelect({
