@@ -16,8 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
 //when the button is clicked the eventlitener is taking the value of the wdith and height and convert it to integars
 //and put the values in the creatgrid function
 
-
-
+//this function will take the x value and convert it to a Alphabet
+    function numberToLetters(num) {
+        let result = "";
+        while (true) {
+            result = String.fromCharCode((num % 26) + 65) + result;
+            num = Math.floor(num / 26) - 1; 
+            if (num < 0) break;
+        }
+        return result;
+    }
 
 
     function createGrid(width, height) {
