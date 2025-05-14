@@ -1,13 +1,14 @@
+/* background for the page */
 body{
     background-color: rgb(255, 255, 255);
     margin: 0px;
 }
-:root{
+:root{ 
     --marron: rgb(121, 49, 65);
     --gray: rgb(150, 150, 150);
     --black: rgb(0, 0, 0);
 }
-
+/* h1 through h5 are fonts that get larger in ascending order */
 h1{
     color:white;
     font-family: 'Times New Roman', Times, serif;
@@ -59,6 +60,7 @@ h5{
     color: var(--marron);
     font-family: 'Times New Roman', Times, serif;
 }
+/* p stands for paragraph with p being small font */
 p{
     font-family: 'Times New Roman', Times, serif;
     font-size: .8em;
@@ -78,25 +80,29 @@ p{
 .white{
     color:rgb(255, 255, 255);
 }
+/* #divEvents is the div that the buttons fit into*/
 #divEvents{
     margin: 10px;
 }
+/* #seatingArea is the div that holds the seat grid */
 #seatingArea{
-    margin: 10px;
+    margin: auto;
+    width: 50%;
+    border: 3px solid white;  
 }
-
+/* .button-container holds that "back" and "checkOut" buttons above the seat grid in space.html */
 .button-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
-
+/*  #back styles the "Back" button that is within .button-container and above the seating grid*/
 #back {
     cursor: pointer;
     border-color:black;
     border-style:outset;
-    border-width: small small small small;
-    border-radius: 10px;
+    border-width: 0px;
+    border-radius: 0px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
@@ -105,16 +111,17 @@ p{
     font-size: 1em;
     padding: 5px 15px;
 }
+/* #back:hover changes color of #back when you hover over the "back" button*/
 #back:hover{
     background-color: rgb(154, 63, 83);
 }
-
+/* #checkOut styles the "Check Out" button that is within .button-container and above the seating grid*/
 #checkOut {
     cursor: pointer;
-    border-color:black;
+    border-color:white;
+    border-width: 0px;
     border-style:outset;
-    border-width: small small small small;
-    border-radius: 10px;
+    border-radius: 0px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
@@ -123,15 +130,18 @@ p{
     font-size: 1em;
     padding: 5px 15px;
 }
+/* #checkOut:hover changes color of #checkOut when you hover over the "Check Out" button*/
 #checkOut:hover{
     background-color: rgb(154, 63, 83);
 }
+/* Confirm Purchase styles the "Confirm Purchase" button on the checkout.html page*/
 #confirmPurchase {
+    border-width: 0px;
     cursor: pointer;
     border-color:black;
     border-style:outset;
     border-width: small small small small;
-    border-radius: 10px;
+    border-radius: 0px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
@@ -140,9 +150,11 @@ p{
     font-size: 1em;
     padding: 5px 15px;
 }
+/* #confirmPurchase:hover changes color of #confirmPurchase when you hover over the "Confirm Purchase" button*/
 #confirmPurchase:hover{
     background-color: rgb(154, 63, 83);
 }
+/* input styles the text input on the checkout.html page */
 input {
     /* background-color: rgba(0, 0, 0, 0.2); */
     background-color: rgba(121, 49, 65, 0.5);
@@ -153,11 +165,25 @@ input {
     border: rgb(121, 49, 65) 2px solid;
     margin-left: 2vw;
 }   
+/*input:focus styles the text input box after you click on it*/
 input:focus {
     background-color: rgb(255, 255, 255);
     border: rgba(0, 0, 0, 0.2) 2px solid;
 }
+/*.header styles the header picture for the page index.html*/
 .header{
+    width: 100vw;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0;
+    margin-top: 0;
+    color:white;
+    background-image: url('gHall2.jpeg'); 
+    background-size:cover;
+    box-shadow: inset 0 0 0 1000px rgba(121, 49, 65, 0.524);
+}
+/*.header2 styles the header picture for the page space.html*/
+.header2{
     width: 100vw;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -168,7 +194,19 @@ input:focus {
     background-size:cover;
     box-shadow: inset 0 0 0 1000px rgba(121, 49, 65, 0.524);
 }
-
+/*.header3 styles the header picture for the page checkout.html*/
+.header3{
+    width: 100vw;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0;
+    margin-top: 0;
+    color:white;
+    background-image: url('gHall3.jpeg'); 
+    background-size:cover;
+    box-shadow: inset 0 0 0 1000px rgba(121, 49, 65, 0.524);
+}
+/*.event styles the event buttons in the page index.html*/
 .event {
     display: flex;
     margin: auto;
@@ -178,30 +216,33 @@ input:focus {
     border-color:black;
     width:40vw;
     cursor: pointer;
-    border-style:outset;
-    border-width: medium medium medium medium;
+    /* border-style:outset;
+    border-width: medium medium medium medium; */
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 0px;
     font-size: 4vb;
     padding: 1.5vh 1vw;
 }
-
+/* #event:hover changes color of .event when you hover over the event buttons*/
 .event:hover {
         background-color: rgb(154, 63, 83);
 }
+/* each row of seats on the seating grid in space.html */
 .seat-row {
-    display: flex;          
-    margin-bottom: 5px;   
+    display:flex;          
+    margin-bottom: 5px;  
 }
+/* .seatingArea is a seatinArea class which helps determine the width of the seating grid and how it flexes*/
 .seatingArea {
     flex-wrap: wrap; 
     justify-content: center; /* Ensures proper alignment */
     align-items: center; /* Centers items vertically */
     width: 100%;
 }
+/* .empty-seat, .selected-seat, .occupied-seat, .available-seat, .stage-seat are styling for the individual seats in the seating grid in space.html and how they fit into the grid and flex with the page */
 .empty-seat, .selected-seat, .occupied-seat, .available-seat, .stage-seat {
     flex: 1;
     aspect-ratio: 1 / 1;
@@ -209,8 +250,8 @@ input:focus {
     padding: 5px;         
     min-width: 20px;
     min-height: 20px;   
-    max-width: 50px;
-    max-height: 50px;     
+    /* max-width: 50px;
+    max-height: 50px;       */
     text-align: center;  
     display: flex;
     justify-content: center; /* Centers text horizontally */
@@ -218,6 +259,7 @@ input:focus {
     border: 1px solid #000; 
     border-radius: 5px;
 }
+/* below are the differences between the types of seats (mostly color) on the seating grid */
 .selected-seat{
     background-color: rgb(0, 53, 0);
 }
@@ -225,7 +267,7 @@ input:focus {
     background-color: #4caf50;
 }
 .occupied-seat{
-    background-color: #ba0000;
+    background-color: rgb(121, 49, 65);
 }
 .stage-seat{
     background-color: black;
@@ -233,7 +275,7 @@ input:focus {
 .seat:hover {
     background-color:#5acd5e;
 }
-
 .empty-seat {
-    background-color: #eee; 
+    background-color: rgb(255, 255, 255);
+    border: 0px;
 }

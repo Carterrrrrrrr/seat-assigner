@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //when the button is clicked the eventlitener is taking the value of the wdith and height and convert it to integars
 //and put the values in the creatgrid function
 
-
-
 //this function will take the x value and convert it to a Alphabet
     function numberToLetters(num) {
         let result = "";
@@ -63,13 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
         gridContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
     }
 
+    
+
     // change the color and set price
 function changeColor(seat) {
     const selectedColor = document.getElementById('color-select').value;
     seat.element.style.backgroundColor = selectedColor;
 
     console.log(`Changing color to: ${selectedColor} for seat at (${seat.letter}, ${seat.y})`);
-
+   
+    if (selectedColor === "white") {
+        seat.element.style.borderColor = "white";
+    } else {
+        seat.element.style.borderColor = "black";
+    }
     seat.color = selectedColor; 
 
     if (selectedColor === "yellow") {
@@ -105,6 +110,12 @@ function initializeDragSelect() {
             if (seat) {
                 seat.element.style.backgroundColor = selectedColor;
                 seat.color = selectedColor;
+                
+                if (selectedColor === "white") {
+                    seat.element.style.borderColor = "white";
+                } else {
+                    seat.element.style.borderColor = "black";
+                }
 
                 if (selectedColor === "yellow") {
                     seat.price = 15;

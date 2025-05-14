@@ -1,4 +1,5 @@
 * { user-select: none; }
+/* #grid-container is a div that holds the seat grid */
 #grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
@@ -9,22 +10,22 @@
     padding: 30px;
     box-sizing: border-box;
 }
-
+/* .grid-item syles each seat within the seat grid in editor.html */
 .grid-item {
     width: 100%; 
     padding-top: 100%; 
     background-color: gray;
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     border-radius: 5px;
     position: relative; 
     margin: 2.5px;
 }
-
+/*.grid-item:hover styles each seat in the seat grid when you hover over the seat */
 .grid-item:hover {
-    background-color: rgb(251, 251, 251);
+    background-color: rgb(146, 109, 109);
     cursor: pointer;
 }
-
+/* h1 through h5 are fonts that get larger in ascending order*/
 h1{
     color:white;
     text-align:center;
@@ -69,12 +70,7 @@ h4{
     margin-right: 0;
     font-weight: bold;
 }
-
-.grid-item:hover {
-    background-color: rgb(251, 251, 251);
-    cursor: pointer;
-}
-
+/*.header styles the header picture for the page editor.html and createpage.html*/
 .header{
     width: 100vw;
     margin-left: 0px;
@@ -87,14 +83,15 @@ h4{
     background-image: url('gHall.jpeg'); 
     background-size:cover;
     box-shadow: inset 0 0 0 1000px rgba(121, 49, 65, 0.524);
+    margin-bottom: 30px;
 }
-
+/* background for the page */
 body{
     /* background-color: white; */
     text-align: center;
     margin: 0px;
 }
-
+/* doesn't do anything at the moment and is an old piece of code*/
 .partyDiv{
     color:rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
@@ -111,6 +108,7 @@ body{
 .white{
     color:rgb(255, 255, 255);
 }
+/* input styles the text input on the editor.html page */
 input {
     display: flex;
     margin: auto;
@@ -124,10 +122,12 @@ input {
     color:rgb(121, 49, 65);
     border: rgb(121, 49, 65) 2px solid;
 }   
+/*input:focus styles the text input box after you click on it*/
 input:focus {
     background-color: rgb(255, 255, 255);
     border: rgba(0, 0, 0, 0.2) 2px solid;
 }
+/* select styles the select/dropdown input on the editor.html page */
 select{
     display: flex;
     margin: auto;
@@ -139,12 +139,14 @@ select{
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255)
 }
+/* select>option is the same as select but when you actually click on the drop down */
 select>option {
     background-color: rgb(255, 255, 255);
     font-size: 0.67em;
     color: rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
 }
+/*.event styles the event buttons in the page createpage.html*/
 .event {
     display: flex;
     margin: auto;
@@ -155,42 +157,28 @@ select>option {
     width:40vw;
     cursor: pointer;
     border-style:outset;
-    border-width: medium medium medium medium;
+    border-width: 0px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 0px;
     font-size: 4vb;
     padding: 1.5vh 1vw;
 }
-
+/* #event:hover changes color of .event when you hover over the event buttons*/
 .event:hover {
         background-color: rgb(154, 63, 83);
 }
-button{
-    display: flex;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
-    font-family: 'Times New Roman', Times, serif;
-    text-align: center;
-    font-size: 1em;
-    padding: 5px 15px;
-}
-
+/* styles when you click on a buttonchanging the color of the button */
 .click a:hover {
     background-color: #8a3535;
 }
-
+/*from .click h2 too .seat are old css classes and old code that is no longer used*/
 .click h2 {
     margin: 0;
     font-size: 20px;
 }
-
-
 
 .seat:hover {
     background-color:#5acd5e;
@@ -204,7 +192,7 @@ button{
     background-color: #4caf50; /* Green background for available seats */
     color: white;              /* White text for contrast */
 }
-
+/*.button styles buttons in createpage.html*/
 .button{
     cursor: pointer;
     display: flex;
@@ -215,8 +203,8 @@ button{
     justify-content: center;
     border-color:black;
     border-style:outset;
-    border-width: medium medium medium medium;
-    border-radius: 10px;
+    border-width: 0px;
+    border-radius: 0px;
     width: 40vw;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
@@ -225,62 +213,39 @@ button{
     font-size: 4vb;
     padding: 1.5vh 1vw;
 }
-
+/* .button:hover styles buttons when you hover over them in createpage.html*/
 .button:hover{
     background-color: rgb(154, 63, 83);
 }
+/* button styles buttons in editor.html*/
 button{
+    cursor: pointer;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     border-color:black;
     border-style:outset;
-    border-width: small small small small;
-    border-radius: 10px;
+    border-width: 0px;
+    border-radius: 0px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    margin: 10px;
+    /* margin: 10px; */
     font-size: 1em;
-    padding: 5px 15px;
-    margin-left: auto;   
+    padding: 5px 15px;  
 }
+/* button:hover styles buttons when you hover over them in editor.html*/
 button:hover{
     background-color: rgb(154, 63, 83);
 }
+/* .divEvents styles the event buttons that are displayed in the page createpage.html*/
 .divEvents{
     margin-top:0;
 }
-input {
-    display: flex;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    background-color: rgba(121, 49, 65, 0.5);
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.2em;
-    font-weight: lighter;
+/*label isn't used and is an old piece of code*/
+label{
     color:rgb(121, 49, 65);
-    border: rgb(121, 49, 65) 2px solid;
-}   
-input:focus {
-    background-color: rgb(255, 255, 255);
-    border: rgba(0, 0, 0, 0.2) 2px solid;
-}
-select{
-    display: flex;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1em;
-    width: 10rem;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255)
-}
-select>option {
-    background-color: rgb(255, 255, 255);
-    font-size: 0.67em;
-    color: rgb(121, 49, 65);
-    font-family: 'Times New Roman', Times, serif;
 }

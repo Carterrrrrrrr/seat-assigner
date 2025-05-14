@@ -98,7 +98,8 @@ const createSeats = async (event) => {
                 isReserved: doc.data().isReserved,
                 reservationName: doc.data().reservationName,
                 x: doc.data().x,
-                y: doc.data().y
+                y: doc.data().y,
+                color: doc.data().color
             });
         });
         return sortSeats(listSeats);
@@ -113,16 +114,21 @@ const sortSeats = (listSeats) => {
     console.log("Sorting seats...");
     const matrix = Array.from({ length: eventDetails.height }, () => Array(eventDetails.width).fill(null));
     listSeats.forEach((seat) => {
-        matrix[seat.y][seat.x] = seat;
+        if (seat.y != null && seat.x != null){
+            matrix[seat.y][seat.x] = seat;
+            console.log("what da flip!");
+        } else{
+            console.log("why is this null");  
+        }
     });
+    console.log(matrix);
     return matrix; //2D array of seats in position
 };
 
 // funcion to create the room layout
 export const createRoom = async () => {
     eventDetails = JSON.parse(sessionStorage.getItem('eventDetails')); console.log("evName:" + eventDetails.eventName);
-
-    console.log("Creating room...")
+    console.log("Creating room...");
     if (!eventDetails.id) {
         console.error("No event selected.");
         return;
@@ -161,13 +167,16 @@ export const createRoom = async () => {
                         seatDiv.className = "available-seat"
                         seatDiv.addEventListener("click", () => selectSeat(seatDiv, seat)); // attach click event listener
                     }
-                }else{
+                }else if(seat.color === "white"){
+                    seatDiv.textContent = "";
+                    seatDiv.className = "empty-seat";
+                } else{
                     seatDiv.textContent = "+";
-                    seatDiv.className = "stage-seat"
+                    seatDiv.className = "stage-seat";
                 }
             } else {
                 // For empty seats
-                seatDiv.textContent = "+";
+                seatDiv.textContent = "";
                 seatDiv.className = "empty-seat";
             }
             rowDiv.appendChild(seatDiv);
