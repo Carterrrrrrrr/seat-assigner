@@ -55,85 +55,63 @@ export const login = function (email, password){
 //add the name and description to firebase
 export const addItem = async function (eventName, eventDescription, width, height) {
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
-  try {   
-    let adminUser = sessionStorage.getItem('userEmail')
-    console.log("New even under... " + adminUser)
-    // Create a document in the "events" collection
-    const eventDocRef = await addDoc(collection(db, "events"), {
-      eventName: eventName,
-      eventDescription: eventDescription,
-      width: width,
-      height: height,
-      adminUser: adminUser,
-    });
-    console.log("Event Document written with ID: ", eventDocRef.id);
-    //upload the seats to firebase
-    const gridItems = JSON.parse(sessionStorage.getItem("grid"));
-    console.log("Publishing seats...");
-    for (let seat of gridItems) {
-      try {
-        const seatRef = await addDoc(collection(eventDocRef, "seats"), {
-          isCheckedIn: false,
-          isReserved: false,
-          price: seat.price,
-          reservationName: "",
-          seatName: seat.letter + "" + seat.y+1,
-          x: seat.x,
-          y: seat.y,
-          color: seat.color,
-          letter: seat.letter
+  try {
+        let adminUser = sessionStorage.getItem('userEmail')
+        console.log("New even under... " + adminUser)
+      const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
+      let eventDocRef;
+      if (eventDetails && eventDetails.id) {
+        // Editing existing event: update event doc and delete old seats
+        eventDocRef = doc(db, "events", eventDetails.id);
+        await updateDoc(eventDocRef, {
+          eventName: eventName,
+          eventDescription: eventDescription,
+          width: width,
+          height: height,
         });
-        console.log("Seat Document written with ID: ", seatRef.id);
-      } catch (e) {
-        console.error("Error adding seat to database: ", e);
+  
+        // Delete all old seats
+        const seatsCollection = collection(eventDocRef, "seats");
+        const seatsSnapshot = await getDocs(seatsCollection);
+        const deletePromises = [];
+        seatsSnapshot.forEach((seatDoc) => {
+          deletePromises.push(deleteDoc(doc(seatsCollection, seatDoc.id)));
+        });
+        await Promise.all(deletePromises);
+        console.log("Old seats deleted.");
+      } else {
+        // Creating new event
+        eventDocRef = await addDoc(collection(db, "events"), {
+          eventName: eventName,
+          eventDescription: eventDescription,
+          width: width,
+          height: height,
+        });
+        console.log("Event Document written with ID: ", eventDocRef.id);
       }
-    }
-  } catch (e) {
-    console.error("Error adding item to database: ", e);
-  }
-};
-
-// fucnction to create event elements
-export const createEvents = async () => {
-  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
-    try {
-        console.log("Fetching events...");
-        const eventsCollection = collection(db, "events");
-        const eventsQuery = query(eventsCollection, where("adminUser", "==", sessionStorage.getItem('userEmail')));
-    
-        const querySnapshot = await getDocs(eventsQuery);
-
-        let listEvents = [];
-        querySnapshot.forEach((doc) => {
-            listEvents.push({
-                id: doc.id, // Store the document ID
-                eventName: doc.data().eventName,
-                eventDescription: doc.data().eventDescription,
-                width: doc.data().width,
-                height: doc.data().height,
-            });
-        });
-
-        // make the event list on the page
-        const divEvents = document.getElementById("divEvents");
-        if (!divEvents) {
-            console.error("divEvents not found in the DOM.");
-            return;
+  
+      // Upload the seats to firebase
+      const gridItems = JSON.parse(sessionStorage.getItem("grid"));
+      console.log("Publishing seats...");
+      for (let seat of gridItems) {
+        try {
+          await addDoc(collection(eventDocRef, "seats"), {
+            isCheckedIn: false,
+            isReserved: false,
+            price: seat.price,
+            reservationName: "",
+            seatName: seat.letter + "" + seat.y+1,
+            x: seat.x,
+            y: seat.y,
+            color: seat.color,
+            letter: seat.letter
+          });
+        } catch (e) {
+          console.error("Error adding seat to database: ", e);
         }
-        listEvents.forEach((event) => {
-            const div = document.createElement("div");
-            if (event.eventName) {
-                div.textContent = event.eventName;
-            } else {div.textContent = "UNKNOWN"}
-             // display the event name
-            div.id = event.id; // use the document ID as the div's ID
-            div.classList.add("event"); // add the 'event' class for styling
-            div.addEventListener("click", () => selectEvent(event)); // attack click event listener
-            divEvents.appendChild(div);
-        });
-        console.log("Events created successfully!");
-    } catch (error) {
-        console.error("Error fetching events:" + error);
+      }
+    } catch (e) {
+      console.error("Error adding item to database: ", e);
     }
 };
 
