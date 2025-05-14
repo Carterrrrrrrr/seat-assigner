@@ -110,23 +110,56 @@ body{
 }
 /* input styles the text input on the editor.html page */
 input {
-    display: flex;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    background-color: rgba(121, 49, 65, 0.5);
+    display: block;
+    margin: 20px auto 0 auto;
+    width: 400px;
+    max-width: 90vw;
+    background: #f3f3f3;
+    border: none;
+    border-bottom: 2px solid #888;
+    border-radius: 8px 8px 0 0;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1.2em;
-    font-weight: lighter;
-    color:rgb(121, 49, 65);
-    border: rgb(121, 49, 65) 2px solid;
+    font-size: 1em;
+    font-weight: 400;
+    color: #555;
+    padding: 24px 0 16px 32px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
+    transition: border-bottom 0.2s, background 0.2s;
+    outline: none;
+    box-sizing: border-box;
 }   
 /*input:focus styles the text input box after you click on it*/
 input:focus {
-    background-color: rgb(255, 255, 255);
-    border: rgba(0, 0, 0, 0.2) 2px solid;
+    background: #fff;
+    border-bottom: 2px solid #555;
+    /* Optional: subtle shadow on focus */
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,0.06);
 }
+
+/* styles the number input size on the editor.html page */
+input[type="number"] {
+    width: 80px;
+    max-width: 100px;
+    font-size: 1em;
+    padding: 8px 8px 8px 12px;
+    margin: 0 8px;
+    border-radius: 6px 6px 0 0;
+    background: #f3f3f3;
+    border: none;
+    border-bottom: 2px solid #888;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.02);
+    transition: border-bottom 0.2s, background 0.2s;
+    outline: none;
+    display: inline-block;
+}
+
+/* styles the number input box after you click on it*/
+input[type="number"]:focus {
+    background: #fff;
+    border-bottom: 2px solid #555;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+}
+
 /* select styles the select/dropdown input on the editor.html page */
 select{
     display: flex;
