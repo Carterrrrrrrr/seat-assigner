@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid of Blocks</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js" defer></script>     -->
+</head>
+<body>
+    <script src="https://dragselect.com/ds.min.js"></script>
+    <script src="creator.js"></script>
+    <script src="firebase.js"></script>
+    <script type="module" src="dragselect.js"></script>
+    <script type="module" src="firebase.js"></script>
+    <script type="module">
+    import {addItem} from './firebase.js';
+      window.addItem = addItem;
+      </script>
+
+<script type="module">
+    import { loadEventData, checkIn } from './firebase.js';
+    window.loadEventData = loadEventData;
+    window.checkIn = checkIn;
+    loadEventData();
+</script>
+
+    <div>
+        <button onclick="checkIn()">Checkin Page</button>
+    </div>
+    <div>
+        <h1>Event Name:</h1> <input type="text" id="event-d">
+        
+        <h1>Event Description:</h1> <input type="text" id="event-c">
+        <div>
+            <h1></h1>
+        </div>
+        <label for="color-select">Select Seat type:</label>
+        <select id="color-select">
+            <option value="">Select a color</option>
+            <option value="yellow">Premium</option>
+            <option value="brown">Regular</option>
+            <option value="black">Stage</option>
+        </select>
+        <h1></h1>
+    </div>
+    <div>
+        <label for="grid-width">Width (X): </label>
+        <input type="number" id="grid-w" value="5">
+        <label for="grid-height">Height (Y): </label>
+        <input type="number" id="grid-h" value="5">
+        <h1></h1>
+        <button id="generate-grid">Generate Grid</button>
+    </div>
+    <div id="grid-container">
+
+    </div>
+ 
+
+    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish & Save</button>
+    <div class="click">
+        <a href="createpage.html">
+            <h2>Home</h2>
+        </a>
+
+
