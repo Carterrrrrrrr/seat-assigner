@@ -204,7 +204,7 @@ select>option {
     border-color:black;
     border-style:outset;
     border-width: 0px;
-    border-radius: 0px;
+    border-radius: 12px;
     width: 40vw;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
@@ -228,7 +228,7 @@ button{
     border-color:black;
     border-style:outset;
     border-width: 0px;
-    border-radius: 0px;
+    border-radius: 12px;
     background-color: rgb(121, 49, 65);
     color: rgb(255, 255, 255);
     font-family: 'Times New Roman', Times, serif;
