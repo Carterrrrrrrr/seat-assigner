@@ -1,4 +1,5 @@
 // Import Firebase
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged , signInWithEmailAndPassword, sendEmailVerification} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, setDoc} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
@@ -16,17 +17,59 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const eventsCollection = collection(db, "events");
-
-let queryString = window.location.search;
-//let queryString = "http://ASDADS.org/checkin/index.html/?event=Hadestown";
-
-queryString = queryString.substring(queryString.indexOf('?'), queryString.length);
-const urlParams = new URLSearchParams(queryString);
-const linkedEvent = urlParams.get('event');
-console.log("event: " + linkedEvent);
-document.getElementById("currentEvent").innerHTML = linkedEvent;
+const auth = getAuth(app);
 
 let event = null;
+const user = null;
+
+export const linkEvent = async function(){
+    console.log("Linking Event...");
+    //let queryString = window.location.search;
+    let queryString = "http://ASDADS.org/checkin/index.html/?event=KIKI%20AY";
+    queryString = queryString.substring(queryString.indexOf('?'), queryString.length);
+    const urlParams = new URLSearchParams(queryString);
+    let linkedEvent = urlParams.get('event');
+    console.log("event: " + linkedEvent);
+    sessionStorage.setItem('linkedEvent', linkedEvent);
+}
+
+//Email must exist and be real
+//password must be at least 6 charaters
+export const signUp = async function (email, password){
+  console.log("signUp");
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    sessionStorage.setItem('userEmail', user.email);
+    window.location.href = 'checkIn.html';
+    sendEmailVerification(auth.currentUser)
+        .then(() => {
+            // Email verification sent!
+            // TODO: ADD CODE THAT TELLS USER TO VERRIFY EMAIL!
+        });
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+}
+
+//login function for submit button
+export const login = function (email, password){
+  console.log("login")
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user
+      sessionStorage.setItem('userEmail', user.email);
+      window.location.href = 'checkIn.html';
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+}
 
 //returns a list of seats with the information
 //id
@@ -106,10 +149,19 @@ export const getAllNames = async function() {
 // I want to return a locally stored list
 export const createEvents = async function(){
     try {
-        //returns all of the event objects from fire base
-        const eventsQuery = query(eventsCollection, where("eventName", "==", linkedEvent));
+        let linkedEvent = sessionStorage.getItem('linkedEvent')
+        document.getElementById("currentEvent").innerHTML = linkedEvent;
+        console.log("EMAIL: " + sessionStorage.getItem('userEmail'));
+        const eventsQuery = query(
+        eventsCollection,
+        where("eventName", "==", linkedEvent),
+        where("checkInUsers", "array-contains", sessionStorage.getItem('userEmail')) //user must be logined in to see seats
+        ); //returns all of the event objects from fire base
         const querySnapshot = await getDocs(eventsQuery);
         //puting the firebase events into local objects into a list called "listEvents"
+        if (querySnapshot.empty) {
+            document.getElementById("error").innerHTML = "either you are not allowed to check in seats for this event or no seats are reserved yet"
+        }
         querySnapshot.forEach((doc) => {
             event = {id: doc.id, eventName: doc.data().eventName}
         });
