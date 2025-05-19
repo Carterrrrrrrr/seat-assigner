@@ -32,6 +32,14 @@ export const signUp = async function (email, password){
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    console.log(error.message);
+    // console.log("bruh");
+    // document.getElementById("theError").innerHTML = error.message;
+    if (error.message === "Firebase: Error (auth/email-already-in-use)."){
+      alert("Email already has an account");
+    }  else{
+      alert("Error Signing In");
+    }
   });
 }
 
@@ -49,6 +57,12 @@ export const login = function (email, password){
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(error.message);
+      if (error.message === "Firebase: Error (auth/invalid-login-credentials)."){
+        alert("Email or Password is Invalid");
+      } else{
+        alert("Error Logging In");
+      }
     });
 }
 
