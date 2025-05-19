@@ -116,10 +116,10 @@ input {
     max-width: 90vw;
     background: #f3f3f3;
     border: none;
-    border-bottom: 2px solid #888;
+    border-bottom: 2px solid #681f1f;
     border-radius: 8px 8px 0 0;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1em;
+    font-size: em;
     font-weight: 400;
     color: #555;
     padding: 24px 0 16px 32px;
@@ -146,7 +146,7 @@ input[type="number"] {
     border-radius: 6px 6px 0 0;
     background: #f3f3f3;
     border: none;
-    border-bottom: 2px solid #888;
+    border-bottom: 2px solid #681f1f;
     box-shadow: 0 1px 4px 0 rgba(0,0,0,0.02);
     transition: border-bottom 0.2s, background 0.2s;
     outline: none;
@@ -161,23 +161,48 @@ input[type="number"]:focus {
 }
 
 /* select styles the select/dropdown input on the editor.html page */
-select{
-    display: flex;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
+select {
+    display: block;
+    margin: 20px auto 0 auto;
+    width: 140px;
+    padding: 8px 32px 8px 12px;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1em;
-    width: 10rem;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255)
-}
-/* select>option is the same as select but when you actually click on the drop down */
-select>option {
-    background-color: rgb(255, 255, 255);
-    font-size: 0.67em;
     color: rgb(121, 49, 65);
+    background: #fff;
+    border: 2px solid #681f1f;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px 0 rgba(121,49,65,0.08);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 49%, #681f1f 51%),
+        linear-gradient(135deg, #681f1f 51%, transparent 49%);
+    background-position:
+        calc(100% - 22px) calc(50% - 4px),
+        calc(100% - 14px) calc(50% - 4px);
+    background-size: 7px 7px, 7px 7px;
+    background-repeat: no-repeat;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* select:hover styles the select input when you hover over it*/
+select:focus, select:hover {
+    border-color: rgb(154, 63, 83);
+    box-shadow: 0 4px 16px 0 rgba(121,49,65,0.18);
+    outline: none;
+}
+
+/* select:focus > option styles the select input when you click on it*/
+select > option {
+    background: #fff;
+    color: rgb(121, 49, 65);
+    font-size: 1em;
     font-family: 'Times New Roman', Times, serif;
+    padding: 10px;
+    border-radius: 0;
+    transition: background 0.2s, color 0.2s;
 }
 /*.event styles the event buttons in the page createpage.html*/
 .event {
@@ -226,29 +251,50 @@ select>option {
     color: white;              /* White text for contrast */
 }
 /*.button styles buttons in createpage.html*/
-.button{
-    cursor: pointer;
-    display: flex;
-    margin: auto;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    align-items: center;
-    justify-content: center;
-    border-color:black;
-    border-style:outset;
-    border-width: 0px;
-    border-radius: 12px;
-    width: 40vw;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
-    font-family: 'Times New Roman', Times, serif;
-    /* margin: 10px; */
-    font-size: 4vb;
-    padding: 1.5vh 1vw;
+a{
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    border: 2px solid #111;
+    text-transform: uppercase;
+    color: rgb(121, 49, 65);
+    text-decoration: none;
+    font-size: 20px;
 }
 /* .button:hover styles buttons when you hover over them in createpage.html*/
-.button:hover{
-    background-color: rgb(154, 63, 83);
+a:before{
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% - 12px);
+    background-color: #fff;
+    transition: 0.5s ease-in-out;
+    transform: scale(1);
+    transition-delay: 0.5s;
+}
+a span{
+    position: relative;
+    z-index: 2;
+}
+a:hover:before{
+    transform: scaleY(0);
+}
+
+a:after{
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: -2px;
+    height: calc(100% + 4px);
+    width: calc(100% - 12px);
+    background-color: #fff;
+    transition: 0.5s ease-in-out;
+    transform: scaleX(1);
+}
+a:hover:after{
+    transform: scaleX(0);
 }
 /* button styles buttons in editor.html*/
 button{
@@ -282,3 +328,27 @@ button:hover{
 label{
     color:rgb(121, 49, 65);
 }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in {
+    opacity: 0;
+    animation: slideInLeft 0.7s cubic-bezier(.77,0,.18,1) forwards;
+}
+
+.slide-in.delay-1 { animation-delay: 0.1s; }
+.slide-in.delay-2 { animation-delay: 0.2s; }
+.slide-in.delay-3 { animation-delay: 0.3s; }
+.slide-in.delay-4 { animation-delay: 0.4s; }
+.slide-in.delay-5 { animation-delay: 0.5s; }
+.slide-in.delay-6 { animation-delay: 0.6s; }
+.slide-in.delay-7 { animation-delay: 0.7s; }
