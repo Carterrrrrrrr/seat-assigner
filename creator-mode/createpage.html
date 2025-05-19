@@ -13,13 +13,13 @@
         window.createEvents = createEvents;
         createEvents();
     </script>
-    <div class="header">
+    <div class="header slide-in delay-1">
         <h1>Creator Page</h1>
     </div>
     <br>
-    <div id="divEvents"></div>
+    <div id="divEvents" class="slide-in delay-2"></div>
 
-    <a href="editor.html" class="button" id="create-event-btn"><span>Create Event</span></a>
+    <a href="editor.html" class="button slide-in delay-3" id="create-event-btn"><span>Create Event</span></a>
     <script>
         document.getElementById('create-event-btn').addEventListener('click', function(e) {
             sessionStorage.removeItem('eventDetails');

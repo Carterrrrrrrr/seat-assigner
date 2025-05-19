@@ -87,7 +87,7 @@ h4{
 }
 /* background for the page */
 body{
-    /* background-color: white; */
+
     text-align: center;
     margin: 0px;
 }
@@ -102,9 +102,11 @@ body{
     margin-right: 2.0em;
     font-weight: lighter;
 }
+
 .marron{
     color: rgb(121, 49, 65);
 }
+
 .white{
     color:rgb(255, 255, 255);
 }
@@ -128,6 +130,7 @@ input {
     outline: none;
     box-sizing: border-box;
 }   
+
 /*input:focus styles the text input box after you click on it*/
 input:focus {
     background: #fff;
@@ -255,7 +258,7 @@ a{
     position: relative;
     display: inline-block;
     padding: 15px 30px;
-    border: 2px solid #111;
+    border: 2px solid rgb(121, 49, 65);
     text-transform: uppercase;
     color: rgb(121, 49, 65);
     text-decoration: none;
@@ -297,28 +300,33 @@ a:hover:after{
     transform: scaleX(0);
 }
 /* button styles buttons in editor.html*/
-button{
-    cursor: pointer;
-    display: flex;
+button {
+    display: inline-block;
     margin: auto;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    border-color:black;
-    border-style:outset;
-    border-width: 0px;
+    border: 2px solid rgb(121, 49, 65); /* marron */
     border-radius: 12px;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
+    background: transparent;
+    color: rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    /* margin: 10px; */
     font-size: 1em;
-    padding: 5px 15px;  
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: 
+        background 0.25s cubic-bezier(.77,0,.18,1),
+        color 0.25s cubic-bezier(.77,0,.18,1),
+        border-color 0.25s cubic-bezier(.77,0,.18,1);
+    box-shadow: none;
+    outline: none;
 }
+
 /* button:hover styles buttons when you hover over them in editor.html*/
-button:hover{
-    background-color: rgb(154, 63, 83);
+button:hover, button:focus {
+    background: rgb(121, 49, 65);
+    color: #fff;
+    border-color: rgb(121, 49, 65);
 }
 /* .divEvents styles the event buttons that are displayed in the page createpage.html*/
 .divEvents{
