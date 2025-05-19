@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged , signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged , signInWithEmailAndPassword, sendEmailVerification} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, doc, updateDoc, where} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
@@ -28,6 +28,11 @@ export const signUp = async function (email, password){
     const user = userCredential.user;
     sessionStorage.setItem('userEmail', user.email);
     window.location.href = 'createpage.html';
+    sendEmailVerification(auth.currentUser)
+        .then(() => {
+            // Email verification sent!
+            // TODO: ADD CODE THAT TELLS USER TO VERRIFY EMAIL!
+        });
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -281,8 +286,8 @@ export const checkIn = () => {
     console.log("HIT")
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
     console.log(eventDetails.eventName);
-    console.log(window.location.pathname + "/checkin/index.html?event=" + eventDetails.eventName);
+    console.log(window.location.pathname + "/checkin/index.html?event=" + encodeURIComponent(eventDetails.eventName));
     //window.location = "/checkin/index.html?event=" + eventDetails.eventName;
-    window.location = "https://carterrrrrrrr.github.io/seat-assigner/checkin/index.html?event=" + eventDetails.eventName;
+    window.location = "https://carterrrrrrrr.github.io/seat-assigner/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName);
     //window.open(window.location.hostname + "/checkin/index.html?event=" + eventDetails.eventName);
 };
