@@ -14,20 +14,25 @@
     <title>Login</title>
 </head>
 <body>
-<!-- <em id="theError"></em> -->
-<div class="container">
+  <div class="header slide-in delay-1">
+    <h1>Login Page</h1>
+    </div>
+<div class="container slide-in delay-1">
+
+    <h1 class="slide-in delay-2"></h1>
     <!-- text box for email/username -->
-    <label><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" id="uname">
+    <label class="slide-in delay-3"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" id="uname" class="slide-in delay-4">
 
     <!-- text box for password -->
-    <label><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" id="psw" >
-
+    <h1 class="slide-in delay-5"></h1>
+    <label class="slide-in delay-6"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" class="slide-in delay-7">
+    <h1 class="slide-in delay-8"></h1>
     <!-- button that runs login function in jscript -->
-    <button id="loginButton" onclick="login(document.getElementById('uname').value, document.getElementById('psw').value);">Login</button>
+    <button id="loginButton" class="slide-in delay-9" onclick="login(document.getElementById('uname').value, document.getElementById('psw').value);">Login</button>
     <!-- button that runs login function in jscript -->
-    <button id="signUpButton" onclick="signUp(document.getElementById('uname').value, document.getElementById('psw').value);">Sign Up</button>
+    <button id="signUpButton" class="slide-in delay-10" onclick="signUp(document.getElementById('uname').value, document.getElementById('psw').value);">Sign Up</button>
 </div>
 
 </body>

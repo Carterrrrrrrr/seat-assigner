@@ -28,14 +28,14 @@
 
 
 
-    <div class="header">
+    <div class="header slide-in delay-1">
     <h1>Project Editor</h1>
     </div>
-        <button onclick="checkIn()">Checkin Page</button>
-    <div>
-        <h2>Event Name:</h2> <input type="text" id="event-d">
+        <button class="slide-in delay-2" onclick="checkIn()">Checkin Page</button>
+    <div class="slide-in delay-3">
+        <h2>Event Name:</h2> <input type="text" placeholder="Enter Event Name" id="event-d">
         
-        <h2>Event Description:</h2> <input type="text" id="event-c">
+        <h2>Event Description:</h2> <input type="text" placeholder="Enter Description" id="event-c">
         <div>
             <h1></h1>
         </div>
@@ -49,7 +49,7 @@
         </select>
         <h1></h1>
     </div>
-    <div>
+    <div class="slide-in delay-4">
         <label for="grid-width">Width (X): </label>
         <input type="number" id="grid-w" value="5">
         <label for="grid-height">Height (Y): </label>
@@ -57,13 +57,14 @@
         <h1></h1>
         <button id="generate-grid">Generate Grid</button>
     </div>
-    <div id="grid-container">
+    <div id="grid-container" class="slide-in delay-5">
 
     </div>
  
-    <button onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish & Save</button>
+    <button class="slide-in delay-6" onclick="addItem(document.getElementById('event-d').value, document.getElementById('event-c').value, document.getElementById('grid-w').value, document.getElementById('grid-h').value)" >Publish & Save</button>
     <br>
-    <button onclick="location.href='createpage.html'">Home</button>
+    <h2></h2>
+    <button class="slide-in delay-7" onclick="location.href='createpage.html'">Home</button>
     <br>
 </body>
 

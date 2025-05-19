@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Login</title>
+</head>
+<body>
+    <script type="module" src = "script.js"></script>
+    <script type="module">
+        import {login, signUp, linkEvent} from "./script.js";
+        window.linkEvent = linkEvent;
+        window.login = login;
+        window.signUp = signUp;
+        linkEvent();
+    </script>
+
+<div class="container">
+    <!-- text box for email/username -->
+    <label><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" id="uname">
+
+    <!-- text box for password -->
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" >
+
+    <!-- button that runs login function in jscript -->
+    <button id="loginButton" onclick="login(document.getElementById('uname').value, document.getElementById('psw').value);">Login</button>
+    <!-- button that runs login function in jscript -->
+    <button id="signUpButton" onclick="signUp(document.getElementById('uname').value, document.getElementById('psw').value);">Sign Up</button>
+</div>
+
+</body>
