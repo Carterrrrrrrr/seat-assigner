@@ -117,6 +117,7 @@ export const createEvents = async () => {
 
 //add the name and description to firebase
 export const addItem = async function (eventName, eventDescription, width, height) {
+  const adminUser = sessionStorage.getItem('userEmail');
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
   try {
         let adminUser = sessionStorage.getItem('userEmail')
@@ -131,6 +132,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           eventDescription: eventDescription,
           width: width,
           height: height,
+          adminUser: adminUser
         });
   
         // Delete all old seats
@@ -149,6 +151,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           eventDescription: eventDescription,
           width: width,
           height: height,
+          adminUser: adminUser
         });
         console.log("Event Document written with ID: ", eventDocRef.id);
       }
