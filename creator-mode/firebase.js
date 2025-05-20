@@ -76,10 +76,9 @@ export const addEmailInput = function() {
   const newInputGroup = document.createElement('div');
   newInputGroup.className = 'email-group';
   newInputGroup.innerHTML = `
-    <input type="email" name="emails" class="email-input" placeholder="Enter email" required>
-    <button type="button" class="remove-button" onclick="removeEmailInput(this)">Delete</button>
-      `;
-    container.appendChild(newInputGroup);
+  <input type="email" name="emails" class="email-input" placeholder="Enter email" required>
+  <button type="button" class="remove-button" onclick="removeEmailInput(this)">Delete</button>`;
+  container.appendChild(newInputGroup);
 }
 
 export function removeEmailInput(button) {
@@ -89,23 +88,34 @@ export function removeEmailInput(button) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("emailForm");
+
   if (!form) {
     console.warn("emailForm not found in the DOM");
     return;
   }
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
     const formData = new FormData(form);
     const emails = formData.getAll("emails");
+
+    console.log("Form Data entries:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     if (emails.length === 0) {
       alert("Please enter at least one email.");
       return;
     }
+
     console.log("Submitted Emails:", emails);
     alert("Emails submitted: " + emails.join(", "));
     sessionStorage.setItem("checkInUsers", JSON.stringify(emails));
   });
 });
+
 
 
 // fucnction to create event elements
