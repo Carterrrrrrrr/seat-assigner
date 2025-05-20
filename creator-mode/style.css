@@ -297,6 +297,7 @@ a:after{
     transition: 0.5s ease-in-out;
     transform: scaleX(1);
 }
+
 a:hover:after{
     transform: scaleX(0);
 }
@@ -348,7 +349,7 @@ label{
         transform: translateX(0);
     }
 }
-/* .slide-in is a class that is used to animate the elements in the page createpage.html */
+/* .slide-in is a class that is used to animate the elements in both html pages */
 .slide-in {
     opacity: 0;
     animation: slideInLeft 0.7s cubic-bezier(.77,0,.18,1) forwards;
