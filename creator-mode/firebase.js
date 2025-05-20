@@ -71,6 +71,36 @@ export const login = function (email, password){
     });
 }
 
+export const addEmailInput = function() {
+  const container = document.getElementById('emailInputs');
+  const newInputGroup = document.createElement('div');
+  newInputGroup.className = 'email-group';
+  newInputGroup.innerHTML = `
+    <input type="email" name="emails[]" class="email-input" placeholder="Enter email" required>
+    <button type="button" class="remove-button" onclick="removeEmailInput(this)">Delete</button>
+      `;
+    container.appendChild(newInputGroup);
+}
+export function removeEmailInput(button) {
+  const inputGroup = button.parentNode;
+  inputGroup.remove();
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('emailForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      let emails = formData.getAll('emails[]');
+      console.log('Submitted Emails:', emails);
+      alert('Emails submitted: ' + emails.join(', '));
+      sessionStorage.setItem('checkInUsers', JSON.stringify(emails));
+    });
+  } else {
+    console.warn("emailForm not found in the DOM");
+  }
+});
+
 // fucnction to create event elements
 export const createEvents = async () => {
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
