@@ -261,7 +261,7 @@ input:focus {
 }
 /* below are the differences between the types of seats (mostly color) on the seating grid */
 .selected-seat{
-    background-color: rgb(0, 53, 0);
+    background-color: blue;
 }
 .available-seat{
     background-color: #4caf50;
