@@ -209,27 +209,32 @@ select > option {
 }
 /*.event styles the event buttons in the page createpage.html*/
 .event {
-    display: flex;
+    display: inline-block;
     margin: auto;
-    margin-bottom: 5px;
     align-items: center;
     justify-content: center;
-    border-color:black;
-    width:40vw;
-    cursor: pointer;
-    border-style:outset;
-    border-width: 0px;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
+    border: 2px solid rgb(121, 49, 65); /* marron */
+    border-radius: 12px;
+    background: transparent;
+    color: rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    border-radius: 0px;
-    font-size: 4vb;
-    padding: 1.5vh 1vw;
+    font-size: 1em;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: 
+        background 0.25s cubic-bezier(.77,0,.18,1),
+        color 0.25s cubic-bezier(.77,0,.18,1),
+        border-color 0.25s cubic-bezier(.77,0,.18,1);
+    box-shadow: none;
+    outline: none;
+    margin: -1px; 
 }
 /* #event:hover changes color of .event when you hover over the event buttons*/
-.event:hover {
-        background-color: rgb(154, 63, 83);
+.event:hover, .event:focus {
+    background: rgb(121, 49, 65);
+    color: #fff;
+    border-color: rgb(121, 49, 65);
 }
 /* styles when you click on a buttonchanging the color of the button */
 .click a:hover {

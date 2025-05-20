@@ -14,18 +14,20 @@
         window.createRoom = createRoom;
         createRoom();
     </script>
-
+<div class="slide-in delay-1">
     <div class="header2">
-        <div id="eventDetails">
-            <h1 id="title">Title</h1>
-            <h4 id="description">Description</h4>
+        <div class="slide-in delay-1" id="eventDetails">
+            <h1 class="slide-in delay-1" id="title">Title</h1>
+            <h4 class="slide-in delay-1" id="description">Description</h4>
         </div>
     </div>
-    <div class="button-container">
-        <button id="back" onclick="window.location.href='index.html'">Back</button>
-        <button id="checkOut" onclick="checkOutButton()">Check out</button>
+</div>    
+    <h1></h1>
+    <div class="slide-in delay-2" class="button-container">
+        <button class="slide-in delay-3" id="back" onclick="window.location.href='index.html'">Back</button>
+        <button class="slide-in delay-3" id="checkOut" onclick="checkOutButton()">Check out</button>
     </div>
-    <h5>Green - Available <br> Red - Occupied <br> Black - Stage <br> Blue - Selected Seat </h5>
+    <h5 class="slide-in delay-8">Green - Available <br> Red - Occupied <br> Black - Stage <br> Blue - Selected Seat </h5>
     <div id="seatingArea"></div>
     <link rel="stylesheet" href="styles.css">
 </body>

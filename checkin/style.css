@@ -188,7 +188,6 @@ input {
 input:focus {
     background: #fff;
     border-bottom: 2px solid #555;
-    /* Optional: subtle shadow on focus */
     box-shadow: 0 4px 12px 0 rgba(0,0,0,0.06);
 }
 select{

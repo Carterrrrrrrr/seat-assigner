@@ -14,16 +14,17 @@
         window.confirmPurchase = confirmPurchase;
         checkOut()
     </script>
-
+<div class="slide-in delay-1">
     <div class="header3">
         <h1 id="total">Total: $0</h1>
     </div>
-
-    <h5>Party Name:</h5>
-    <input type="text" id="name" name="name" size="25"/>
-    <p>Please proceed to Veracross and complete your purchase, then enter the confirmation code below</p>
-    <h5>Code:</h5>
-    <input type="number" id="code" name="code" maxlength="5" size="10"/>
-    <button id="confirmPurchase" onclick="confirmPurchase()">Confirm</button>
+</div>
+    <h5 class="slide-in delay-2">Party Name:</h5>
+    <input class="slide-in delay-6" placeholder="Enter Party Name" type="text" id="name" name="name" size="25">
+    <p class="slide-in delay-4">Please proceed to Veracross and complete your purchase, then enter the confirmation code below</p>
+    <h5 class="slide-in delay-5">Code:</h5>
+    <input class="slide-in delay-6" placeholder="Enter Code" type="number" id="code" name="code" maxlength="5" size="10">
+    <h1></h1>
+    <button class="slide-in delay-7" id="confirmPurchase" onclick="confirmPurchase()">Confirm</button>
 </body>
 </html>

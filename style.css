@@ -2,6 +2,7 @@
 body{
     background-color: rgb(255, 255, 255);
     margin: 0px;
+    text-align: center;
 }
 :root{ 
     --marron: rgb(121, 49, 65);
@@ -60,6 +61,65 @@ h5{
     color: var(--marron);
     font-family: 'Times New Roman', Times, serif;
 }
+
+/* button styles buttons in both html*/
+button {
+    display: inline-block;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(121, 49, 65); /* marron */
+    border-radius: 12px;
+    background: transparent;
+    color: rgb(121, 49, 65);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    font-size: 1em;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: 
+        background 0.25s cubic-bezier(.77,0,.18,1),
+        color 0.25s cubic-bezier(.77,0,.18,1),
+        border-color 0.25s cubic-bezier(.77,0,.18,1);
+    box-shadow: none;
+    outline: none;
+}
+
+/* button:hover styles buttons when you hover over them in both html*/
+button:hover, button:focus {
+    background: rgb(121, 49, 65);
+    color: #fff;
+    border-color: rgb(121, 49, 65);
+}
+
+/* input styles the text input on the html page */
+input {
+    display: block;
+    margin: 20px auto 0 auto;
+    width: 400px;
+    max-width: 90vw;
+    background: #f3f3f3;
+    border: none;
+    border-bottom: 2px solid #681f1f;
+    border-radius: 8px 8px 0 0;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: em;
+    font-weight: 400;
+    color: #555;
+    padding: 24px 0 16px 32px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
+    transition: border-bottom 0.2s, background 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}   
+
+/*input:focus styles the text input box after you click on it*/
+input:focus {
+    background: #fff;
+    border-bottom: 2px solid #555;
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,0.06);
+}
+
 /* p stands for paragraph with p being small font */
 p{
     font-family: 'Times New Roman', Times, serif;
@@ -71,9 +131,7 @@ p{
     font-weight: lighter;
     color: var(--marron);
 }
-.center{
-    text-align:center;
-}
+
 .marron{
     color: rgb(121, 49, 65);
 }
@@ -83,6 +141,10 @@ p{
 /* #divEvents is the div that the buttons fit into*/
 #divEvents{
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px; /* space between event buttons */
 }
 /* #seatingArea is the div that holds the seat grid */
 #seatingArea{
@@ -98,78 +160,89 @@ p{
 }
 /*  #back styles the "Back" button that is within .button-container and above the seating grid*/
 #back {
-    cursor: pointer;
-    border-color:black;
-    border-style:outset;
-    border-width: 0px;
-    border-radius: 0px;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
+    display: inline-block;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(121, 49, 65); /* marron */
+    border-radius: 12px;
+    background: transparent;
+    color: rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    margin: 10px;
     font-size: 1em;
-    padding: 5px 15px;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: 
+        background 0.25s cubic-bezier(.77,0,.18,1),
+        color 0.25s cubic-bezier(.77,0,.18,1),
+        border-color 0.25s cubic-bezier(.77,0,.18,1);
+    box-shadow: none;
+    outline: none;
 }
 /* #back:hover changes color of #back when you hover over the "back" button*/
 #back:hover{
-    background-color: rgb(154, 63, 83);
+    background: rgb(121, 49, 65);
+    color: #fff;
+    border-color: rgb(121, 49, 65);
 }
 /* #checkOut styles the "Check Out" button that is within .button-container and above the seating grid*/
 #checkOut {
-    cursor: pointer;
-    border-color:white;
-    border-width: 0px;
-    border-style:outset;
-    border-radius: 0px;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
+    display: inline-block;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(121, 49, 65); /* marron */
+    border-radius: 12px;
+    background: transparent;
+    color: rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    margin: 10px;
     font-size: 1em;
-    padding: 5px 15px;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: 
+        background 0.25s cubic-bezier(.77,0,.18,1),
+        color 0.25s cubic-bezier(.77,0,.18,1),
+        border-color 0.25s cubic-bezier(.77,0,.18,1);
+    box-shadow: none;
+    outline: none;
 }
 /* #checkOut:hover changes color of #checkOut when you hover over the "Check Out" button*/
 #checkOut:hover{
-    background-color: rgb(154, 63, 83);
+    background: rgb(121, 49, 65);
+    color: #fff;
+    border-color: rgb(121, 49, 65);
 }
 /* Confirm Purchase styles the "Confirm Purchase" button on the checkout.html page*/
 #confirmPurchase {
-    border-width: 0px;
-    cursor: pointer;
-    border-color:black;
-    border-style:outset;
-    border-width: small small small small;
-    border-radius: 0px;
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
+    display: inline-block;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(121, 49, 65); /* marron */
+    border-radius: 12px;
+    background: transparent;
+    color: rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    margin: 10px;
     font-size: 1em;
-    padding: 5px 15px;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: 
+        background 0.25s cubic-bezier(.77,0,.18,1),
+        color 0.25s cubic-bezier(.77,0,.18,1),
+        border-color 0.25s cubic-bezier(.77,0,.18,1);
+    box-shadow: none;
+    outline: none;
 }
 /* #confirmPurchase:hover changes color of #confirmPurchase when you hover over the "Confirm Purchase" button*/
 #confirmPurchase:hover{
-    background-color: rgb(154, 63, 83);
+    background: rgb(121, 49, 65);
+    color: #fff;
+    border-color: rgb(121, 49, 65);
 }
-/* input styles the text input on the checkout.html page */
-input {
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    background-color: rgba(121, 49, 65, 0.5);
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.2em;
-    font-weight: lighter;
-    color:rgb(121, 49, 65);
-    border: rgb(121, 49, 65) 2px solid;
-    margin-left: 2vw;
-}   
-/*input:focus styles the text input box after you click on it*/
-input:focus {
-    background-color: rgb(255, 255, 255);
-    border: rgba(0, 0, 0, 0.2) 2px solid;
-}
+
 /*.header styles the header picture for the page index.html*/
 .header{
     width: 100vw;
@@ -208,27 +281,33 @@ input:focus {
 }
 /*.event styles the event buttons in the page index.html*/
 .event {
-    display: flex;
+    width:40vw;
+    display: inline-block;
     margin: auto;
-    margin-bottom: 5px;
     align-items: center;
     justify-content: center;
-    border-color:black;
-    width:40vw;
-    cursor: pointer;
-    /* border-style:outset;
-    border-width: medium medium medium medium; */
-    background-color: rgb(121, 49, 65);
-    color: rgb(255, 255, 255);
+    border: 2px solid rgb(121, 49, 65); /* marron */
+    border-radius: 12px;
+    background: transparent;
+    color: rgb(121, 49, 65);
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    border-radius: 0px;
-    font-size: 4vb;
-    padding: 1.5vh 1vw;
+    font-size: 1em;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: 
+        background 0.25s cubic-bezier(.77,0,.18,1),
+        color 0.25s cubic-bezier(.77,0,.18,1),
+        border-color 0.25s cubic-bezier(.77,0,.18,1);
+    box-shadow: none;
+    outline: none;
+    margin: -1px; 
 }
 /* #event:hover changes color of .event when you hover over the event buttons*/
-.event:hover {
-        background-color: rgb(154, 63, 83);
+.event:hover,.event:focus {
+    background: rgb(121, 49, 65);
+    color: #fff;
+    border-color: rgb(121, 49, 65);
 }
 /* each row of seats on the seating grid in space.html */
 .seat-row {
@@ -279,3 +358,30 @@ input:focus {
     background-color: rgb(255, 255, 255);
     border: 0px;
 }
+
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+/* .slide-in is a class that is used to animate the elements in both html pages */
+.slide-in {
+    opacity: 0;
+    animation: slideInLeft 0.7s cubic-bezier(.77,0,.18,1) forwards;
+}
+
+
+.slide-in.delay-1 { animation-delay: 0.1s; }
+.slide-in.delay-2 { animation-delay: 0.2s; }
+.slide-in.delay-3 { animation-delay: 0.3s; }
+.slide-in.delay-4 { animation-delay: 0.4s; }
+.slide-in.delay-5 { animation-delay: 0.5s; }
+.slide-in.delay-6 { animation-delay: 0.6s; }
+.slide-in.delay-7 { animation-delay: 0.7s; }
+.slide-in.delay-8 { animation-delay: 0.8s; }
