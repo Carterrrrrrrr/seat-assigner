@@ -150,7 +150,8 @@ export const addItem = async function (eventName, eventDescription, width, heigh
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
   try {
         let adminUser = sessionStorage.getItem('userEmail');
-        let checkInUsers = sessionStorage.getItem('checkInUsers');
+        let checkInUsers = JSON.parse(sessionStorage.getItem('checkInUsers')) || [];
+        checkInUsers.push(adminUser)
         console.log("New even under... " + adminUser)
       const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
       let eventDocRef;
@@ -163,7 +164,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           width: width,
           height: height,
           adminUser: adminUser,
-          checkInUsers: arrayUnion(...emails)
+          checkInUsers: arrayUnion(...checkInUsers)
         });
   
         // Delete all old seats
@@ -183,7 +184,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           width: width,
           height: height,
           adminUser: adminUser,
-          checkInUsers: arrayUnion(...emails)
+          checkInUsers: arrayUnion(...checkInUsers)
         });
         console.log("Event Document written with ID: ", eventDocRef.id);
       }
