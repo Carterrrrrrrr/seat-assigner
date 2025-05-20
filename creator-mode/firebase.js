@@ -71,6 +71,50 @@ export const login = function (email, password){
     });
 }
 
+// fucnction to create event elements
+export const createEvents = async () => {
+  console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
+    try {
+        console.log("Fetching events...");
+        const eventsCollection = collection(db, "events");
+        const eventsQuery = query(eventsCollection, where("adminUser", "==", sessionStorage.getItem('userEmail')));
+    
+        const querySnapshot = await getDocs(eventsQuery);
+
+        let listEvents = [];
+        querySnapshot.forEach((doc) => {
+            listEvents.push({
+                id: doc.id, // Store the document ID
+                eventName: doc.data().eventName,
+                eventDescription: doc.data().eventDescription,
+                width: doc.data().width,
+                height: doc.data().height,
+            });
+        });
+
+        // make the event list on the page
+        const divEvents = document.getElementById("divEvents");
+        if (!divEvents) {
+            console.error("divEvents not found in the DOM.");
+            return;
+        }
+        listEvents.forEach((event) => {
+            const div = document.createElement("div");
+            if (event.eventName) {
+                div.textContent = event.eventName;
+            } else {div.textContent = "UNKNOWN"}
+             // display the event name
+            div.id = event.id; // use the document ID as the div's ID
+            div.classList.add("event"); // add the 'event' class for styling
+            div.addEventListener("click", () => selectEvent(event)); // attack click event listener
+            divEvents.appendChild(div);
+        });
+        console.log("Events created successfully!");
+    } catch (error) {
+        console.error("Error fetching events:" + error);
+    }
+};
+
 //add the name and description to firebase
 export const addItem = async function (eventName, eventDescription, width, height) {
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
