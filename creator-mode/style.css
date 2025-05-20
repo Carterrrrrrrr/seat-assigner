@@ -264,6 +264,7 @@ a{
     text-decoration: none;
     font-size: 20px;
 }
+
 /* .button:hover styles buttons when you hover over them in createpage.html*/
 a:before{
     content: '';
@@ -347,11 +348,12 @@ label{
         transform: translateX(0);
     }
 }
-
+/* .slide-in is a class that is used to animate the elements in the page createpage.html */
 .slide-in {
     opacity: 0;
     animation: slideInLeft 0.7s cubic-bezier(.77,0,.18,1) forwards;
 }
+
 
 .slide-in.delay-1 { animation-delay: 0.1s; }
 .slide-in.delay-2 { animation-delay: 0.2s; }
@@ -360,3 +362,4 @@ label{
 .slide-in.delay-5 { animation-delay: 0.5s; }
 .slide-in.delay-6 { animation-delay: 0.6s; }
 .slide-in.delay-7 { animation-delay: 0.7s; }
+.slide-in.delay-8 { animation-delay: 0.8s; }
