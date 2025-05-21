@@ -414,7 +414,7 @@ export const checkIn = () => {
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
     console.log(eventDetails.eventName);
     console.log(window.location.pathname + "/checkin/index.html?event=" + encodeURIComponent(eventDetails.eventName));
-    //window.location = "/checkin/index.html?event=" + encodeURIComponent(eventDetails.eventName);
+    window.location = "/checkin/index.html?event=" + encodeURIComponent(eventDetails.eventName);
     //window.location = "https://carterrrrrrrr.github.io/seat-assigner/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName);
-    window.open(window.location.hostname + "/checkin/index.html?event=" + encodeURIComponent(eventDetails.eventName));
+    //window.open(window.location.hostname + "/checkin/index.html?event=" + encodeURIComponent(eventDetails.eventName));
 };
