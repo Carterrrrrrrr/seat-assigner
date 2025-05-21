@@ -209,6 +209,7 @@ select > option {
 }
 /*.event styles the event buttons in the page createpage.html*/
 .event {
+    width:40vw;
     display: inline-block;
     margin: auto;
     align-items: center;
@@ -229,6 +230,7 @@ select > option {
     box-shadow: none;
     outline: none;
     margin: -1px; 
+
 }
 /* #event:hover changes color of .event when you hover over the event buttons*/
 .event:hover, .event:focus {
