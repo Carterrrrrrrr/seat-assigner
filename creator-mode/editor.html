@@ -11,7 +11,6 @@
 <body>
     <script src="https://dragselect.com/ds.min.js"></script>
     <script src="creator.js"></script>
-    <script src="firebase.js"></script>
     <script type="module" src="dragselect.js"></script>
     <script type="module" src="firebase.js"></script>
     <script type="module">
@@ -20,9 +19,11 @@
       </script>
 
     <script type="module">
-        import { loadEventData, checkIn } from './firebase.js';
+        import { loadEventData, checkIn, addEmailInput, removeEmailInput} from './firebase.js';
         window.loadEventData = loadEventData;
         window.checkIn = checkIn;
+        window.addEmailInput = addEmailInput;
+        window.removeEmailInput = removeEmailInput;
         loadEventData();
     </script>
 
@@ -36,9 +37,19 @@
         <h2>Event Name:</h2> <input type="text" placeholder="Enter Event Name" id="event-d">
         
         <h2>Event Description:</h2> <input type="text" placeholder="Enter Description" id="event-c">
-        <div>
-            <h1></h1>
+        
+        <h3>Checkin Volunteers</h3> 
+        <form id="emailForm">
+        <div id="emailInputs">
+        <div class="email-group">
+            <input type="email" name="emails" class="email-input" placeholder="Enter email" required>
+            <button type="button" class="remove-button" onclick="removeEmailInput(this)">Delete</button>
         </div>
+        </div>
+        <button type="button" class="add-button" onclick="addEmailInput()">Add Another Email</button>
+        <button type="submit">Save Users</button>
+        </form>
+
         <label for="color-select">Select Seat type:</label>
         <select id="color-select">
             <option value="">Select a color</option>
