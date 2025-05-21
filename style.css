@@ -340,13 +340,13 @@ p{
 }
 /* below are the differences between the types of seats (mostly color) on the seating grid */
 .selected-seat{
-    background-color: blue;
+    background-color: green;
 }
 .available-seat{
-    background-color: #4caf50;
+    background-color: rgb(49, 125, 225);
 }
 .occupied-seat{
-    background-color: rgb(121, 49, 65);
+    background-color: gray;
 }
 .stage-seat{
     background-color: black;
