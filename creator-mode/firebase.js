@@ -98,24 +98,24 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const formData = new FormData(form);
-    const emails = formData.getAll("emails");
+    //const emails = formData.getAll("emails");
+    let emails = [];
 
     console.log("Form Data entries:");
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
+      emails.push(value);
     }
 
-    if (emails.length === 0) {
+    if (emails.length == 0) {
       alert("Please enter at least one email.");
       return;
     }
 
-    console.log("Submitted Emails:", emails);
     alert("Emails submitted: " + emails.join(", "));
     sessionStorage.setItem("checkInUsers", JSON.stringify(emails));
   });
 });
-
 
 
 // fucnction to create event elements
@@ -136,6 +136,7 @@ export const createEvents = async () => {
                 eventDescription: doc.data().eventDescription,
                 width: doc.data().width,
                 height: doc.data().height,
+                checkInUsers: doc.data().checkInUsers
             });
         });
 
@@ -166,10 +167,10 @@ export const createEvents = async () => {
 export const addItem = async function (eventName, eventDescription, width, height) {
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
   try {
-        let adminUser = sessionStorage.getItem('userEmail');
-        let checkInUsers = JSON.parse(sessionStorage.getItem('checkInUsers')) || [];
-        checkInUsers.push(adminUser)
-        console.log("New even under... " + adminUser)
+      let adminUser = sessionStorage.getItem('userEmail');
+      let checkInUsers = JSON.parse(sessionStorage.getItem('checkInUsers')) || [];
+      checkInUsers.push(adminUser)
+      console.log("New even under... " + adminUser)
       const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
       let eventDocRef;
       if (eventDetails && eventDetails.id) {
@@ -181,7 +182,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           width: width,
           height: height,
           adminUser: adminUser,
-          checkInUsers: arrayUnion(...checkInUsers)
+          checkInUsers: checkInUsers
         });
   
         // Delete all old seats
@@ -201,7 +202,7 @@ export const addItem = async function (eventName, eventDescription, width, heigh
           width: width,
           height: height,
           adminUser: adminUser,
-          checkInUsers: arrayUnion(...checkInUsers)
+          checkInUsers: checkInUsers
         });
         console.log("Event Document written with ID: ", eventDocRef.id);
       }
@@ -241,6 +242,7 @@ const selectEvent = async (event) => {
         eventDescription: event.eventDescription,
         width: event.width,
         height: event.height,
+        checkInUsers: event.checkInUsers
     };
 
     sessionStorage.setItem('eventDetails', JSON.stringify(eventDetails));
@@ -294,6 +296,8 @@ function createSeatElement(seat, gridItems) {
 export const loadEventData = async () => {
   console.log("USER EMAIL: " + sessionStorage.getItem('userEmail'))
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
+    const checkInUsers = eventDetails.checkInUsers || [];
+
     if (!eventDetails) {
         console.error("No event selected.");
         return;
@@ -302,6 +306,18 @@ export const loadEventData = async () => {
     document.getElementById('event-c').value = eventDetails.eventDescription;
     document.getElementById('grid-w').value = eventDetails.width;
     document.getElementById('grid-h').value = eventDetails.height;
+
+  const container = document.getElementById('emailInputs');
+
+  checkInUsers.forEach(email => {
+    const newInputGroup = document.createElement('div');
+    newInputGroup.className = 'email-group';
+    newInputGroup.innerHTML = `
+      <input type="email" name="emails" class="email-input" placeholder="Enter email" value="${email}" required>
+      <button type="button" class="remove-button" onclick="removeEmailInput(this)">Delete</button>`;
+    container.appendChild(newInputGroup);
+  });
+
 
     const eventDocRef = doc(db, "events", eventDetails.id);
     const seatsCollection = collection(eventDocRef, "seats");
