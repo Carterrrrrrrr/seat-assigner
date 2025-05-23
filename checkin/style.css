@@ -123,7 +123,7 @@ button {
     margin: auto;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgb(121, 49, 65); /* marron */
+    border: 2px solid rgb(121, 49, 65); 
     border-radius: 12px;
     background: transparent;
     color: rgb(121, 49, 65);
@@ -190,6 +190,7 @@ input:focus {
     border-bottom: 2px solid #555;
     box-shadow: 0 4px 12px 0 rgba(0,0,0,0.06);
 }
+
 select{
     display: flex;
     margin: auto;

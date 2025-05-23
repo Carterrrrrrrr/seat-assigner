@@ -192,7 +192,7 @@ p{
     margin: auto;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgb(121, 49, 65); /* marron */
+    border: 2px solid rgb(121, 49, 65); 
     border-radius: 12px;
     background: transparent;
     color: rgb(121, 49, 65);
@@ -220,7 +220,7 @@ p{
     margin: auto;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgb(121, 49, 65); /* marron */
+    border: 2px solid rgb(121, 49, 65); 
     border-radius: 12px;
     background: transparent;
     color: rgb(121, 49, 65);
@@ -286,7 +286,7 @@ p{
     margin: auto;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgb(121, 49, 65); /* marron */
+    border: 2px solid rgb(121, 49, 65); 
     border-radius: 12px;
     background: transparent;
     color: rgb(121, 49, 65);
@@ -317,8 +317,8 @@ p{
 /* .seatingArea is a seatinArea class which helps determine the width of the seating grid and how it flexes*/
 .seatingArea {
     flex-wrap: wrap; 
-    justify-content: center; /* Ensures proper alignment */
-    align-items: center; /* Centers items vertically */
+    justify-content: center; 
+    align-items: center; 
     width: 100%;
 }
 /* .empty-seat, .selected-seat, .occupied-seat, .available-seat, .stage-seat are styling for the individual seats in the seating grid in space.html and how they fit into the grid and flex with the page */
@@ -359,7 +359,7 @@ p{
     border: 0px;
 }
 
-
+/* slide in from the left style*/
 @keyframes slideInLeft {
     from {
         opacity: 0;
