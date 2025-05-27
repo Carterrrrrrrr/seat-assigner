@@ -340,10 +340,11 @@ p{
 }
 /* below are the differences between the types of seats (mostly color) on the seating grid */
 .selected-seat{
-    background-color: green;
+    background-color: rgb(6, 86, 16);
+    color: white;
 }
 .available-seat{
-    background-color: rgb(49, 125, 225);
+    background-color: green;
 }
 .occupied-seat{
     background-color: gray;
