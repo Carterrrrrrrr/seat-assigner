@@ -60,7 +60,10 @@ export const login = function (email, password){
       window.location.href = 'createpage.html';
     } else{
       console.log("email is not verified");
-      alert("Email is not Verified");
+      sendEmailVerification(auth.currentUser)
+        .then(() => {
+            alert("Email is not Verified, please do so with the email sent to your inbox");
+        });
     }
     })
     .catch((error) => {
