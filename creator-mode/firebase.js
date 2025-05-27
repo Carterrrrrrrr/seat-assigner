@@ -27,11 +27,10 @@ export const signUp = async function (email, password){
     // Signed up 
     const user = userCredential.user;
     sessionStorage.setItem('userEmail', user.email);
-    window.location.href = 'createpage.html';
+   //sends email verification to the user
     sendEmailVerification(auth.currentUser)
         .then(() => {
-            // Email verification sent!
-            // TODO: ADD CODE THAT TELLS USER TO VERRIFY EMAIL!
+            alert("email verification sent to your email inbox, please verify your email to log in");
         });
   })
   .catch((error) => {
@@ -56,8 +55,16 @@ export const login = function (email, password){
       // Signed in 
       const user = userCredential.user;
       console.log(user);
+     if(user.emailVerified){
       sessionStorage.setItem('userEmail', user.email);
       window.location.href = 'createpage.html';
+    } else{
+      console.log("email is not verified");
+      sendEmailVerification(auth.currentUser)
+        .then(() => {
+            alert("Email is not Verified, please do so with the email sent to your inbox");
+        });
+    }
     })
     .catch((error) => {
       const errorCode = error.code;
