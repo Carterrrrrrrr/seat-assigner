@@ -24,8 +24,8 @@ const user = null;
 
 export const linkEvent = async function(){
     console.log("Linking Event...");
-    //let queryString = window.location.search;
-    let queryString = "http://ASDADS.org/checkin/index.html/?event=KIKI%20AY";
+    let queryString = window.location.search;
+    //let queryString = "http://ASDADS.org/checkin/index.html/?event=KIKI%20AY";
     queryString = queryString.substring(queryString.indexOf('?'), queryString.length);
     const urlParams = new URLSearchParams(queryString);
     let linkedEvent = urlParams.get('event');
