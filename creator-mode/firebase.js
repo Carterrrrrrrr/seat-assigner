@@ -418,8 +418,8 @@ function initializeDragSelect(gridItems) {
 
 export const checkIn = () => {
     const eventDetails = JSON.parse(sessionStorage.getItem('eventDetails'));
-    console.log(eventDetails.eventName);
-    console.log(window.location.pathname + "/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName));
+    // console.log(eventDetails.eventName);
+    // console.log(window.location.pathname + "/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName));
     //window.location.href = "checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName);
     //window.location = "https://carterrrrrrrr.github.io/seat-assigner/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName);
     window.open(window.location.host + "/seat-assigner/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName));
