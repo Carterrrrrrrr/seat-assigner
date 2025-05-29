@@ -422,5 +422,6 @@ export const checkIn = () => {
     // console.log(window.location.pathname + "/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName));
     //window.location.href = "checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName);
     //window.location = "https://carterrrrrrrr.github.io/seat-assigner/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName);
-    window.open(window.location.host + "/seat-assigner/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName));
+    window.open(window.location.host + "/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName));
+    window.open("https://carterrrrrrrr.github.io/seat-assigner/checkin/login.html?event=" + encodeURIComponent(eventDetails.eventName));
 };
